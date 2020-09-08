@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Users Config
-    # 'users.apps.UsersConfig',
+    'users.apps.UsersConfig',
     # 'center.apps.CenterConfig',
     # 'booking.apps.BookingConfig',
 
