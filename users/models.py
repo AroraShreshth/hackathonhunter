@@ -13,7 +13,7 @@ from imagekit import ImageSpec
 class BaseClass(models.Model):
     id = models.UUIDField(
         primary_key=True,
-        default=uuid.uuid4().hex[:15],
+        default=uuid.uuid4(),
         editable=False)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -96,6 +96,8 @@ class Profile(BaseClass):
 
     # contact
     phone = PhoneField(blank=True, help_text='Contact phone number')
+    address = models.CharField(max_length=300)
+
     emergency_contact_name = models.CharField(blank=True, max_length=150)
     emergency_phone = PhoneField(blank=True, help_text='Contact phone number')
 
@@ -117,6 +119,6 @@ class Work(BaseClass):
     url = models.URLField(blank=True)
 
 
-class Links(BaseClass):
+class Link(BaseClass):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     url = models.URLField()
