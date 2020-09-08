@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./
+    command: gunicorn vacc.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app/
+    ports: 
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=usap
+      - SQL_USER=usap
+      - SQL_PASSWORD=usap
+      - SQL_HOST=db
+      - SQL_PORT=5432
+
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+        - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=usap
+      - POSTGRES_PASSWORD=usap
+      - POSTGRES_DB=usap
+
+volumes:
+  postgres_data:
