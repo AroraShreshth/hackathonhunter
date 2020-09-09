@@ -1,12 +1,15 @@
 <div align = "center">
 
 
-<h1>Shreshth Arora Production</h1>
+<h2>Shreshth Arora Production</h2>
+
 
 
 
 # Hackathon Hunter's Application 
 
+![PythonCI](https://github.com/AroraShreshth/hackathonhunter/workflows/PythonCI/badge.svg)
+</div>
 
 ## About  💫
 
