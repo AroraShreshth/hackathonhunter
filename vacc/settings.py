@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     # 'center.apps.CenterConfig',
     # 'booking.apps.BookingConfig',
 
+    # External Applications
+    'rest_framework',
+    'phone_field'
 ]
 
 MIDDLEWARE = [

@@ -58,7 +58,8 @@ class Profile(BaseClass):
         ('XXL', 'XX Large'),
         ('XXXL', 'XXX Large'),
     )
-    shirt_size = models.CharField(max_length=4, choices=SHIRT_SIZES)
+    shirt_size = models.CharField(
+        max_length=4, choices=SHIRT_SIZES, blank=True)
 
     GENDER = (
         ('M', 'MALE'),
@@ -67,7 +68,7 @@ class Profile(BaseClass):
         ('P', 'Prefer Not To Say'),
         ('N', 'Non Binary,Gender Queer or gender non-confirming')
     )
-    shirt_size = models.CharField(max_length=1, choices=GENDER)
+    gender = models.CharField(max_length=1, choices=GENDER, blank=True)
 
     # Education
 
@@ -80,23 +81,27 @@ class Profile(BaseClass):
         ('High School', 'High School')
     )
 
-    degree_type = models.CharField(max_length=12, choices=DEGREE_TYPE)
-    institute = models.ForeignKey(Institute, on_delete=models.PROTECT)
-    field_of_study = models.ForeignKey(FieldofStudy, on_delete=models.PROTECT)
+    degree_type = models.CharField(
+        max_length=12, choices=DEGREE_TYPE, blank=True)
+    institute = models.ForeignKey(
+        Institute, on_delete=models.PROTECT, null=True, blank=True)
+    field_of_study = models.ForeignKey(
+        FieldofStudy, on_delete=models.PROTECT, null=True, blank=True)
 
-    grad_year = models.DateTimeField()
+    grad_year = models.DateTimeField(null=True, blank=True)
 
     # Experience
-    skill = models.ForeignKey(Skill, on_delete=models.PROTECT)
+    skill = models.ForeignKey(
+        Skill, on_delete=models.PROTECT, null=True, blank=True)
 
     def user_directory_path(instance, filename):
         return 'user_{0}/{1}'.format(instance.user.username, filename)
-    resume = models.FileField(upload_to=user_directory_path)
+    resume = models.FileField(upload_to=user_directory_path, blank=True)
     work_status = models.BooleanField(default=False)
 
     # contact
     phone = PhoneField(blank=True, help_text='Contact phone number')
-    address = models.CharField(max_length=300)
+    address = models.TextField(max_length=5000, null=True, blank=True)
 
     emergency_contact_name = models.CharField(blank=True, max_length=150)
     emergency_phone = PhoneField(blank=True, help_text='Contact phone number')
@@ -106,6 +111,9 @@ class Profile(BaseClass):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.user.username} '
 
 
 class Work(BaseClass):
@@ -118,7 +126,13 @@ class Work(BaseClass):
     description = models.TextField(null=True)
     url = models.URLField(blank=True)
 
+    def __str__(self):
+        return f'{self.profile.user.username} Work at {self.employer}'
+
 
 class Link(BaseClass):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     url = models.URLField()
+
+    def __str__(self):
+        return f'{self.profile.user.username} {self.url}'
