@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Institute, FieldofStudy, Skill, Profile, Work, Link
+from .models import Institute, FieldofStudy, Skill, Profile, Work, Link, Snippet
+
+admin.site.register(Snippet)
 
 
 @admin.register(Institute)

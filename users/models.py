@@ -13,7 +13,7 @@ from imagekit import ImageSpec
 class BaseClass(models.Model):
     id = models.UUIDField(
         primary_key=True,
-        default=uuid.uuid4(),
+        default=uuid.uuid4,
         editable=False)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -136,3 +136,8 @@ class Link(BaseClass):
 
     def __str__(self):
         return f'{self.profile.user.username} {self.url}'
+
+
+class Snippet(BaseClass):
+    title = models.CharField(max_length=150)
+    body = models.CharField(max_length=300)
