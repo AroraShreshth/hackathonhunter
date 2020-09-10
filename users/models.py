@@ -25,13 +25,22 @@ class BaseClass(models.Model):
 class Institute(BaseClass):
     name = models.CharField(max_length=300)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class FieldofStudy(BaseClass):
     name = models.CharField(max_length=300)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class Skill(BaseClass):
     name = models.CharField(max_length=300)
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Profile(BaseClass):
@@ -42,7 +51,8 @@ class Profile(BaseClass):
     published = models.BooleanField(default=True)
 
     # About User
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(
+        default='profile_pics/default.jpg', upload_to='profile_pics')
     bio = models.TextField(max_length=5000, null=True, blank=True)
 
     image_thumb = ImageSpecField(source='image',
@@ -96,7 +106,8 @@ class Profile(BaseClass):
 
     def user_directory_path(instance, filename):
         return 'user_{0}/{1}'.format(instance.user.username, filename)
-    resume = models.FileField(upload_to=user_directory_path, blank=True)
+
+    resume = models.FileField(upload_to='resume', blank=True)
     work_status = models.BooleanField(default=False)
 
     # contact
@@ -141,3 +152,6 @@ class Link(BaseClass):
 class Snippet(BaseClass):
     title = models.CharField(max_length=150)
     body = models.CharField(max_length=300)
+
+    def __str__(self):
+        return f'{self.title} : {self.body}'
