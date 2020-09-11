@@ -33,7 +33,7 @@ INSTALLED_APPS = [
 
     # Users Config
     'users.apps.UsersConfig',
-    # 'center.apps.CenterConfig',
+    'comp.apps.CompConfig',
     # 'booking.apps.BookingConfig',
 
     # External Applications
