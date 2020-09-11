@@ -12,6 +12,9 @@ class Location(BaseClass):
     state = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f'{self.city}'
+
 
 class Event(BaseClass):
     name = models.CharField(max_length=200)
@@ -19,7 +22,7 @@ class Event(BaseClass):
     description = models.TextField()
     slug = models.SlugField()
     start_date = models.DateTimeField()
-    end_date = models.DateField()
+    end_date = models.DateTimeField()
 
     # Types
     is_online = models.BooleanField(default=False)
@@ -45,29 +48,31 @@ class Event(BaseClass):
     # Location
     Location = models.ForeignKey(
         Location, null=True, blank=False, on_delete=models.PROTECT)
-    address = models.CharField(max_length=300)
-    longitute = models.DecimalField(blank=True, max_digits=8, decimal_places=3)
-    latitute = models.DecimalField(blank=True, max_digits=8, decimal_places=3)
+    address = models.CharField(max_length=300, blank=True)
+    longitute = models.DecimalField(
+        null=True, blank=True, max_digits=8, decimal_places=3)
+    latitute = models.DecimalField(
+        null=True, blank=True, max_digits=8, decimal_places=3)
 
     women_only = models.BooleanField(default=False)
     # participant stuff
-    approx_particpants = models.PositiveIntegerField()
+    approx_particpants = models.PositiveIntegerField(default=200)
 
-    team_size = models.SmallIntegerField()
-    team_min = models.SmallIntegerField()
+    team_size = models.SmallIntegerField(default=4)
+    team_min = models.SmallIntegerField(default=2)
 
     winner_announced = models.BooleanField(default=False)
 
     # Emails Time
-    reminder_email_sent_at = models.DateTimeField(blank=True)
-    rsvp_email_sent_at = models.DateTimeField(blank=True)
-    reminder_email_sent_at = models.DateTimeField(blank=True)
-    feedback_reminder_sent_at = models.DateTimeField(blank=True)
+    reminder_email_sent_at = models.DateTimeField(null=True, blank=True)
+    rsvp_email_sent_at = models.DateTimeField(null=True, blank=True)
+    reminder_email_sent_at = models.DateTimeField(null=True, blank=True)
+    feedback_reminder_sent_at = models.DateTimeField(null=True, blank=True)
 
     # Email Messgaes Content
-    not_accepeted_message = models.TextField()
-    waitlist_message = models.TextField()
-    accepted_message = models.TextField()
+    not_accepeted_message = models.TextField(blank=True)
+    waitlist_message = models.TextField(blank=True)
+    accepted_message = models.TextField(blank=True)
 
     # Links
     website = models.URLField(blank=True)
@@ -91,7 +96,7 @@ class Judge(BaseClass):
     position = models.CharField(max_length=200)
     company = models.CharField(max_length=100)
     link = models.URLField(blank=True)
-    detail = models.TextField(max_length=1000, null=True, blank=True)
+    detail = models.TextField(max_length=1000, blank=True)
     image = models.ImageField(
         default='judge_profile/default.jpg', upload_to='judge_profile')
 
@@ -105,7 +110,7 @@ class FAQ(BaseClass):
 class SponsorType(BaseClass):
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
     priority = models.SmallIntegerField()
-    size = models.SmallIntegerField(blank=True)
+    size = models.SmallIntegerField(null=True, blank=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -115,7 +120,7 @@ class SponsorType(BaseClass):
 class Sponsor(BaseClass):
     type = models.ForeignKey(SponsorType, on_delete=models.PROTECT)
     name = models.CharField(max_length=100)
-    detail = models.TextField(max_length=1000, null=True, blank=True)
+    detail = models.TextField(max_length=1000, blank=True)
     image = models.ImageField(
         default='profile_pics/default.jpg', upload_to='profile_pics')
     image_thumb = ImageSpecField(source='image',
