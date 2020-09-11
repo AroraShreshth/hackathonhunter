@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     # Users Config
     'users.apps.UsersConfig',
     'comp.apps.CompConfig',
-    # 'booking.apps.BookingConfig',
+    'appl.apps.ApplConfig',
 
     # External Applications
     'rest_framework',
