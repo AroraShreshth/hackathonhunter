@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Location, Event, Judge, FAQ, SponsorType, Sponsor, PrizeType, Prize
+from .models import Location, Event, Announcement, ApplicationQuestion, TimelineEvent, Judge, FAQ, SponsorType, Sponsor, PrizeType, Prize, EventMember, Feedback
 
 
 @admin.register(Location)
@@ -33,6 +33,7 @@ class EventAdmin(admin.ModelAdmin):
         'published',
         'verified',
         'official',
+        'is_team_comp',
         'image',
         'cover_image',
         'Location',
@@ -68,6 +69,7 @@ class EventAdmin(admin.ModelAdmin):
         'published',
         'verified',
         'official',
+        'is_team_comp',
         'Location',
         'women_only',
         'winner_announced',
@@ -80,6 +82,54 @@ class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['name']}
 
 
+@admin.register(Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'created_date',
+        'modified_date',
+        'event',
+        'content',
+    )
+    list_filter = ('created_date', 'modified_date', 'event')
+
+
+@admin.register(ApplicationQuestion)
+class ApplicationQuestionAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'created_date',
+        'modified_date',
+        'required',
+        'types',
+        'event',
+        'question',
+    )
+    list_filter = ('created_date', 'modified_date', 'required', 'event')
+
+
+@admin.register(TimelineEvent)
+class TimelineEventAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'created_date',
+        'modified_date',
+        'event',
+        'important',
+        'date',
+        'name',
+        'description',
+    )
+    list_filter = (
+        'created_date',
+        'modified_date',
+        'event',
+        'important',
+        'date',
+    )
+    search_fields = ('name',)
+
+
 @admin.register(Judge)
 class JudgeAdmin(admin.ModelAdmin):
     list_display = (
@@ -87,6 +137,7 @@ class JudgeAdmin(admin.ModelAdmin):
         'created_date',
         'modified_date',
         'event',
+        'user',
         'only_speaker',
         'name',
         'position',
@@ -95,7 +146,13 @@ class JudgeAdmin(admin.ModelAdmin):
         'detail',
         'image',
     )
-    list_filter = ('created_date', 'modified_date', 'event', 'only_speaker')
+    list_filter = (
+        'created_date',
+        'modified_date',
+        'event',
+        'user',
+        'only_speaker',
+    )
     search_fields = ('name',)
 
 
@@ -166,6 +223,49 @@ class PrizeAdmin(admin.ModelAdmin):
         'type',
         'name',
         'value',
+        'awarded_to',
     )
-    list_filter = ('created_date', 'modified_date', 'type')
+    list_filter = ('created_date', 'modified_date', 'type', 'awarded_to')
     search_fields = ('name',)
+
+
+@admin.register(EventMember)
+class EventMemberAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'created_date',
+        'modified_date',
+        'user',
+        'event',
+        'roll_name',
+        'public',
+        'overview',
+        'review',
+        'volunteer',
+        'admin',
+        'feedback',
+    )
+    list_filter = (
+        'created_date',
+        'modified_date',
+        'user',
+        'event',
+        'public',
+        'overview',
+        'review',
+        'volunteer',
+        'admin',
+        'feedback',
+    )
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'created_date',
+        'modified_date',
+        'event',
+        'question',
+    )
+    list_filter = ('created_date', 'modified_date', 'event')

@@ -27,9 +27,10 @@ class Event(BaseClass):
     # Types
     is_online = models.BooleanField(default=False)
     published = models.BooleanField(default=False)
-    verified = models.BooleanField(default=True)
+    verified = models.BooleanField(default=False)
     official = models.BooleanField(default=False)
     women_only = models.BooleanField(default=False)
+    is_team_comp = models.BooleanField(default=True)
 
     # Image Data
     image = models.ImageField(
@@ -89,8 +90,46 @@ class Event(BaseClass):
         return f'{self.name}'
 
 
+class Announcement(BaseClass):
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    content = models.TextField()
+
+    def __str__(self):
+        return f'{self.content}'
+
+
+class ApplicationQuestion(BaseClass):
+    """
+        Application Question
+    """
+    TYPES = (
+        ('File', 'File'),
+        ('Text', 'Text'),
+        ('Boolean', 'Boolean')
+    )
+    required = models.BooleanField(default=True)
+    types = models.CharField(choices=TYPES, default='Text', max_length=10)
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    question = models.CharField(max_length=500)
+
+    def __str__(self):
+        return f'{self.question}'
+
+
+class TimelineEvent(BaseClass):
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    important = models.BooleanField(default=False)
+    date = models.DateTimeField()
+    name = models.CharField(max_length=300)
+    description = models.CharField(max_length=500)
+
+    def __str__(self):
+        return f'{self.name} {self.event.name} {self.date}'
+
+
 class Judge(BaseClass):
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     only_speaker = models.BooleanField(default=False)
     name = models.CharField(max_length=150)
     position = models.CharField(max_length=200)
@@ -143,9 +182,47 @@ class PrizeType(BaseClass):
 
 
 class Prize(BaseClass):
+    """
+     Prizes Data and Type 
+    """
     type = models.ForeignKey(PrizeType, on_delete=models.PROTECT)
     name = models.CharField(max_length=200)
     value = models.CharField(max_length=200, blank=True)
+    # Result Decleration
+    awarded_to = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
+
+
+class EventMember(BaseClass):
+    """
+        Add Memebers to manage functionality provided in the organise section of the application
+    """
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    roll_name = models.CharField(max_length=200)
+
+    public = models.BooleanField(default=True)
+
+    overview = models.BooleanField(default=False)
+    review = models.BooleanField(default=False)
+    volunteer = models.BooleanField(default=False)
+    #logistics = models.BooleanField(default=False)
+    admin = models.BooleanField(default=False)
+    feedback = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.user.username} {self.event.name}'
+
+
+class Feedback(BaseClass):
+    """
+        Create Feedback Question 
+    """
+    event = models.ForeignKey(Event, on_delete=models.PROTECT)
+    question = models.CharField(max_length=500)
+
+    def __str__(self):
+        return f'{self.question}'
+
 
 # Models Left to make
 #  1. App (Application)(Status Making)
@@ -157,11 +234,8 @@ class Prize(BaseClass):
 #       e. Applied
 #       f. checkedin
 #  Model Logger for all above Events
-#  Create Email Field for Judge description for mailing
 #  ( log all emails on DB )
-#
 #  4. EventTeam and Access Control with Role Access
 #  5. AppTeam (w/ Option to reject individual Memebers )
 #  2. Projects/Submissions Models
 #  3. Feedback Model Logic
-#
