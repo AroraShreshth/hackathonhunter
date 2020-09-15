@@ -38,7 +38,9 @@ INSTALLED_APPS = [
 
     # External Applications
     'rest_framework',
-    'phone_field'
+    'phone_field',
+    'markdownx',
+
 ]
 
 MIDDLEWARE = [
