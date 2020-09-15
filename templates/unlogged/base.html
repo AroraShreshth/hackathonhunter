@@ -1,22 +1,40 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% if title%}
+    <title>{{ website_name }} - {{title}}</title>
+    {% else %}
+    <title>{{website_name }}</title>
+    {% endif %}
+
+  </head>
+  <head>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
   </head>
   <body>
+  {% include 'unlogged/_navbar.html' %}
   <section class="section">
     <div class="container">
       <h1 class="title">
         Hello World
       </h1>
       <p class="subtitle">
-        My first website with <strong>Bulma</strong>!
+       Welcome to {{ website_name }}
       </p>
     </div>
   </section>
+  {% include 'unlogged/_footer.html' %}
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </body>
 </html>

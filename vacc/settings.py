@@ -131,6 +131,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# Login Stuff
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'home'
+PASSWORD_RESET_TIMEOUT_DAYS = 1
+
 # Django Toolbar
 MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 INSTALLED_APPS += ['debug_toolbar', ]
@@ -144,6 +150,10 @@ INTERNAL_IPS = ['127.0.0.1', 'localhost']
 # Django Extensions
 INSTALLED_APPS += ['django_extensions', ]
 
+# Captcha System
+INSTALLED_APPS += ['captcha', ]
+RECAPTCHA_PUBLIC_KEY = '6LczbcwZAAAAAM0xlmQzIErz9fE5-z6V1tCD_Gx2'
+RECAPTCHA_PRIVATE_KEY = '6LczbcwZAAAAAJvY4Hr6moDw6n05neq0jyXE0KQ3'
 
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
