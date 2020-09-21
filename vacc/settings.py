@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'phone_field',
     'markdownx',
+    'crispy_forms',
 
 ]
 
