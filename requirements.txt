@@ -18,6 +18,7 @@ django-phone-field==1.8.1
 django-recaptcha==2.0.6
 django-six==1.0.4
 djangorestframework==3.11.1
+docutils==0.16
 graphene==2.1.8
 graphene-django==2.13.0
 graphql-core==2.3.2
