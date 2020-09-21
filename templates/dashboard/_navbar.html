@@ -1,0 +1,102 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href={% url 'home'%}>
+        {% comment %} <h1> <strong> Amiyo </strong> </h1> {% endcomment %}
+      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"> 
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasic" class="navbar-menu">
+    <div class="navbar-start ">
+    <div class="buttons">
+    
+     <button class=" navbar-item button is-medium is-white mt-5">
+        <span class="icon has-text-link">
+            <i class="fas fa-seedling"></i>
+        </span>
+        <div class='p-2'>
+            Competitions Happening 
+        </div>
+     </button>
+     <button class=" navbar-item button is-medium is-white mt-5">
+        <span class="icon has-text-link">
+            <i class="fas fa-users"></i>
+        </span>
+        <div class='p-2'>
+            About
+        </div> 
+    </button>
+    </div>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+{% comment %}         
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item">
+            About
+          </a>
+          <a class="navbar-item">
+            Jobs
+          </a>
+          <a class="navbar-item">
+            Contact
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item">
+            Report an issue
+          </a>
+        </div> {% endcomment %}
+
+      </div>
+      
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+        <a class="button is-medium is-danger" >
+         <span class="icon has-text-warning">
+            <i class="fas fa-star"></i>
+            </span>
+            <div class='p-2'>
+                <strong> Organize Competiton </strong>
+            </div>   
+          </a>
+          <a class="button is-medium is-primary" href={% url 'register' %}>
+            <span class="icon has-text-info">
+            <i class="fas fa-fingerprint"></i>
+            </span>
+            <div class='p-2'>
+            <strong>Register </strong>
+            </div>
+          </a>
+          <a class="button is-medium is-warning " href={% url 'login' %}>
+            <span class="icon has-text-danger">
+            <i class="fas fa-key"></i>
+            </span>
+            <div class='p-2 '>
+           <strong> Log in </strong>
+           </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+
+</script>
+
+<style>
+
+</style>

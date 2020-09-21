@@ -11,6 +11,7 @@ urlpatterns = [
                                                 template_name='unlogged/login.html'), name='login'),
 
     path('logout/', auth_views.LogoutView.as_view(template_name='unlogged/logout.html'), name='logout'),
+    path('dashboard/', user_views.DashBoard.as_view(), name='dashboard-home'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='unlogged/password_reset.html'),

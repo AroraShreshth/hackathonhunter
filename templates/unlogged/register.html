@@ -1,0 +1,23 @@
+{% extends "unlogged/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-6">Join Today 😜</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-primary" type="submit">Sign Up 🔑</button>
+                 <small> By Clicking on the Sign UP button you accept the <a href="#">Terms and Conditons</small>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In 🔓</a>
+               
+            </small>
+        </div>
+    </div>
+{% endblock content %}

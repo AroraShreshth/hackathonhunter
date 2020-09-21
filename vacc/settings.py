@@ -116,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -135,7 +135,7 @@ MEDIA_URL = '/media/'
 
 # Login Stuff
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'dashboard-home'
 LOGOUT_REDIRECT_URL = 'home'
 PASSWORD_RESET_TIMEOUT_DAYS = 1
 

@@ -9,15 +9,18 @@ from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
+    TemplateView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from users.models import Snippet, Profile
 
+website_name = 'Competion Hunter'
+
 
 def homepage(request):
-    return render(request, 'unlogged/base.html')
+    return render(request, 'unlogged/index.html', {'website_name': website_name})
 
 
 def register(request):
@@ -99,3 +102,8 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['snippet'] = Snippet.objects.order_by('?').first()
         return context
+
+
+class DashBoard(LoginRequiredMixin, TemplateView):
+
+    template_name = 'dashboard/home.html'

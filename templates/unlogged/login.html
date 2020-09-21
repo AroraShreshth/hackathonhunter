@@ -1,0 +1,27 @@
+{% extends "unlogged/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Login 🙌🏻</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                
+                <button class="btn btn-primary" type="submit">Login 🔓</button>
+                <small> By Clicking on the Login link you accept the <a href="#">Usage Policy </small>
+            </div>
+        </form>
+        <div class="border-top pt-3 ">
+            <div class="col-md-12">
+            <a href={% url 'password_reset' %} ><button class="btn btn-outline-primary" >Forgot My Password 🤔</button></a>
+            
+            <small class="text-muted" style="float: right;">
+                Don't Have An Account? <a class="ml-2" href="{% url 'register' %}">Register 🔑 </a>
+            </small>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
