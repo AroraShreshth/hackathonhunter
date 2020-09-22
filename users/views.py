@@ -14,12 +14,32 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from users.models import Snippet, Profile
-
+from django.contrib.auth import views as auth_views
 website_name = 'Competion Hunter'
 
 
 def homepage(request):
-    return render(request, 'unlogged/index.html', {'website_name': website_name})
+    return render(request, 'unlogged/index.html', {'title': '', 'website_name': website_name})
+
+
+class About(TemplateView):
+    template_name = 'unlogged/about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'About'
+        return context
+
+
+class Explore(TemplateView):
+    template_name = 'unlogged/explore.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'About'
+        return context
 
 
 def register(request):
@@ -36,7 +56,18 @@ def register(request):
         if request.user.is_authenticated:
             return redirect('dashboard-home')
         form = UserRegisterForm()
-    return render(request, 'unlogged/register.html', {'form': form})
+    return render(request, 'unlogged/register.html', {'website_name': website_name, 'title': 'Register', 'form': form})
+
+
+class NewLoginView(auth_views.LoginView):
+    template_name = 'unlogged/login.html'
+    redirect_authenticated_user = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Login'
+        return context
 
 
 @login_required
@@ -58,27 +89,12 @@ def profile(request):
 
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'website_name': website_name,
+        'title': 'Profile',
     }
 
     return render(request, 'user/profile_update.html', context)
-
-
-def indexpage(request):
-    context = {
-        'title': 'Welcome',
-        'snippet': Snippet.objects.order_by('?').first()
-    }
-    return render(request, 'unlogged/index.html', context)
-
-
-def aboutpage(request):
-
-    context = {
-        'title': 'About',
-        'snippet': Snippet.objects.order_by('?').first()
-    }
-    return render(request, 'unlogged/index.html', context)
 
 
 class UserListView(LoginRequiredMixin, ListView):
@@ -91,6 +107,7 @@ class UserListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['snippet'] = Snippet.objects.order_by('?')
         context['search_form'] = self.form
+        context['website_name'] = website_name
         return context
 
 
@@ -103,6 +120,8 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         profile = self.get_object()
         context = super().get_context_data(**kwargs)
         context['snippet'] = Snippet.objects.order_by('?').first()
+        context['website_name'] = website_name
+
         return context
 
 

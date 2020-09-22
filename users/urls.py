@@ -7,11 +7,11 @@ urlpatterns = [
     path('', user_views.homepage, name='home'),
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
-    path('login/', auth_views.LoginView.as_view(redirect_authenticated_user=True,
-                                                template_name='unlogged/login.html'), name='login'),
-
+    path('login/', user_views.NewLoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='unlogged/logout.html'), name='logout'),
     path('dashboard/', user_views.DashBoard.as_view(), name='dashboard-home'),
+    path('about/', user_views.About.as_view(), name='about'),
+    path('explore/', user_views.Explore.as_view(), name='explore'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='unlogged/password_reset.html'),
