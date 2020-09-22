@@ -6,15 +6,17 @@ from .router import router
 from django.conf.urls.static import static
 from markdownx import urls as markdownx
 from django.contrib.auth import views as auth_views
+from .settings import website_name
 # Admin.py Stuff
-admin.site.site_header = 'Competiton Hunter Admin'
-admin.site.site_title = 'Competiton Hunter Admin'
-admin.site.index_title = 'Competiton Hunter System Administration'
+admin.site.site_header = f'{website_name} Admin'
+admin.site.site_title = f'{website_name} Admin'
+admin.site.index_title = f'{website_name} System Administration'
 
 urlpatterns = [
     path('', include('users.urls')),
     path('admin/', admin.site.urls),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
+    path('comp/', include('comp.urls')),
     path('admin/password_reset/', auth_views.PasswordResetView.as_view(),
          name='admin_password_reset',
          ),

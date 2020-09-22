@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from users.models import Snippet, Profile
 from django.contrib.auth import views as auth_views
-website_name = 'Competion Hunter'
+from vacc.settings import website_name
 
 
 def homepage(request):

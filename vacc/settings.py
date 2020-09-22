@@ -19,7 +19,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+website_name = 'Competiton Hunter'
 # Application definition
 
 INSTALLED_APPS = [
