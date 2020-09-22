@@ -63,14 +63,17 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-        <a class="button is-medium is-danger" >
-         <span class="icon has-text-warning">
+          
+          <a class="button is-medium is-danger" >
+            <span class="icon has-text-warning">
             <i class="fas fa-star"></i>
             </span>
             <div class='p-2'>
                 <strong> Organize Competiton </strong>
             </div>   
           </a>
+          
+          {% if not user.is_authenticated %}
           <a class="button is-medium is-primary" href={% url 'register' %}>
             <span class="icon has-text-info">
             <i class="fas fa-fingerprint"></i>
@@ -79,12 +82,22 @@
             <strong>Register </strong>
             </div>
           </a>
+          {% endif %}
+
           <a class="button is-medium is-warning " href={% url 'login' %}>
+          {% if user.is_authenticated %}
+           <span class="icon has-text-danger">
+            <i class="fas fa-tachometer-alt"></i>
+            </span>
+            <div class='p-2 '>
+           <strong> Dashboard </strong>
+           {% else %}
             <span class="icon has-text-danger">
             <i class="fas fa-key"></i>
             </span>
             <div class='p-2 '>
            <strong> Log in </strong>
+           {% endif %}
            </div>
           </a>
         </div>

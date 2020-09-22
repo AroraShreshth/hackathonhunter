@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -24,6 +23,7 @@ def homepage(request):
 
 
 def register(request):
+
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -33,6 +33,8 @@ def register(request):
                 request, f'Your account has been created! You are now able to log in')
             return redirect('login')
     else:
+        if request.user.is_authenticated:
+            return redirect('dashboard-home')
         form = UserRegisterForm()
     return render(request, 'unlogged/register.html', {'form': form})
 
