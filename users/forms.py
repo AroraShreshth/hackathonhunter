@@ -7,7 +7,28 @@ from captcha.widgets import ReCaptchaV3
 
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
+    email = forms.EmailField(
+        # widget=forms.TextInput(attrs={
+        #     'class': 'input',
+        #     'placeholder': 'e.g. awesome'
+        # }
+        # )
+    )
+
+    # username = forms.CharField(
+    #     widget=forms.TextInput(attrs={
+    #         'class': 'input',
+    #         'autofocus': True,
+    #         'placeholder': 'Username'
+    #     }
+    #     ))
+    # password = forms.CharField(
+    #     widget=forms.PasswordInput(attrs={
+    #         'class': 'input',
+    #         'placeholder': '*******'
+    #     }
+    #     ))
+
     captcha = ReCaptchaField(
         widget=ReCaptchaV3(
             attrs={
@@ -18,8 +39,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name',
-                  'last_name', 'password1', 'password2', 'captcha']
+        fields = ['username', 'email',  'password1', 'password2']
 
 
 class UserUpdateForm(forms.ModelForm):
