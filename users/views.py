@@ -22,6 +22,26 @@ def homepage(request):
     return render(request, 'unlogged/index.html', {'title': '', 'website_name': website_name})
 
 
+class PrivacyPolicy(TemplateView):
+    template_name = 'unlogged/privacy-policy.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Privacy Policy'
+        return context
+
+
+class TermsofService(TemplateView):
+    template_name = 'unlogged/terms-of-service.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Terms of Service'
+        return context
+
+
 class About(TemplateView):
     template_name = 'unlogged/about.html'
 
@@ -121,10 +141,8 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['snippet'] = Snippet.objects.order_by('?').first()
         context['website_name'] = website_name
-
         return context
 
 
 class DashBoard(LoginRequiredMixin, TemplateView):
-
     template_name = 'dashboard/home.html'

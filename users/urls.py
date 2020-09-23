@@ -12,6 +12,10 @@ urlpatterns = [
     path('dashboard/', user_views.DashBoard.as_view(), name='dashboard-home'),
     path('about/', user_views.About.as_view(), name='about'),
     path('explore/', user_views.Explore.as_view(), name='explore'),
+    path('terms-of-service/', user_views.TermsofService.as_view(),
+         name='terms-of-service'),
+    path('privacy-policy/', user_views.PrivacyPolicy.as_view(),
+         name='privacy-policy'),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='unlogged/password_reset.html'),
