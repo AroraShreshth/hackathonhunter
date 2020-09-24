@@ -59,6 +59,27 @@ class NameForm(forms.ModelForm):
         fields = ['first_name', 'last_name']
 
 
+class ProfileGTForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ['gender', 'shirt_size']
+
+
+class ProfileBioForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['bio']
+
+
+class ProfileEducationForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ['no_formal_education', 'degree_type',
+                  'grad_year', 'field_of_study']
+
+
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
