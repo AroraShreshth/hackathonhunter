@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, SearchForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, SearchForm, NameForm
 from django.views.generic import (
     View,
     ListView,
@@ -118,6 +118,39 @@ def profile(request):
     return render(request, 'user/profile_update.html', context)
 
 
+@login_required
+def welcome(request):
+    context = {
+        'website_name': website_name,
+        'title': 'Welcome',
+        'name_form': NameForm
+    }
+
+    if request.method == 'POST':
+        name_form = NameForm(request.POST, instance=request.user)
+
+        if name_form.is_valid():
+            name_form.save()
+            messages.success(
+                request, f'{request.user.username} Name Details Saved !')
+            return render(request, 'dashboard/welcome.html', context)
+    else:
+
+        return render(request, 'dashboard/welcome.html', context)
+
+
+class Welcome(LoginRequiredMixin, TemplateView):
+    name_form = NameForm
+    template_name = 'dashboard/welcome.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['name_form'] = NameForm
+        context['title'] = 'Welcome'
+        return context
+
+
 class UserListView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'user/user_list.html'
@@ -170,14 +203,4 @@ class DashBoard(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['website_name'] = website_name
         context['title'] = 'Dashboard'
-        return context
-
-
-class Welcome(LoginRequiredMixin, TemplateView):
-    template_name = 'dashboard/welcome.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['website_name'] = website_name
-        context['title'] = 'Welcome'
         return context

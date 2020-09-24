@@ -43,11 +43,20 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField(disabled=True)
+    email = forms.EmailField()
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', ]
+        fields = ['username', 'email']
+
+
+class NameForm(forms.ModelForm):
+    first_name = forms.CharField(min_length=3)
+    last_name = forms.CharField(min_length=3)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
 
 
 class ProfileUpdateForm(forms.ModelForm):

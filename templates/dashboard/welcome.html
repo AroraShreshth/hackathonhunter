@@ -15,7 +15,7 @@
     </div>
   </section>
 
-  <section class="section" >
+<section class="section" >
   <div class="tile is-ancestor px-3">
   <div class="tile is-vertical is-8">
     <div class="tile">
@@ -23,6 +23,9 @@
         <article class="tile is-child notification is-primary">
           <p class="title">Let's Begin</p>
           <p class="subtitle">We would like to know more about you ! </p>
+           <figure class="image is-4by3">
+            <img src="{% static 'images/abstract-list-is-empty.png' %}">
+          </figure>
         </article>
         <article class="tile is-child notification is-warning">
           <p class="title">...tiles</p>
@@ -30,12 +33,17 @@
         </article>
       </div>
       <div class="tile is-parent">
-        <article class="tile is-child notification is-info">
-          <p class="title">Middle tile</p>
-          <p class="subtitle">With an image</p>
-          <figure class="image is-4by3">
-            <img src="{% static 'images/abstract-list-is-empty.png' %}">
-          </figure>
+        <article class="tile is-child notification is-link">
+          <p class="title">Your Details Please</p>
+         <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ name_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn is-danger" type="submit">Submit</button>
+            </div>
+        </form>
         </article>
       </div>
     </div>
