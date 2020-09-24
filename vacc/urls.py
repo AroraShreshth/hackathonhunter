@@ -11,7 +11,8 @@ from .settings import website_name
 admin.site.site_header = f'{website_name} Admin'
 admin.site.site_title = f'{website_name} Admin'
 admin.site.index_title = f'{website_name} System Administration'
-
+admin.autodiscover()
+admin.site.enable_nav_sidebar = False
 urlpatterns = [
     path('', include('users.urls')),
     path('admin/', admin.site.urls),
@@ -49,3 +50,5 @@ if settings.DEBUG:
     # Media Data
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)

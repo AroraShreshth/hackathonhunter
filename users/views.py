@@ -162,7 +162,6 @@ class DashBoard(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        print(request.user)
         if not request.user.profile.setup:
             return redirect('dashboard-welcome')
         return self.render_to_response(context)
