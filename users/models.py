@@ -49,7 +49,7 @@ class Profile(BaseClass):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     isverified = models.BooleanField(default=False)
     published = models.BooleanField(default=True)
-
+    setup = models.BooleanField(default=False)
     # About User
     image = models.ImageField(
         default='profile_pics/default.jpg', upload_to='profile_pics')

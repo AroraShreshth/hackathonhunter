@@ -12,6 +12,7 @@ urlpatterns = [
     path('dashboard/', user_views.DashBoard.as_view(), name='dashboard-home'),
     path('about/', user_views.About.as_view(), name='about'),
     path('explore/', user_views.Explore.as_view(), name='explore'),
+    path('welcome/', user_views.Welcome.as_view(), name='dashboard-welcome'),
     path('terms-of-service/', user_views.TermsofService.as_view(),
          name='terms-of-service'),
     path('privacy-policy/', user_views.PrivacyPolicy.as_view(),

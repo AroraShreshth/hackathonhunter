@@ -11,6 +11,7 @@ from django.views.generic import (
     DeleteView,
     TemplateView
 )
+from django.views.generic.base import RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from users.models import Snippet, Profile
@@ -144,5 +145,40 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
+# @login_required
+# def DashBoard(request):
+#     context = {
+#         'website_name': website_name,
+#         'title': 'Dashboard',
+#     }
+#     if not request.user.profile.setup:
+#         return redirect('dashboard-welcome')
+#     else:
+#         return render(request, 'dashboard/home.html', context)
+
+
 class DashBoard(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/home.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        print(request.user)
+        if not request.user.profile.setup:
+            return redirect('dashboard-welcome')
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Dashboard'
+        return context
+
+
+class Welcome(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/welcome.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Welcome'
+        return context
