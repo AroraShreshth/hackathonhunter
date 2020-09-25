@@ -68,7 +68,7 @@ class Profile(BaseClass):
                                  processors=[ResizeToFill(150, 150)],
                                  format='JPEG',
                                  options={'quality': 80})
-    dob = models.DateField(null=True)
+    dob = models.DateField(null=True, blank=True)
     mail_otp = models.PositiveBigIntegerField(
         default=random_no)
     phone_otp = models.PositiveBigIntegerField(

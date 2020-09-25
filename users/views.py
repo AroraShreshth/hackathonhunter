@@ -261,7 +261,10 @@ def VerifyEmail(request):
                 return render(request, 'dashboard/profile_email_verify.html', context)
     else:
         if profile.mail_is_verified == False:
-            profile.send_verification_email()
+            if profile.verification_mail_sent == False:
+                profile.verification_mail_sent = True
+                profile.send_verification_email()
+                profile.save()
             return render(request, 'dashboard/profile_email_verify.html', context)
         else:
             return redirect('dashboard-home')
