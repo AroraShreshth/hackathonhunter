@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, SearchForm, NameForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, SearchForm, NameForm, EmailVerifyForm
 from django.views.generic import (
     View,
     ListView,
@@ -17,6 +17,7 @@ from django.contrib.auth.models import User
 from users.models import Snippet, Profile
 from django.contrib.auth import views as auth_views
 from vacc.settings import website_name
+from django.core.mail import send_mail
 
 
 def homepage(request):
@@ -204,3 +205,43 @@ class DashBoard(LoginRequiredMixin, TemplateView):
         context['website_name'] = website_name
         context['title'] = 'Dashboard'
         return context
+
+
+@login_required
+def VerifyEmail(request):
+
+    context = {
+        'website_name': website_name,
+        'title': 'Verify Email',
+        'form': EmailVerifyForm
+    }
+
+    profile = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        ∂
+        form = EmailVerifyForm(request.POST)
+
+        if profile.mail_is_verified == True:
+            profile.send_verification_email()
+            return render(request, 'dashboard/profile_email_verify.html', context)
+
+        if form.is_valid():
+            request.user.profile.mail_is_verified == True
+            print(request.POST.get('OTP'))
+            print(request.user.profile.mail_otp)
+            if int(request.POST.get('OTP')) == int(request.user.profile.mail_otp):
+                profile.mail_is_verified = True
+                profile.save()
+                messages.success(
+                    request, f' Hey, {request.user.username} your email has been verfied successfully !')
+                return redirect('dashboard-home')
+            else:
+                messages.error(
+                    request, f' OOPS! {request.user.username} OTP provided is incorrect !')
+                return render(request, 'dashboard/profile_email_verify.html', context)
+    else:
+        if profile.mail_is_verified == False:
+            profile.send_verification_email()
+            return render(request, 'dashboard/profile_email_verify.html', context)
+        else:
+            return redirect('dashboard-home')

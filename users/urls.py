@@ -13,6 +13,8 @@ urlpatterns = [
     path('about/', user_views.About.as_view(), name='about'),
     path('explore/', user_views.Explore.as_view(), name='explore'),
     path('welcome/', user_views.welcome, name='dashboard-welcome'),
+    path('profile/verifyemail/', user_views.VerifyEmail,
+         name='dashboard-profile-verify-email'),
     path('terms-of-service/', user_views.TermsofService.as_view(),
          name='terms-of-service'),
     path('privacy-policy/', user_views.PrivacyPolicy.as_view(),

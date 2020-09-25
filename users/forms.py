@@ -91,3 +91,11 @@ class SearchForm(forms.ModelForm):
 
     class Meta:
         fields = ['query']
+
+
+class EmailVerifyForm(forms.Form):
+    OTP = forms.CharField(
+        max_length=6,
+        min_length=6,
+        widget=forms.TextInput(attrs={'type': 'number'})
+    )

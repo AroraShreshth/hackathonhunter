@@ -5,9 +5,16 @@ from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.mail import send_mail
 import uuid
+import random
+from django.core.mail import send_mail
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from imagekit import ImageSpec
+from vacc.settings import website_name, EMAIL_HOST_USER
+
+
+def random_no():
+    return random.randint(120930, 999999)
 
 
 class BaseClass(models.Model):
@@ -47,7 +54,8 @@ class Profile(BaseClass):
 
     # Logical Stuff
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    isverified = models.BooleanField(default=False)
+    mail_is_verified = models.BooleanField(default=False)
+    phone_is_verified = models.BooleanField(default=False)
     published = models.BooleanField(default=True)
     setup = models.BooleanField(default=False)
     # About User
@@ -59,6 +67,12 @@ class Profile(BaseClass):
                                  processors=[ResizeToFill(150, 150)],
                                  format='JPEG',
                                  options={'quality': 80})
+
+    mail_otp = models.PositiveBigIntegerField(
+        default=random_no)
+    phone_otp = models.PositiveBigIntegerField(
+        default=random_no)
+
     SHIRT_SIZES = (
         ('XS', 'Extra Small'),
         ('S', 'Small'),
@@ -97,7 +111,6 @@ class Profile(BaseClass):
         Institute, on_delete=models.PROTECT, null=True, blank=True)
     field_of_study = models.ForeignKey(
         FieldofStudy, on_delete=models.PROTECT, null=True, blank=True)
-
     grad_year = models.DateTimeField(null=True, blank=True)
 
     # Experience
@@ -117,8 +130,17 @@ class Profile(BaseClass):
     emergency_contact_name = models.CharField(blank=True, max_length=150)
     emergency_phone = PhoneField(blank=True, help_text='Contact phone number')
 
-    def __str__(self):
-        return f'{self.user.username}'
+    def send_verification_email(self):
+        send_mail(
+            f'Hey! Here is your {website_name} Email Verification Token',
+            f' {self.mail_otp} is your Token for {website_name}',
+            EMAIL_HOST_USER,
+            [self.user.email],
+            fail_silently=False,
+        )
+
+    def send_verification_SMS(self):
+        message = f'Hey! Here is your {website_name} Mobile Verification Token {self.phone_otp}'
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

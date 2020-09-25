@@ -31,10 +31,9 @@ class SkillAdmin(admin.ModelAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'created_date',
-        'modified_date',
         'user',
-        'isverified',
+        'mail_is_verified',
+        'phone_is_verified',
         'published',
         'image',
         'bio',
@@ -55,8 +54,6 @@ class ProfileAdmin(admin.ModelAdmin):
     list_filter = (
         'created_date',
         'modified_date',
-        'user',
-        'isverified',
         'published',
         'no_formal_education',
         'institute',
@@ -65,6 +62,8 @@ class ProfileAdmin(admin.ModelAdmin):
         'skill',
         'work_status',
     )
+    readonly_fields = ('phone_otp', 'mail_otp', 'created_date',
+                       'modified_date')
 
 
 @admin.register(Work)
