@@ -74,10 +74,20 @@ class ProfileGTForm(forms.ModelForm):
         fields = ['gender', 'shirt_size']
 
 
-class ProfileBioForm(forms.ModelForm):
+class ProfileAboutForm(forms.ModelForm):
+    bio = forms.CharField(
+        max_length=500,
+        min_length=20,
+        label='Tell Us About Yourself',
+        widget=forms.Textarea
+    )
+
     class Meta:
         model = Profile
-        fields = ['bio']
+        fields = ['bio', 'image', 'gender']
+        labels = {
+            'image': 'Profile Photo'
+        }
 
 
 class ProfileEducationForm(forms.ModelForm):

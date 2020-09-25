@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, SearchForm, NameForm, EmailVerifyForm
+from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
+                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm)
 from django.views.generic import (
     View,
     ListView,
@@ -120,10 +121,36 @@ def profile(request):
 
 
 @login_required
+def welcome_about(request):
+    context = {
+        'website_name': website_name,
+        'title': 'Welcome - Bio',
+        'form': ProfileAboutForm
+    }
+    if request.method == 'POST':
+        print('POST')
+        form = ProfileAboutForm(
+            request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            print('POST')
+            form.save()
+            messages.success(
+                request, f'{request.user.username} Your About Details Saved !')
+            return redirect('welcome-email-verify')
+
+    else:
+        if request.user.profile.setup:
+            return redirect('dashboard-home')
+        if request.user.profile.bio:
+            return redirect('welcome-email-verify')
+        return render(request, 'dashboard/welcome_about.html', context)
+
+
+@login_required
 def welcome(request):
     context = {
         'website_name': website_name,
-        'title': 'Welcome',
+        'title': 'Welcome - Name',
         'name_form': NameForm
     }
 
@@ -134,22 +161,14 @@ def welcome(request):
             name_form.save()
             messages.success(
                 request, f'{request.user.username} Name Details Saved !')
-            return render(request, 'dashboard/welcome.html', context)
+            return redirect('welcome-about')
+
     else:
-
+        if request.user.profile.setup:
+            return redirect('dashboard-home')
+        if len(request.user.first_name) or len(request.user.last_name):
+            return redirect('welcome-about')
         return render(request, 'dashboard/welcome.html', context)
-
-
-class Welcome(LoginRequiredMixin, TemplateView):
-    name_form = NameForm
-    template_name = 'dashboard/welcome.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['website_name'] = website_name
-        context['name_form'] = NameForm
-        context['title'] = 'Welcome'
-        return context
 
 
 class UserListView(LoginRequiredMixin, ListView):
@@ -212,7 +231,7 @@ def VerifyEmail(request):
 
     context = {
         'website_name': website_name,
-        'title': 'Verify Email',
+        'title': 'Welcome - Verify Email',
         'form': EmailVerifyForm
     }
 
@@ -231,6 +250,7 @@ def VerifyEmail(request):
             print(request.user.profile.mail_otp)
             if int(request.POST.get('OTP')) == int(request.user.profile.mail_otp):
                 profile.mail_is_verified = True
+                profile.setup = True
                 profile.save()
                 messages.success(
                     request, f' Hey, {request.user.username} your email has been verfied successfully !')

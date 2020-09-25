@@ -56,6 +56,7 @@ class Profile(BaseClass):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     mail_is_verified = models.BooleanField(default=False)
     phone_is_verified = models.BooleanField(default=False)
+    verification_mail_sent = models.BooleanField(default=False)
     published = models.BooleanField(default=True)
     setup = models.BooleanField(default=False)
     # About User
@@ -67,7 +68,7 @@ class Profile(BaseClass):
                                  processors=[ResizeToFill(150, 150)],
                                  format='JPEG',
                                  options={'quality': 80})
-
+    dob = models.DateField(null=True)
     mail_otp = models.PositiveBigIntegerField(
         default=random_no)
     phone_otp = models.PositiveBigIntegerField(
