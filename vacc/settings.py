@@ -157,6 +157,15 @@ INSTALLED_APPS += ['captcha', ]
 RECAPTCHA_PUBLIC_KEY = '6LczbcwZAAAAAM0xlmQzIErz9fE5-z6V1tCD_Gx2'
 RECAPTCHA_PRIVATE_KEY = '6LczbcwZAAAAAJvY4Hr6moDw6n05neq0jyXE0KQ3'
 
+
+# Email Setup
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "competitionhunternoreply@gmail.com"
+EMAIL_HOST_PASSWORD = "Ysm3'U;?B"
+
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
         'default': {
