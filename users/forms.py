@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 from .models import Profile, Snippet
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
@@ -28,6 +29,13 @@ class UserRegisterForm(UserCreationForm):
     #         'placeholder': '*******'
     #     }
     #     ))
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError(
+                "Entered Email already exists ! Please Login")
+        return self.cleaned_data
 
     captcha = ReCaptchaField(
         widget=ReCaptchaV3(

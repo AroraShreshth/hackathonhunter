@@ -26,6 +26,7 @@ graphql-core==2.3.2
 graphql-relay==2.0.1
 gunicorn==20.0.4
 Markdown==3.2.2
+pdfkit==0.6.1
 pilkit==2.0
 Pillow==7.2.0
 ply==3.11
@@ -33,6 +34,8 @@ promise==2.3
 psycopg2==2.8.5
 pycodestyle==2.6.0
 PyJWT==1.7.1
+pypng==0.0.20
+PyQRCode==1.2.1
 python-dotenv==0.14.0
 pytz==2020.1
 Rx==1.6.1
