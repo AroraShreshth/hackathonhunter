@@ -218,7 +218,7 @@ def VerifyEmail(request):
 
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
-        ∂
+
         form = EmailVerifyForm(request.POST)
 
         if profile.mail_is_verified == True:
