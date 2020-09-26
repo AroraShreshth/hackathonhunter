@@ -140,6 +140,9 @@ class Profile(BaseClass):
             fail_silently=False,
         )
 
+    def mail_otp_change(self):
+        self.mail_otp = random_no
+
     def send_verification_SMS(self):
         message = f'Hey! Here is your {website_name} Mobile Verification Token {self.phone_otp}'
 

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
-                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm)
+                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, UserLoginForm)
 from django.views.generic import (
     View,
     ListView,
@@ -19,6 +20,7 @@ from users.models import Snippet, Profile
 from django.contrib.auth import views as auth_views
 from vacc.settings import website_name
 from django.core.mail import send_mail
+import random
 
 
 def homepage(request):
@@ -72,8 +74,11 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            password1 = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password1)
+            login(request, user)
             messages.success(
-                request, f'Your account has been created! You can Login')
+                request, f' {username} your account has been crreated successfully')
             return redirect('login')
     else:
         if request.user.is_authenticated:
@@ -90,6 +95,7 @@ class NewLoginView(auth_views.LoginView):
         context = super().get_context_data(**kwargs)
         context['website_name'] = website_name
         context['title'] = 'Login'
+        context['form'] = UserLoginForm
         return context
 
 
@@ -261,6 +267,7 @@ def VerifyEmail(request):
             if int(request.POST.get('OTP')) == int(request.user.profile.mail_otp):
                 profile.mail_is_verified = True
                 profile.setup = True
+                profile.mail_otp = random.randint(120930, 999999)
                 profile.save()
                 messages.success(
                     request, f' Hey, {request.user.username} your email has been verfied successfully !')

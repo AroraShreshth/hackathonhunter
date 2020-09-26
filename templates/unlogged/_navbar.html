@@ -15,7 +15,7 @@
   <div id="navbarBasic" class="navbar-menu">
     <div class="navbar-start ">
       <div class="buttons">
-        <a class='is-6 mx-1 px-3' href={% url 'explore' %}>
+        <a class='is-6 mx-1 px-3' href="{% url 'explore' %}">
           <button class=" navbar-item button is-white mt-5">
             <span class="icon has-text-link">
               <i class="fas fa-seedling"></i>
@@ -25,7 +25,7 @@
             </div>
           </button>
         </a>
-        <a class=' is-6 mx-1 px-3 ' href={% url 'about' %}>
+        <a class=' is-6 mx-1 px-3 ' href="{% url 'about' %}">
           <button class=" navbar-item button is-white mt-5">
             <span class="icon has-text-link">
               <i class="fas fa-users"></i>
@@ -51,12 +51,12 @@
               <i class="fas fa-star"></i>
             </span>
             <div class='p-2'>
-              <strong> Organize Competiton  !</strong>
+              <strong> Organize Competiton !</strong>
             </div>
           </a>
           <br>
           {% if not user.is_authenticated %}
-          <a class="button is-primary is-mobile" href={% url 'register' %}>
+          <a class="button is-primary is-mobile" href="{% url 'register' %}">
             <span class="icon has-text-info">
               <i class="fas fa-fingerprint"></i>
             </span>
@@ -64,10 +64,10 @@
               <strong>Register </strong>
             </div>
           </a>
-          
+
           {% endif %}
           <br>
-          <a class="button is-warning is-mobile" href={% url 'login' %}>
+          <a class="button is-warning is-mobile" href="{% url 'login' %}">
             {% if user.is_authenticated %}
             <span class="icon has-text-danger">
               <i class="fas fa-tachometer-alt"></i>

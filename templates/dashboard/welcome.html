@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
  {% load static %}
- 
+ {% load bulma_tags %}
  <section class="section">
     <div class="container box is-8 has-text-centered" >
       <h1 class="title p-2 ">
@@ -38,7 +38,7 @@
          <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                {{ name_form|crispy }}
+                {{ name_form|bulma }}
             </fieldset>
             <div class="form-group">
                 <button class="btn is-danger" type="submit">Submit</button>

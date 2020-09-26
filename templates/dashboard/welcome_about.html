@@ -1,13 +1,14 @@
 {% extends "dashboard/base_foc.html" %}
 {% load crispy_forms_tags %}
-{% block content %}
 {% load static %}
+{% load bulma_tags %}
+{% block content %}
 
 <section class="section">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
-            {{ form|crispy }}
+            {{ form|bulma }}
         </fieldset>
         <div class="form-group">
             <button class="btn is-danger" type="submit">Submit</button>

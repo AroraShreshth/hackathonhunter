@@ -5,30 +5,11 @@ from django.core.exceptions import ValidationError
 from .models import Profile, Snippet
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
+from django.contrib.auth.forms import AuthenticationForm
 
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(
-        # widget=forms.TextInput(attrs={
-        #     'class': 'input',
-        #     'placeholder': 'e.g. awesome'
-        # }
-        # )
-    )
-
-    # username = forms.CharField(
-    #     widget=forms.TextInput(attrs={
-    #         'class': 'input',
-    #         'autofocus': True,
-    #         'placeholder': 'Username'
-    #     }
-    #     ))
-    # password = forms.CharField(
-    #     widget=forms.PasswordInput(attrs={
-    #         'class': 'input',
-    #         'placeholder': '*******'
-    #     }
-    #     ))
+    email = forms.EmailField()
 
     def clean(self):
         email = self.cleaned_data.get('email')
@@ -38,9 +19,10 @@ class UserRegisterForm(UserCreationForm):
         return self.cleaned_data
 
     captcha = ReCaptchaField(
+        label='',
         widget=ReCaptchaV3(
             attrs={
-                'required_score': 0.85,
+                'required_score': 0.75,
             }
         )
     )
@@ -48,6 +30,21 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email',  'password1', 'password2']
+
+
+class UserLoginForm(AuthenticationForm):
+    captcha = ReCaptchaField(
+        label='',
+        widget=ReCaptchaV3(
+            attrs={
+                'required_score': 0.75,
+                'class': 'party'
+            }
+        )
+    )
+
+    class Meta:
+        fields = ['username', 'password', 'captcha']
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -82,11 +79,16 @@ class ProfileAboutForm(forms.ModelForm):
         widget=forms.Textarea
     )
 
+    image = forms.FileField(required=True, label='Profile Image', widget=forms.FileInput(attrs={
+        'data-empty-message': 'Please upload Profile Image'
+    }))
+
     class Meta:
         model = Profile
         fields = ['image', 'gender', 'bio']
         labels = {
-            'image': 'Profile Photo'
+            'image': 'Profile Image',
+            'gender': 'Gender',
         }
 
 
@@ -115,5 +117,6 @@ class EmailVerifyForm(forms.Form):
     OTP = forms.CharField(
         max_length=6,
         min_length=6,
-        widget=forms.TextInput(attrs={'type': 'number'})
+        widget=forms.TextInput(attrs={'type': 'number'}),
+        label='Mail OTP'
     )

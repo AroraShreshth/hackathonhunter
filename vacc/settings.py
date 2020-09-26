@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'phone_field',
     'markdownx',
     'crispy_forms',
+    'bulma',
+
 
 ]
 
@@ -132,7 +134,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'staticfiles'),
+)
 # Login Stuff
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard-home'
