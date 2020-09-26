@@ -87,8 +87,8 @@ class Profile(BaseClass):
         max_length=4, choices=SHIRT_SIZES, blank=True)
 
     GENDER = (
-        ('M', 'MALE'),
-        ('F', 'FEMALE'),
+        ('M', 'Male'),
+        ('F', 'Female'),
         ('T', 'Transgender'),
         ('P', 'Prefer Not To Say'),
         ('N', 'Non Binary,Gender Queer or gender non-confirming')
