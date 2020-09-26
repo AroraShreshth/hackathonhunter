@@ -120,6 +120,16 @@ def profile(request):
     return render(request, 'user/profile_update.html', context)
 
 
+class WelcomeDone(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/welcome_done.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Welcome Complete'
+        return context
+
+
 @login_required
 def welcome_about(request):
     context = {
@@ -254,7 +264,7 @@ def VerifyEmail(request):
                 profile.save()
                 messages.success(
                     request, f' Hey, {request.user.username} your email has been verfied successfully !')
-                return redirect('dashboard-home')
+                return redirect('welcome-done')
             else:
                 messages.error(
                     request, f' OOPS! {request.user.username} OTP provided is incorrect !')

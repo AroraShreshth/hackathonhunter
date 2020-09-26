@@ -1,0 +1,16 @@
+{% extends "dashboard/base_foc.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+ 
+ <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Hey, {{ user.username }} !
+      </h1>
+      <p class="subtitle">
+        Go to Dahsboard <a href='{% url 'dashboard-home' %}' <button>Home </button> </a>
+      </p>
+    </div>
+  </section>
+
+{% endblock content %}

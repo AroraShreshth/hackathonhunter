@@ -15,6 +15,8 @@ urlpatterns = [
     path('welcome/name', user_views.welcome, name='dashboard-welcome'),
     path('welcome/verifyemail', user_views.VerifyEmail,
          name='welcome-email-verify'),
+    path('welcome/done', user_views.WelcomeDone.as_view(),
+         name='welcome-done'),
     path('welcome/about', user_views.welcome_about,
          name='welcome-about'),
     path('terms-of-service/', user_views.TermsofService.as_view(),
