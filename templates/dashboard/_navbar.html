@@ -1,4 +1,5 @@
-<nav class="navbar is-transparent is-active" role="navigation" aria-label="main navigation">
+{% load imagekit %}
+<nav class="navbar is-transparent is-active s-fixed-top is-spaced" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href={% url 'home'%}>
       {% comment %} <h1> <strong> Amiyo </strong> </h1> {% endcomment %}
@@ -12,75 +13,99 @@
     </a>
   </div>
 
-  <div id="navbarBasic" class="navbar-menu">
-    <div class="navbar-start ">
-      <div class="buttons">
-        <a class='is-6 mx-1 px-3' href={% url 'explore' %}>
-          <button class=" navbar-item button is-white mt-5">
-            <span class="icon has-text-link">
-              <i class="fas fa-seedling"></i>
-            </span>
-            <div class='p-3'>
-              Competitions
-            </div>
-          </button>
-        </a>
-        <a class=' is-6 mx-1 px-3' href={% url 'about' %}>
-          <button class=" navbar-item button is-white mt-5">
-            <span class="icon has-text-link">
-              <i class="fas fa-users"></i>
-            </span>
-            <div class='p-3'>
-              About
-            </div>
-          </button>
-        </a>
-      </div>
-
-      <br>
+  <div class="navbar-menu">
+    <div class="navbar-start px-4  buttons mt-3">
+      <a class="button is-inverted is-link mt-3 " href={% url 'register' %}>
+        <span class="icon ">
+          <i class="fas fa-user-alt"></i>
+        </span>
+        <div class='p-2 '>
+          <strong> Profile</strong>
+        </div>
+      </a>
+      <a class="button is-inverted is-link mt-3 " href={% url 'register' %}>
+        <span class="icon ">
+          <i class="fas fa-compass"></i>
+        </span>
+        <div class='p-2 '>
+          <strong> Competitons</strong>
+        </div>
+      </a>
+      <a class="button is-inverted is-link mt-3 " href={% url 'register' %}>
+        <span class="icon ">
+          <i class="fas fa-certificate"></i>
+        </span>
+        <div class='p-2 '>
+          <strong>Badges</strong>
+        </div>
+      </a>
+      <a class="button is-inverted is-link mt-3 " href={% url 'register' %}>
+        <span class="icon ">
+          <i class="fas fa-box-open"></i>
+        </span>
+        <div class='p-2 '>
+          <strong>Submissions</strong>
+        </div>
+      </a>
 
     </div>
 
-    <div class="navbar-end">
+    <div class="navbar-end mt-2">
       <div class="navbar-item">
         <div class="buttons">
 
-          <a class="button is-danger">
+          <a class="button is-danger mt-3 is-fullwidth">
             <span class="icon has-text-warning">
               <i class="fas fa-star"></i>
             </span>
-            <div class='p-2'>
-              <strong> Organize Competiton !</strong>
-            </div>
-          </a>
-
-          {% if not user.is_authenticated %}
-          <a class="button is-primary" href={% url 'register' %}>
-            <span class="icon has-text-info">
-              <i class="fas fa-fingerprint"></i>
-            </span>
-            <div class='p-2'>
-              <strong>Register</strong>
-            </div>
-          </a>
-          {% endif %}
-
-          <a class="button is-warning " href={% url 'login' %}>
-            {% if user.is_authenticated %}
-            <span class="icon has-text-danger">
-              <i class="fas fa-tachometer-alt"></i>
-            </span>
             <div class='p-2 '>
-              <strong> Go to Dashboard </strong>
-              {% else %}
-              <span class="icon has-text-danger">
-                <i class="fas fa-key"></i>
+              <strong> Organize Competitons !</strong>
+            </div>
+          </a>
+
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable pr-6">
+          <div class="navbar-link is-arrowless pb-3">
+            <div class='p-2'>
+              <figure class=" image is-32x32 ">
+                {% thumbnail '128x128' user.profile.image -- alt="Profile Photo"  %}
+              </figure>
+            </div>
+          </div>
+
+          <div class="navbar-dropdown buttons ">
+            <a class="button is-white is-small ">
+              <span class="icon has-text-warning ">
+                <i class="fas fa-star"></i>
               </span>
               <div class='p-2 '>
-                <strong> Log in </strong>
-                {% endif %}
+                <strong>Profile </strong>
               </div>
-          </a>
+            </a>
+            <a class="button is-white is-small ">
+              <span class="icon has-text-link ">
+                <i class="fas fa-cog"></i>
+              </span>
+              <div class='p-2 '>
+                <strong>Settings</strong>
+              </div>
+            </a>
+            <a class="button is-white is-small " href={% url 'logout' %}>
+              <span class="icon has-text-link ">
+                <i class="fas fa-sign-out-alt"></i>
+              </span>
+              <div class='p-2 '>
+                <strong>Logout</strong>
+              </div>
+            </a>
+            <hr class="navbar-divider mb-2">
+            <a class="navbar-item" href="#">
+              <small>Report an issue</small>
+            </a>
+            <div class="navbar-item mb-2">
+              <small> Version: 0.0.1</small>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -151,8 +151,8 @@ def welcome_about(request):
         if form.is_valid():
             print('POST')
             form.save()
-            messages.success(
-                request, f'{request.user.username} Your About Details Saved !')
+            # messages.success(
+            #     request, f'{request.user.username} Your About Details Saved !')
             return redirect('welcome-email-verify')
 
     else:

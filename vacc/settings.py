@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'markdownx',
     'crispy_forms',
     'bulma',
+    'imagekit'
 
 
 ]
