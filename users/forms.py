@@ -9,6 +9,12 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 class UserRegisterForm(UserCreationForm):
+
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+
+        # for fieldname in ['username', 'password1', 'password2']:
+        self.fields['password1'].help_text = 'Please keep your password dissimilar from your other info, 8 Characterers Minium, Not entirely Numeric, also please don\'t use common passwords for security purposes'
     email = forms.EmailField()
 
     def clean(self):
