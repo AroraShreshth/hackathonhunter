@@ -5,16 +5,97 @@
 {% block content %}
 
 <section class="section">
-    <form method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            {{ form|bulma }}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn is-danger" type="submit">Submit</button>
+    <div class="p-2 container has-text-centered">
+        <h1 class="title">
+            OTP Mail Sent !
+        </h1>
+        <br>
+        <p class="subtitle">
+            We have sent an email confirmation OTP to <strong>{{ request.user.email }}</strong>
+        </p>
+
+    </div>
+    <div class="p-2 steps">
+        <div class="step-item is-active is-success">
+            <div class="step-marker">1</div>
+            <div class="step-details">
+                <p class="step-title">Name</p>
+            </div>
         </div>
-    </form>
+        <div class="step-item is-active is-success ">
+            <div class="step-marker">2</div>
+            <div class="step-details">
+                <p class="step-title">About</p>
+            </div>
+        </div>
+        <div class="step-item is-active is-info">
+            <div class="step-marker">3</div>
+            <div class="step-details">
+                <p class="step-title">Mail OTP</p>
+            </div>
+        </div>
+    </div>
+    <div class="columns is-mobile  is-centered">
+        <a class="my-2 border-top is-half py-4 has-text-centered button is-primary " href="https://{{ domain }}"
+            target="_blank">
+            <strong>
+                <span class="icon mx-1">
+                    <i class="is-small fas fa-envelope-open-text"></i>
+                </span>
+                Open {{ domain }}
+            </strong>
+        </a>
+
+    </div>
+
+</section>
+<section class="section">
+    <div class=" mx-2 columns is-centered">
+        <div class=" box  column is-half ">
+            <div class="content-section">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|bulma }}
+                    </fieldset>
+                    <div class="form-group">
+
+                        <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth"
+                            type="submit">
+                            <strong>
+                                <span class="icon mx-1 ">
+                                    <i class="is-small fas fa-check"></i>
+                                </span>
+                                Submit
+                            </strong>
+                        </button>
+                        <br>
+                        <small class="border-top py-4 ">
+                            This page is protected by Google reCAPTCHA to ensure you're not a bot
+                        </small>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 </section>
 
+
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 
 {% endblock content %}

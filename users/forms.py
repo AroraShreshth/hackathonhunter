@@ -58,10 +58,18 @@ class UserUpdateForm(forms.ModelForm):
 class NameForm(forms.ModelForm):
     first_name = forms.CharField(min_length=3)
     last_name = forms.CharField(min_length=3)
+    captcha = ReCaptchaField(
+        label='',
+        widget=ReCaptchaV3(
+            attrs={
+                'required_score': 0.75,
+            }
+        )
+    )
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name']
+        fields = ['first_name', 'last_name', 'captcha']
 
 
 class ProfileGTForm(forms.ModelForm):
@@ -75,17 +83,24 @@ class ProfileAboutForm(forms.ModelForm):
     bio = forms.CharField(
         max_length=500,
         min_length=20,
-        label='Tell Us About Yourself',
+        label='Tell Us About Yourself (min 20 letters)',
         widget=forms.Textarea
     )
-
+    captcha = ReCaptchaField(
+        label='',
+        widget=ReCaptchaV3(
+            attrs={
+                'required_score': 0.75,
+            }
+        )
+    )
     image = forms.FileField(required=True, label='Profile Image', widget=forms.FileInput(attrs={
         'data-empty-message': 'Please upload Profile Image'
     }))
 
     class Meta:
         model = Profile
-        fields = ['image', 'gender', 'bio']
+        fields = ['image', 'gender', 'bio', 'captcha']
         labels = {
             'image': 'Profile Image',
             'gender': 'Gender',
@@ -117,6 +132,14 @@ class EmailVerifyForm(forms.Form):
     OTP = forms.CharField(
         max_length=6,
         min_length=6,
-        widget=forms.TextInput(attrs={'type': 'number'}),
+        widget=forms.TextInput(attrs={'type': 'number', 'min': '100000'}),
         label='Mail OTP'
+    )
+    captcha = ReCaptchaField(
+        label='',
+        widget=ReCaptchaV3(
+            attrs={
+                'required_score': 0.75,
+            }
+        )
     )

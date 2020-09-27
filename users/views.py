@@ -21,6 +21,7 @@ from django.contrib.auth import views as auth_views
 from vacc.settings import website_name
 from django.core.mail import send_mail
 import random
+import re
 
 
 def homepage(request):
@@ -175,8 +176,8 @@ def welcome(request):
 
         if name_form.is_valid():
             name_form.save()
-            messages.success(
-                request, f'{request.user.username} Name Details Saved !')
+            # messages.success(
+            #     request, f'{request.user.username} Name Details Saved !')
             return redirect('welcome-about')
 
     else:
@@ -244,11 +245,12 @@ class DashBoard(LoginRequiredMixin, TemplateView):
 
 @login_required
 def VerifyEmail(request):
-
+    domain = re.search("@[\w.]+", request.user.email)
     context = {
         'website_name': website_name,
         'title': 'Welcome - Verify Email',
-        'form': EmailVerifyForm
+        'form': EmailVerifyForm,
+        'domain': domain.group()[1:]
     }
 
     profile = Profile.objects.get(user=request.user)
@@ -270,7 +272,7 @@ def VerifyEmail(request):
                 profile.mail_otp = random.randint(120930, 999999)
                 profile.save()
                 messages.success(
-                    request, f' Hey, {request.user.username} your email has been verfied successfully !')
+                    request, f' Hey, {request.user.username} your email has been successfully verfied !')
                 return redirect('welcome-done')
             else:
                 messages.error(
