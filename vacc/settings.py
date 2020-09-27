@@ -1,6 +1,8 @@
 
 import os
 from dotenv import load_dotenv
+# Heroku Stuff
+import django_heroku
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -17,7 +19,7 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['comp.veio.in', 'competitionhunter.herokuapp.com']
 
 website_name = 'Competiton Hunter'
 # Application definition
@@ -200,3 +202,6 @@ if os.environ.get('GITHUB_WORKFLOW'):
             'PORT': '5432',
         }
     }
+
+
+django_heroku.settings(locals())
