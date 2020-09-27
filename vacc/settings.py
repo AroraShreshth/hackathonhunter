@@ -100,16 +100,12 @@ if bool(os.environ.get('LOCAL_DEVELOPMENT_SYSTEM')):
             "PORT": os.environ.get("SQL_PORT", default="5432"),
         }
     }
+else:
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=600, ssl_require=True)
 
-try:
-    if os.environ['DATABASE_URL']:
-        DATABASES['default'] = dj_database_url.config(
-            conn_max_age=600, ssl_require=True)
-except Exception:
-    print('Not in Herko')
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+    # Password validation
+    # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -191,6 +187,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "competitionhunternoreply@gmail.com"
 EMAIL_HOST_PASSWORD = "Ysm3'U;?B"
 
+
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
         'default': {
@@ -203,5 +200,5 @@ if os.environ.get('GITHUB_WORKFLOW'):
         }
     }
 
-
-django_heroku.settings(locals())
+if not bool(os.environ.get('LOCAL_DEVELOPMENT_SYSTEM')):
+    django_heroku.settings(locals())  # Heroku Sucks
