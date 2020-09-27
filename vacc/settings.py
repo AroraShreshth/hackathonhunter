@@ -151,6 +151,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'staticfiles'),
 )
@@ -202,3 +203,6 @@ if os.environ.get('GITHUB_WORKFLOW'):
 
 if not bool(os.environ.get('LOCAL_DEVELOPMENT_SYSTEM')):
     django_heroku.settings(locals())  # Heroku Sucks
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'staticfiles'),
+)
