@@ -77,8 +77,8 @@ def register(request):
             password1 = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password1)
             login(request, user)
-            messages.success(
-                request, f' {username} your account has been crreated successfully')
+            # messages.success(
+            #     request, f' {username} your account has been crreated successfully')
             return redirect('login')
     else:
         if request.user.is_authenticated:
