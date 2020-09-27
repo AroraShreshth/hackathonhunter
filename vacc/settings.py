@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'comp.apps.CompConfig',
     'appl.apps.ApplConfig',
+    'issuerep.apps.IssuerepConfig',
 
     # External Applications
     'rest_framework',
@@ -126,6 +127,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# Admin Emails
+ADMINS = [
+    ('Shreshth-Arora', 'arorashreshth1@gmail.com'),
+    ('Shreshth-Arora-System', 'shreshtharora@icloud.com'),
+    ('Shreshth-Arora-Uni', 'sarora_be18@thapar.edu')
+]
 
 
 # Static files (CSS, JavaScript, Images)
