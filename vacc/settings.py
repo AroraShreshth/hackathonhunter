@@ -85,24 +85,26 @@ WSGI_APPLICATION = 'vacc.wsgi.application'
 
 
 IN_DOCKER = bool(os.environ.get('IN_DOCKER'))
-DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", default="django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("SQL_USER", default="usap"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", default="usap"),
-        "HOST": os.environ.get("SQL_HOST", default="db"),
-        "PORT": os.environ.get("SQL_PORT", default="5432"),
+
+if bool(os.environ.get('LOCAL_DEVELOPMENT_SYSTEM')):
+    print('LOCAL SYSTEM FOUND !')
+    DATABASES = {
+        "default": {
+            "ENGINE": os.environ.get("SQL_ENGINE", default="django.db.backends.sqlite3"),
+            "NAME": os.environ.get("SQL_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
+            "USER": os.environ.get("SQL_USER", default="usap"),
+            "PASSWORD": os.environ.get("SQL_PASSWORD", default="usap"),
+            "HOST": os.environ.get("SQL_HOST", default="db"),
+            "PORT": os.environ.get("SQL_PORT", default="5432"),
+        }
     }
-}
 
 try:
-    DATABASE_URL_EXIST = bool(os.environ['DATABASE_URL'])
-    if DATABASE_URL_EXIST:
+    if os.environ['DATABASE_URL']:
         DATABASES['default'] = dj_database_url.config(
             conn_max_age=600, ssl_require=True)
 except Exception:
-    print('Not in Herko Env')
+    print('Not in Herko')
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
