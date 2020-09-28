@@ -106,9 +106,9 @@ class ProfileAboutForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ['image', 'gender', 'bio', 'captcha']
+        fields = ['dob', 'gender', 'bio', 'captcha']
         labels = {
-            'image': 'Profile Image',
+            'dob': 'Date of Birth',
             'gender': 'Gender',
         }
 
