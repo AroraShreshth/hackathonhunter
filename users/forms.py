@@ -100,9 +100,6 @@ class ProfileAboutForm(forms.ModelForm):
             }
         )
     )
-    image = forms.FileField(required=True, label='Profile Image', widget=forms.FileInput(attrs={
-        'data-empty-message': 'Please upload Profile Image'
-    }))
 
     class Meta:
         model = Profile
