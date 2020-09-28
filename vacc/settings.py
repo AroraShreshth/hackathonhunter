@@ -107,7 +107,7 @@ DATABASES = {
         "PASSWORD": os.environ['SQL_PASSWORD'],
         "HOST": os.environ['SQL_HOST'],
         "PORT": os.environ['SQL_PORT'],
-        "CONN": os.environ['CONN'],
+        "CONN": 600,
         "OPTIONS": {'sslmode': 'require'},
     }
 }
