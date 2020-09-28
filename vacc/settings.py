@@ -19,7 +19,8 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['comp.veio.in', 'competitionhunter.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',
+                 'comp.veio.in', 'competitionhunter.herokuapp.com']
 
 website_name = 'Competiton Hunter'
 # Application definition
@@ -87,14 +88,25 @@ WSGI_APPLICATION = 'vacc.wsgi.application'
 
 
 IN_DOCKER = bool(os.environ.get('IN_DOCKER'))
+# DATABASES = {
+#     "default": {
+#         "ENGINE": os.environ.get("SQL_ENGINE", default="django.db.backends.sqlite3"),
+#         "NAME": os.environ.get("SQL_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
+#         "USER": os.environ.get("SQL_USER", default="usap"),
+#         "PASSWORD": os.environ.get("SQL_PASSWORD", default="usap"),
+#         "HOST": os.environ.get("SQL_HOST", default="db"),
+#         "PORT": os.environ.get("SQL_PORT", default="5432"),
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", default="django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("SQL_USER", default="usap"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", default="usap"),
-        "HOST": os.environ.get("SQL_HOST", default="db"),
-        "PORT": os.environ.get("SQL_PORT", default="5432"),
+        "ENGINE": os.environ['SQL_ENGINE'],
+        "NAME": os.environ['SQL_DATABASE'],
+        "USER": os.environ['SQL_USER'],
+        "PASSWORD": os.environ['SQL_PASSWORD'],
+        "HOST": os.environ['SQL_HOST'],
+        "PORT": os.environ['SQL_PORT']
     }
 }
 
