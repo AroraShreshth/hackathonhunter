@@ -1,16 +1,114 @@
 {% extends "dashboard/base_foc.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
- 
- <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hey, {{ user.username }} !
-      </h1>
-      <p class="subtitle">
-        Go to Dahsboard <a href='{% url 'dashboard-home' %}' <button>Home </button> </a>
-      </p>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+    <h1 class="title">
+      Congratulations ! {{ user.first_name }} {{ user.last_name }}
+    </h1>
+    <br>
+    <p class="subtitle">
+      <strong> Onboarding is Complete </strong> for you <strong>{{ user.username }} </strong>
+      <br>
+      Now choose what you want to do ahead
+    </p>
+  </div>
+
+  <hr>
+
+  <div class="pricing-table px-2 mx-2">
+
+
+    <div class="pricing-plan is-warning">
+      <div class="plan-header">Explore Competitions</div>
+      <div class="container has-text-centered">
+        <h1 class="is-size-1">
+          <span class="icon ">
+            <i class="fas fa-compass"></i>
+          </span>
+        </h1>
+        <p class="subtitle">
+          <strong> Onboarding is Complete </strong> for you <strong>{{ user.username }} </strong>
+          <br>
+          Now choose what you want to do ahead
+        </p>
+      </div>
+      <div class="plan-items">
+
+      </div>
+      <div class="plan-footer">
+        <a class="button is-inverted is-fullwidth is-link mt-3 " href={% url 'explore' %}>
+          <span class="icon ">
+            <i class="fas fa-compass"></i>
+          </span>
+          <div class='p-2 '>
+            <strong> Start Exploration </strong>
+          </div>
+        </a>
+      </div>
     </div>
-  </section>
+
+    <div class="pricing-plan is-link ">
+      <div class="plan-header">Build Profile</div>
+      <div class="container has-text-centered">
+        <h1 class="is-size-1">
+          <span class="icon ">
+            <i class="fas fa-user-alt"></i>
+          </span>
+        </h1>
+        <p class="subtitle">
+          <strong> Onboarding is Complete </strong> for you <strong>{{ user.username }} </strong>
+          <br>
+          Now choose what you want to do ahead
+        </p>
+      </div>
+      <div class="plan-items">
+
+      </div>
+      <div class="plan-footer">
+        <a class="button is-inverted is-fullwidth is-link mt-3 " href={% url 'profile-about' %}>
+          <span class="icon ">
+            <i class="fas fa-user-alt"></i>
+          </span>
+          <div class='p-2 '>
+            <strong> Continue to Profile</strong>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="pricing-plan is-danger">
+      <div class="plan-header">Know more About Team</div>
+      <div class="container has-text-centered">
+        <h1 class="is-size-1">
+          <span class="icon ">
+            <i class="fas fa-users"></i>
+          </span>
+        </h1>
+        <p class="subtitle">
+          <strong> Onboarding is Complete </strong> for you <strong>{{ user.username }} </strong>
+          <br>
+          Now choose what you want to do ahead
+        </p>
+      </div>
+      <div class="plan-items">
+
+      </div>
+      <div class="plan-footer">
+        <a class="button is-inverted is-fullwidth is-link mt-3 " href={% url 'about' %}>
+          <span class="icon ">
+            <i class="fas fa-users"></i>
+          </span>
+          <div class='p-2 '>
+            <strong> About</strong>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 {% endblock content %}

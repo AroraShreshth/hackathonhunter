@@ -287,3 +287,9 @@ def VerifyEmail(request):
             return render(request, 'dashboard/profile_email_verify.html', context)
         else:
             return redirect('dashboard-home')
+
+
+# Profile Page View of Application from this point onwards
+@login_required
+def ProfileAbout(request):
+    return render(request, 'dashboard/profile_about.html')

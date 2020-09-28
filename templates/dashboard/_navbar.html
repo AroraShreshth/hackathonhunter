@@ -15,7 +15,7 @@
 
   <div class="navbar-menu">
     <div class="navbar-start px-4  buttons mt-3">
-      <a class="button is-inverted is-link mt-3 " href={% url 'register' %}>
+      <a class="button is-inverted is-link mt-3 " href={% url 'profile-about' %}>
         <span class="icon ">
           <i class="fas fa-user-alt"></i>
         </span>
@@ -23,7 +23,7 @@
           <strong> Profile</strong>
         </div>
       </a>
-      <a class="button is-inverted is-link mt-3 " href={% url 'register' %}>
+      <a class="button is-inverted is-link mt-3 " href={% url 'explore' %}>
         <span class="icon ">
           <i class="fas fa-compass"></i>
         </span>
@@ -68,7 +68,7 @@
           <div class="navbar-link is-arrowless pb-3">
             <div class='p-2'>
               <figure class=" image is-32x32 ">
-                {% thumbnail '128x128' user.profile.image -- alt="Profile Photo"  %}
+                {% comment %} {% thumbnail '128x128' user.profile.image -- alt="Profile Photo"  %} {% endcomment %}
               </figure>
             </div>
           </div>

@@ -4,9 +4,12 @@ from . import views as user_views
 
 
 urlpatterns = [
+    # Profile Filling Views
+    path('profile/', user_views.ProfileAbout, name='profile-about'),
+
+    # Sign Up & On boarding / Welcome Logic & Auth Views
     path('', user_views.homepage, name='home'),
     path('register/', user_views.register, name='register'),
-    path('profile/', user_views.profile, name='profile'),
     path('login/', user_views.NewLoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='unlogged/logout.html'), name='logout'),
     path('dashboard/', user_views.DashBoard.as_view(), name='dashboard-home'),
@@ -43,4 +46,5 @@ urlpatterns = [
 
     path('<int:pk>/',
          user_views.UserDetailView.as_view(), name='user-detail'),
+
 ]
