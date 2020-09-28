@@ -87,9 +87,6 @@ WSGI_APPLICATION = 'vacc.wsgi.application'
 
 
 IN_DOCKER = bool(os.environ.get('IN_DOCKER'))
-
-
-print('LOCAL SYSTEM FOUND !')
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", default="django.db.backends.sqlite3"),
@@ -100,9 +97,7 @@ DATABASES = {
         "PORT": os.environ.get("SQL_PORT", default="5432"),
     }
 }
-# else:
-#     DATABASES['default'] = dj_database_url.config(
-#         conn_max_age=600, ssl_require=True)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
