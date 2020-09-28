@@ -1,1 +1,1 @@
-web: gunicorn vacc.wsgi
+web: daphne vacc.asgi:application

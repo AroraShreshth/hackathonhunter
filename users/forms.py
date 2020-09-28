@@ -44,7 +44,6 @@ class UserLoginForm(AuthenticationForm):
         widget=ReCaptchaV3(
             attrs={
                 'required_score': 0.75,
-                'class': 'party'
             }
         )
     )
