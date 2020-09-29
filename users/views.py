@@ -292,4 +292,8 @@ def VerifyEmail(request):
 # Profile Page View of Application from this point onwards
 @login_required
 def ProfileAbout(request):
-    return render(request, 'dashboard/profile_about.html')
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - About'
+    }
+    return render(request, 'dashboard/profile_about.html', context)
