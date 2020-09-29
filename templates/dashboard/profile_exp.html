@@ -1,0 +1,53 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+ 
+ 
+<section class="section">
+<div class="tabs is-toggle is-centered is-toggle-rounded">
+  <ul>
+    <li>
+      <a href={% url 'profile-about' %}>
+        <span class="icon is-small"><i class="fas fa-address-card"></i></span>
+        <span>About</span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'profile-edu' %}>
+        <span class="icon is-small"><i class="fas fa-university"></i></span>
+        <span>Education</span>
+      </a>
+    </li>
+    <li class="is-active">
+      <a href={% url 'profile-exp' %}>
+        <span class="icon is-small"><i class="fas fa-pencil-ruler"></i></span>
+        <span><strong>Experience</strong></span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'profile-links' %}>
+        <span class="icon is-small"><i class="fas fa-link"></i></span>
+        <span>Links</span>
+      </a>
+    </li>
+    <li>
+      <a href={% url 'profile-contact' %}>
+        <span class="icon is-small"><i class="fas fa-phone-alt"></i></span>
+        <span>Contact</span>
+      </a>
+    </li>
+  </ul>
+</div>
+</section>
+<section class="section">
+    <div class="container">
+      <h1 class="title">
+        Hey, {{ user.first_name }} {{ user.last_name }} !
+      </h1>
+      <p class="subtitle">
+        Profile Change of {{website_name}}
+      </p>
+    </div>
+  </section>
+
+{% endblock content %}

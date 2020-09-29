@@ -300,6 +300,7 @@ def VerifyEmail(request):
 
 
 # Profile Page View of Application from this point onwards
+
 @login_required
 def ProfileAbout(request):
     context = {
@@ -307,6 +308,42 @@ def ProfileAbout(request):
         'title': 'Profile - About'
     }
     return render(request, 'dashboard/profile_about.html', context)
+
+
+@login_required
+def ProfileEducation(request):
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - Education'
+    }
+    return render(request, 'dashboard/profile_edu.html', context)
+
+
+@login_required
+def ProfileExperience(request):
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - Experience'
+    }
+    return render(request, 'dashboard/profile_exp.html', context)
+
+
+@login_required
+def ProfileLinks(request):
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - Links'
+    }
+    return render(request, 'dashboard/profile_links.html', context)
+
+
+@login_required
+def ProfileContact(request):
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - Links'
+    }
+    return render(request, 'dashboard/profile_contact.html', context)
 
 
 @login_required

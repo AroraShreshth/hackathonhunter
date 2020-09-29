@@ -28,3 +28,13 @@ class Start(LoginRequiredMixin, TemplateView):
         context['website_name'] = website_name
         context['title'] = 'About'
         return context
+
+
+class Pricing(TemplateView):
+    template_name = 'comp/pricing.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Pricing'
+        return context

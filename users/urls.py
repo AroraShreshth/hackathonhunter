@@ -5,7 +5,11 @@ from . import views as user_views
 
 urlpatterns = [
     # Profile Filling Views
-    path('profile/', user_views.ProfileAbout, name='profile-about'),
+    path('profile/about', user_views.ProfileAbout, name='profile-about'),
+    path('profile/education', user_views.ProfileEducation, name='profile-edu'),
+    path('profile/experience', user_views.ProfileExperience, name='profile-exp'),
+    path('profile/links', user_views.ProfileLinks, name='profile-links'),
+    path('profile/contact', user_views.ProfileContact, name='profile-contact'),
     path('p/', user_views.profilepage, name='public-profile'),
     # Sign Up & On boarding / Welcome Logic & Auth Views
     path('', user_views.homepage, name='home'),

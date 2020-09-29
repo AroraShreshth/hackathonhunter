@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
@@ -16,6 +15,7 @@ admin.site.enable_nav_sidebar = False
 urlpatterns = [
     path('', include('users.urls')),
     path('', include('appl.urls')),
+    path('organize/', include('comp.urls')),
     path('issue/', include('issuerep.urls')),
     path('admin/', admin.site.urls),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
