@@ -3,8 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
-                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, UserLoginForm)
+
 from django.views.generic import (
     View,
     ListView,
@@ -25,7 +24,7 @@ from .models import Issue, IssueType
 
 class IssueList(LoginRequiredMixin, ListView):
     model = Issue
-    template_name = 'issuerep/main.html'
+    template_name = 'issuerep/list.html'
     context_object_name = 'issues'
     ordering = ['-created_date']
     paginate_by = 20
@@ -47,3 +46,32 @@ class CreateIssue(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.posted_by = self.request.user
         return super().form_valid(form)
+
+
+class IssueDetail(LoginRequiredMixin, DetailView):
+    model = Issue
+    template_name = 'issuerep/detail.html'
+
+
+class IssueUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Issue
+    template_name = 'issuerep/update.html'
+    fields = ['description']
+
+    def form_valid(self, form):
+        form.instance.posted_by = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        issue = self.get_object()
+        return self.request.user == issue.posted_by
+
+
+class IssueDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Issue
+
+    success_url = '/dashboard/'
+
+    def test_func(self):
+        issue = self.get_object()
+        return self.request.user == issue.posted_by

@@ -1,0 +1,65 @@
+{% extends "dashboard/base_foc.html" %}
+{% load crispy_forms_tags %}
+{% load bulma_tags %}
+{% block content %}
+
+<section class="section">
+    <div class="container has-text-centered">
+        <h1 class="title">
+            Create Issue 
+        </h1>
+        <p class="subtitle">
+           We get it, you faced a problem we are here happy to help
+
+        </p>
+        <p class="subtitle">
+        Please provide the below detials and we will quickly get back to you
+     <p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="columns is-centered">
+        <div class="column is-half ">
+            <div class="content-section">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|bulma }}
+                    </fieldset>
+                    <div class="form-group ">
+                        <div class="control ">
+
+                            <button class="my-2  has-text-centered button is-link is-fullwidth" type="submit">
+                                <strong>
+                                    <span class="icon mx-1 ">
+                                        <i class="is-small fas fa-fingerprint"></i>
+                                    </span>
+                                    Create Issue
+                                </strong>
+                            </button>
+                        </div>
+
+                        <br>
+                        <small>
+                            This page is protected by Google reCAPTCHA to ensure you're not a bot
+                        </small>
+                    </div>
+                </form>
+                <div class="border-top py-4 ">
+                    <div class="text-muted ">
+                        <a class="button has-text-centered is-primary is-fullwidth" href="{% url 'login' %}" >
+                            <strong>
+                                <span class="icon mx-1 ">
+                                    <i class="is-small fas fa-key"></i>
+                                </span>
+                                 Back to Dashbaord ?
+                            </strong>
+                            </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+{% endblock content %}
