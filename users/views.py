@@ -48,6 +48,16 @@ class TermsofService(TemplateView):
         return context
 
 
+class Help(TemplateView):
+    template_name = 'unlogged/help.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Help'
+        return context
+
+
 class About(TemplateView):
     template_name = 'unlogged/about.html'
 
@@ -297,3 +307,20 @@ def ProfileAbout(request):
         'title': 'Profile - About'
     }
     return render(request, 'dashboard/profile_about.html', context)
+
+
+@login_required
+def settings(request):
+    context = {
+        'website_name': website_name,
+        'title': 'Settings'
+    }
+    return render(request, 'dashboard/settings.html', context)
+
+
+def profilepage(request):
+    context = {
+        'website_name': website_name,
+        'title': 'Profile Page'
+    }
+    return render(request, 'unlogged/profile.html', context)

@@ -14,6 +14,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from users.models import Snippet, Profile
 from vacc.settings import website_name
+from .models import Event
+
+
+# Competiton Organisation Panel
 
 
 class Start(LoginRequiredMixin, TemplateView):

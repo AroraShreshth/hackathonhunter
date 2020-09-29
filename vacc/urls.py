@@ -15,9 +15,10 @@ admin.autodiscover()
 admin.site.enable_nav_sidebar = False
 urlpatterns = [
     path('', include('users.urls')),
+    path('', include('appl.urls')),
     path('admin/', admin.site.urls),
     path('admin/doc/', include('django.contrib.admindocs.urls')),
-    path('comp/', include('comp.urls')),
+    path('competition/', include('comp.urls')),
     path('admin/password_reset/', auth_views.PasswordResetView.as_view(),
          name='admin_password_reset',
          ),

@@ -6,7 +6,7 @@ from . import views as user_views
 urlpatterns = [
     # Profile Filling Views
     path('profile/', user_views.ProfileAbout, name='profile-about'),
-
+    path('p/', user_views.profilepage, name='public-profile'),
     # Sign Up & On boarding / Welcome Logic & Auth Views
     path('', user_views.homepage, name='home'),
     path('register/', user_views.register, name='register'),
@@ -14,7 +14,10 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='unlogged/logout.html'), name='logout'),
     path('dashboard/', user_views.DashBoard.as_view(), name='dashboard-home'),
     path('about/', user_views.About.as_view(), name='about'),
-    path('explore/', user_views.Explore.as_view(), name='explore'),
+    path('competitons/', user_views.Explore.as_view(), name='explore'),
+    path('help/', user_views.Help.as_view(), name='help'),
+    path('settings/', user_views.settings, name='settings'),
+
     path('welcome/name', user_views.welcome, name='dashboard-welcome'),
     path('welcome/verifyemail', user_views.VerifyEmail,
          name='welcome-email-verify'),
