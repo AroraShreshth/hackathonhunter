@@ -10,6 +10,9 @@ class IssueType(BaseClass):
     # The Type of Issue that has been reported to the system
     name = models.CharField(max_length=300)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class Issue(BaseClass):
     title = models.CharField(max_length=300)
