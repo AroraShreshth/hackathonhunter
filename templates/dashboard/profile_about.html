@@ -1,5 +1,6 @@
 {% extends "dashboard/base.html" %}
 {% load crispy_forms_tags %}
+{% load bulma_tags %}
 {% block content %}
  
  
@@ -39,15 +40,68 @@
   </ul>
 </div>
 </section>
+
+
 <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hey, {{ user.first_name }} {{ user.last_name }} !
-      </h1>
-      <p class="subtitle">
-        Profile Change of {{website_name}}
-      </p>
-    </div>
-  </section>
+<div class="tile is-ancestor is-12">
+   <div class="tile is-parent is-vertical mx-2">
+    <article class="tile is-child notification is-12 is-white box is-centered">
+      <div class="content">
+        <p class="title">Basic Information</p>
+        {% comment %} <p class="subtitle">Your Basic Information</p> {% endcomment %}
+        <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ name_form|bulma }}
+                        {{ g_form|bulma }}
+                    </fieldset>
+                    <div class="form-group">
+
+                        <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth"
+                            type="submit">
+                            <strong>
+                                <span class="icon mx-1 ">
+                                    <i class="is-small fas fa-signature"></i>
+                                </span>
+                                Submit
+                            </strong>
+                        </button>
+                        <br>
+                    </div>
+                </form>
+      </div>
+    </article>
+  </div>
+
+  <div class="tile is-parent is-vertical">
+    <article class="tile is-child notification is-12 is-white box is-centered">
+      <div class="content">
+        <p class="title">About you</p>
+        <p class="subtitle">Markdown supported , write intro to your competition organizors </p>
+        <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ bio_form|bulma }}
+                    </fieldset>
+                    <div class="form-group">
+
+                        <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth"
+                            type="submit">
+                            <strong>
+                                <span class="icon mx-1 ">
+                                    <i class="is-small fas fa-signature"></i>
+                                </span>
+                                Submit
+                            </strong>
+                        </button>
+                        <br>
+                    </div>
+                </form>
+        </div>
+    </article>
+  </div>
+</div>
+
+</section>
 
 {% endblock content %}

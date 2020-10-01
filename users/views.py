@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
-                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, UserLoginForm)
+                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
 from django.views.generic import (
     View,
     ListView,
@@ -305,7 +305,10 @@ def VerifyEmail(request):
 def ProfileAbout(request):
     context = {
         'website_name': website_name,
-        'title': 'Profile - About'
+        'title': 'Profile - About',
+        'name_form': NameForm,
+        'bio_form': BioForm,
+        'g_form': ShirtSizeGenderForm
     }
     return render(request, 'dashboard/profile_about.html', context)
 

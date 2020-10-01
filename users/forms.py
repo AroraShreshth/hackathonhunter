@@ -77,6 +77,27 @@ class NameForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'captcha']
 
 
+class ShirtSizeGenderForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['gender', 'shirt_size']
+
+
+class BioForm(forms.ModelForm):
+    captcha = ReCaptchaField(
+        label='',
+        widget=ReCaptchaV3(
+            attrs={
+                'required_score': 0.75,
+            }
+        )
+    )
+
+    class Meta:
+        model = Profile
+        fields = ['bio']
+
+
 class ProfileGTForm(forms.ModelForm):
 
     class Meta:
@@ -136,6 +157,41 @@ class EmailVerifyForm(forms.Form):
         min_length=6,
         widget=forms.TextInput(attrs={'type': 'number', 'min': '100000'}),
         label='Mail OTP'
+    )
+    captcha = ReCaptchaField(
+        label='',
+        widget=ReCaptchaV3(
+            attrs={
+                'required_score': 0.75,
+            }
+        )
+    )
+
+
+class ProfileResumeForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['resume']
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['phone', 'address', 'emergency_contact_name']
+
+
+class ContactEmergencyForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['emergency_contact_name', 'emergency_phone']
+
+
+class PhoneVerifyForm(forms.ModelForm):
+    OTP = forms.CharField(
+        max_length=6,
+        min_length=6,
+        widget=forms.TextInput(attrs={'type': 'number', 'min': '100000'}),
+        label='Phone OTP'
     )
     captcha = ReCaptchaField(
         label='',
