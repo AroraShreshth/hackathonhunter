@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load pwa %}
 <!DOCTYPE html>
 <html>
 
@@ -30,7 +30,7 @@
   {% else %}
   <title>{{website_name }}</title>
   {% endif %}
-
+    {% progressive_web_app_meta %}
 </head>
 
   <body>

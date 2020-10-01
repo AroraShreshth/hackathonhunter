@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'markdownx',
     'crispy_forms',
     'bulma',
-    'imagekit'
+    'imagekit',
+    'pwa',
 
 
 ]
@@ -200,7 +201,39 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "competitionhunternoreply@gmail.com"
 EMAIL_HOST_PASSWORD = "Ysm3'U;?B"
 
+# PWA SETUP
+PWA_APP_NAME = website_name
+PWA_APP_DESCRIPTION = "Organize and Participate in Comeptitions"
+PWA_APP_THEME_COLOR = '#0A0302'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/icon/android-chrome-512x512.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/static/icon/apple-touch-icon-180x180.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/icons/android-chrome-maskable-512x512.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
+PWA_APP_DEBUG_MODE = False
 
+# Github workflow File
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
         'default': {
