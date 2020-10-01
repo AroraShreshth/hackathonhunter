@@ -26,6 +26,7 @@ django-heroku==0.3.1
 django-imagekit==4.0.2
 django-markdownx==3.0.1
 django-phone-field==1.8.1
+django-pwa==1.0.10
 django-recaptcha==2.0.6
 django-six==1.0.4
 djangorestframework==3.11.1
@@ -49,6 +50,8 @@ pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycodestyle==2.6.0
 pycparser==2.20
+Pygments==2.7.1
+pygount==1.2.4
 PyHamcrest==2.0.2
 PyJWT==1.7.1
 pyOpenSSL==19.1.0
