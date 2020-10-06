@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     'bulma',
     'imagekit',
     'pwa',
+    'markdownify',
+
+    # These 2 go hand in hand
+    'markdown_deux',
 
 
 ]
@@ -232,6 +236,11 @@ PWA_APP_SPLASH_SCREEN = [
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
 PWA_APP_DEBUG_MODE = False
+
+# Markdowify Settings
+MARKDOWNIFY_STRIP = False
+MARKDOWNIFY_WHITELIST_TAGS = {'a', 'p', 'h1', 'h2',
+                              'h3', 'h4', 'h5', 'h6', 'h7', 'ul', 'li', 'span', }
 
 # Github workflow File
 if os.environ.get('GITHUB_WORKFLOW'):

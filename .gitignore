@@ -160,3 +160,5 @@ webserver/certs/*
 
 #User generated Data
 media/
+
+static/

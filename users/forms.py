@@ -6,6 +6,7 @@ from .models import Profile, Snippet
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
 from django.contrib.auth.forms import AuthenticationForm
+from pagedown.widgets import PagedownWidget
 
 
 class UserRegisterForm(UserCreationForm):
@@ -83,7 +84,8 @@ class ShirtSizeGenderForm(forms.ModelForm):
         fields = ['gender', 'shirt_size']
 
 
-class BioForm(forms.ModelForm):
+class BioForm(forms.Form):
+    # Used in Profile Setup
     captcha = ReCaptchaField(
         label='',
         widget=ReCaptchaV3(
@@ -92,10 +94,12 @@ class BioForm(forms.ModelForm):
             }
         )
     )
-
-    class Meta:
-        model = Profile
-        fields = ['bio']
+    bio = forms.CharField(
+        max_length=5000,
+        min_length=20,
+        label='Bio',
+        widget=forms.Textarea
+    )
 
 
 class ProfileGTForm(forms.ModelForm):
@@ -106,6 +110,7 @@ class ProfileGTForm(forms.ModelForm):
 
 
 class ProfileAboutForm(forms.ModelForm):
+    # used in Welcome Setup
     bio = forms.CharField(
         max_length=500,
         min_length=20,

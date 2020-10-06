@@ -1,0 +1,21 @@
+{% extends "dashboard/base_foc.html" %}
+{% load markdown_deux_tags %}
+{% load markdownify %}
+{% block content %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<section class="section">
+    <div class="box container">
+        <div class="p-2 ">
+        <h1 class="title">
+            {{ user.first_name}} {{ user.last_name }}'s Profile
+        </h1>
+           {{ data|markdown }}
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
+

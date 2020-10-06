@@ -22,6 +22,7 @@ from vacc.settings import website_name
 from django.core.mail import send_mail
 import random
 import re
+import markdown
 
 
 def homepage(request):
@@ -301,15 +302,34 @@ def VerifyEmail(request):
 
 # Profile Page View of Application from this point onwards
 
+def ProfileMarkdown(request):
+    profile = Profile.objects.get(user=request.user)
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - Public',
+        'data': profile.bio
+    }
+    return render(request, 'dashboard/profile_publicpreview.html', context)
+
+
 @login_required
 def ProfileAbout(request):
+    profile = Profile.objects.get(user=request.user)
+
     context = {
         'website_name': website_name,
         'title': 'Profile - About',
-        'name_form': NameForm,
-        'bio_form': BioForm,
-        'g_form': ShirtSizeGenderForm
+        'bio_form': BioForm(initial={'bio': profile.bio}),
     }
+
+    if request.method == 'POST':
+        form = BioForm(request.POST)
+
+        if form.is_valid():
+            profile.bio = form.cleaned_data.get('bio')
+            profile.save()
+            return redirect('profile-edu')
+
     return render(request, 'dashboard/profile_about.html', context)
 
 

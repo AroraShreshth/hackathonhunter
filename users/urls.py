@@ -6,6 +6,7 @@ from . import views as user_views
 urlpatterns = [
     # Profile Filling Views
     path('profile/about', user_views.ProfileAbout, name='profile-about'),
+    path('profile/preview', user_views.ProfileMarkdown, name='profile-markdown'),
     path('profile/education', user_views.ProfileEducation, name='profile-edu'),
     path('profile/experience', user_views.ProfileExperience, name='profile-exp'),
     path('profile/links', user_views.ProfileLinks, name='profile-links'),
