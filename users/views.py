@@ -330,7 +330,7 @@ def ProfileAbout(request):
         if form.is_valid():
             profile.bio = form.cleaned_data.get('bio')
             profile.save()
-            return redirect('profile-edu')
+            return render(request, 'dashboard/profile_about.html', context)
 
     return render(request, 'dashboard/profile_about.html', context)
 
