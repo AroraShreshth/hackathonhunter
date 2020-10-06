@@ -321,6 +321,7 @@ def ProfileAbout(request):
         'website_name': website_name,
         'title': 'Profile - About',
         'bio_form': BioForm(initial={'bio': profile.bio}),
+        'data': profile.bio
     }
 
     if request.method == 'POST':

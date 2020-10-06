@@ -23,7 +23,7 @@
   <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'bulma/css/style.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-
+  <link rel="stylesheet" type="text/css" href="{% static 'mde/simplemde.min.css' %}">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   {% if title%}
   <title>{{ website_name }} | {{title}}</title>
@@ -31,7 +31,6 @@
   <title>{{website_name }}</title>
   {% endif %}
     {% progressive_web_app_meta %}
-  {{ form.media }}
 </head>
 
   <body>
@@ -43,5 +42,7 @@
  
   {% include 'dashboard/_footer.html' %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+  <script src="{% static 'mde/simplemde.min.js' %}" ></script>
+  
   </body>
 </html>

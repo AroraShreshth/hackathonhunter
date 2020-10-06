@@ -1,6 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% load crispy_forms_tags %}
 {% load bulma_tags %}
+{% load markdown_deux_tags %}
 {% block content %}
 
 
@@ -46,13 +47,30 @@
 <div class="columns ">
   <div class="column is-half is-offset-one-quarter">
       <div class="tile is-ancestor is-12">
-
     <div class="tile is-parent is-vertical">
       <article class="tile is-child notification is-12 is-white box is-centered">
         <div class="content">
           <h3 class="title">About you</h3>
           <p class="subtitle"> Markdown supported , write a meaningful intro </p>
-          <form method="POST" enctype="multipart/form-data">
+          
+          
+          {{ data|markdown }}
+  <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth" id="lanuchModal" >
+                <span class="icon mx-1 ">
+                    <i class="is-small fas fa-signature"></i>
+                  </span>
+                
+                <strong>Update Bio</strong>
+    </button> 
+        <div id="update-modal" class="modal  is-active"> 
+          <div class="modal-background"></div> 
+          <div class="modal-content"> 
+  
+            <div class='box'> 
+              <h1 class='title' > 
+                Update Bio</h1> 
+              <p class="subtitle"> Markdown supported , write a meaningful intro </p>
+              <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
               {{ bio_form|bulma }}
@@ -70,14 +88,65 @@
               <br>
             </div>
           </form>
+              
+            </div> 
+          </div> 
+          <button class="modal-close is-large" 
+                  aria-label="close"> 
+            Model 
+          </button> 
+        </div> 
         </div>
       </article>
     </div>
   </div>
   </div>
 </div>
-  
-
 </section>
+
+ {% comment %} <script> 
+
+    const modal =  
+          document.querySelector('.modal'); 
+    const btn =  
+          document.querySelector('#btn') 
+    const close =  
+          document.querySelector('.modal-close') 
+  
+    btn.addEventListener('click', 
+                         function () { 
+      modal.style.display = 'block' 
+    }) 
+  
+    close.addEventListener('click', 
+                           function () { 
+      modal.style.display = 'none' 
+    }) 
+  
+    window.addEventListener('click', 
+                            function (event) { 
+      if (event.target.className ===  
+          'modal-background') { 
+        modal.style.display = 'none' 
+      } 
+    })
+  </script>  {% endcomment %}
+
+  <script>
+ 
+$("#lanuchModal").click(function() {
+ 
+  $(".modal").addClass("is-active"); 
+ 
+});
+
+ 
+$(".modal-close").click(function() {
+ 
+   $(".modal").removeClass("is-active");
+ 
+});
+ 
+</script>
 
 {% endblock content %}
