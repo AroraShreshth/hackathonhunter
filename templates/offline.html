@@ -25,19 +25,23 @@
   <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
 
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  {% if title%}
-  <title>{{ website_name }} | {{title}}</title>
-  {% else %}
-  <title>{{website_name }}</title>
-  {% endif %}
+
+  <title>Competition Hunter | Offline</title>
   {% progressive_web_app_meta %}
 </head>
 
   <body>
  
-    {% include 'dashboard/_messages.html' %}
-    
-    {% block content %}{% endblock %}
+   <section class="section">
+    <div class="box container">
+      <h1 class="title">
+       Looks like you are offline 🤨
+      </h1>
+      <p class="subtitle">
+        try reconnecting internet
+      </p>
+    </div>
+  </section>
 
  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>

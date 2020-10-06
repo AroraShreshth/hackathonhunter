@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
-                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileEducationForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
+                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileEducationForm, ProfileExpForm, ProfileWorkForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
 from django.views.generic import (
     View,
     ListView,
@@ -16,13 +16,14 @@ from django.views.generic import (
 from django.views.generic.base import RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
-from users.models import Snippet, Profile
+from users.models import Snippet, Profile, Institute, Work, Link, Skill, FieldofStudy
 from django.contrib.auth import views as auth_views
 from vacc.settings import website_name
 from django.core.mail import send_mail
 import random
 import re
 import markdown
+from dal import autocomplete
 
 
 def homepage(request):
@@ -386,16 +387,62 @@ def ProfileEducation(request):
     return render(request, 'dashboard/profile_edu.html', context)
 
 
-@login_required
+class InstituteAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Institute.objects.none()
+        qs = Institute.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+        return qs
+
+
+class SkillAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Skill.objects.none()
+        qs = Skill.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+        return qs
+
+
+class FieldofStudyAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return FieldofStudy.objects.none()
+        qs = FieldofStudy.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q)
+        return qs
+
+
+@ login_required
 def ProfileExperience(request):
     context = {
         'website_name': website_name,
-        'title': 'Profile - Experience'
+        'title': 'Profile - Experience',
+        'form': ProfileExpForm,
+        'form_work': ProfileWorkForm,
     }
     return render(request, 'dashboard/profile_exp.html', context)
 
 
-@login_required
+@ login_required
+def ProfileExpResume(request):
+
+    if request.method == 'POST':
+        profile = Profile.objects.get(request.POST,
+                                      request.FILES,
+                                      instance=request.user.profile)
+        form = ProfileExpForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    return redirect('profile-exp')
+
+
+@ login_required
 def ProfileLinks(request):
     context = {
         'website_name': website_name,
@@ -404,7 +451,7 @@ def ProfileLinks(request):
     return render(request, 'dashboard/profile_links.html', context)
 
 
-@login_required
+@ login_required
 def ProfileContact(request):
     context = {
         'website_name': website_name,
@@ -413,7 +460,7 @@ def ProfileContact(request):
     return render(request, 'dashboard/profile_contact.html', context)
 
 
-@login_required
+@ login_required
 def settings(request):
     context = {
         'website_name': website_name,

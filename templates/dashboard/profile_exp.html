@@ -1,53 +1,103 @@
 {% extends "dashboard/base.html" %}
 {% load crispy_forms_tags %}
+{% load bulma_tags %}
 {% block content %}
- 
- 
+
+
 <section class="section">
-<div class="tabs is-toggle is-centered is-toggle-rounded">
-  <ul>
-    <li>
-      <a href={% url 'profile-about' %}>
-        <span class="icon is-small"><i class="fas fa-address-card"></i></span>
-        <span>About</span>
-      </a>
-    </li>
-    <li>
-      <a href={% url 'profile-edu' %}>
-        <span class="icon is-small"><i class="fas fa-university"></i></span>
-        <span>Education</span>
-      </a>
-    </li>
-    <li class="is-active">
-      <a href={% url 'profile-exp' %}>
-        <span class="icon is-small"><i class="fas fa-pencil-ruler"></i></span>
-        <span><strong>Experience</strong></span>
-      </a>
-    </li>
-    <li>
-      <a href={% url 'profile-links' %}>
-        <span class="icon is-small"><i class="fas fa-link"></i></span>
-        <span>Links</span>
-      </a>
-    </li>
-    <li>
-      <a href={% url 'profile-contact' %}>
-        <span class="icon is-small"><i class="fas fa-phone-alt"></i></span>
-        <span>Contact</span>
-      </a>
-    </li>
-  </ul>
-</div>
+  <div class="tabs is-toggle is-centered is-toggle-rounded">
+    <ul>
+      <li>
+        <a href={% url 'profile-about' %}>
+          <span class="icon is-small"><i class="fas fa-address-card"></i></span>
+          <span>About</span>
+        </a>
+      </li>
+      <li>
+        <a href={% url 'profile-edu' %}>
+          <span class="icon is-small"><i class="fas fa-university"></i></span>
+          <span>Education</span>
+        </a>
+      </li>
+      <li class="is-active">
+        <a href={% url 'profile-exp' %}>
+          <span class="icon is-small"><i class="fas fa-pencil-ruler"></i></span>
+          <span><strong>Experience</strong></span>
+        </a>
+      </li>
+      <li>
+        <a href={% url 'profile-links' %}>
+          <span class="icon is-small"><i class="fas fa-link"></i></span>
+          <span>Links</span>
+        </a>
+      </li>
+      <li>
+        <a href={% url 'profile-contact' %}>
+          <span class="icon is-small"><i class="fas fa-phone-alt"></i></span>
+          <span>Contact</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </section>
+
 <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hey, {{ user.first_name }} {{ user.last_name }} !
-      </h1>
-      <p class="subtitle">
-        Profile Change of {{website_name}}
-      </p>
+  <div class="tile is-ancestor is-12">
+    <div class="tile is-parent is-vertical mx-2">
+      <article class="tile is-child notification is-12 is-white box is-centered">
+        <div class="content">
+          <h3 class="title">Basic Information</h3>
+          {% comment %} <p class="subtitle">Your Basic Information</p> {% endcomment %}
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              {{ form|bulma }}
+            </fieldset>
+            <div class="form-group">
+
+              <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth" type="submit">
+                <strong>
+                  <span class="icon mx-1 ">
+                    <i class="is-small fas fa-signature"></i>
+                  </span>
+                  Submit
+                </strong>
+              </button>
+              <br>
+            </div>
+          </form>
+        </div>
+      </article>
     </div>
-  </section>
+
+    <div class="tile is-parent is-vertical">
+      <article class="tile is-child notification is-12 is-white box is-centered">
+        <div class="content">
+          <h3 class="title">About you</h3>
+          <p class="subtitle"> Markdown supported , write intro to your competition organizers </p>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              {{ form_work|bulma }}
+            </fieldset>
+            <div class="form-group">
+
+              <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth" type="submit">
+                <strong>
+                  <span class="icon mx-1 ">
+                    <i class="is-small fas fa-signature"></i>
+                  </span>
+                  Submit
+                </strong>
+              </button>
+              <br>
+            </div>
+          </form>
+        </div>
+      </article>
+    </div>
+  </div>
+
+</section>
 
 {% endblock content %}

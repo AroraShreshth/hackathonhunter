@@ -2,11 +2,12 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from .models import Profile, Snippet
+from .models import Profile, Snippet, Work, Link, Institute
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
 from django.contrib.auth.forms import AuthenticationForm
 import datetime
+from dal import autocomplete
 
 
 class UserRegisterForm(UserCreationForm):
@@ -166,6 +167,10 @@ class ProfileEducationForm(forms.ModelForm):
         widget=forms.DateInput(
             format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control'}),
     )
+    # institute = forms.ModelChoiceField(
+    #     queryset=Institute.objects.all(),
+    #     widget=autocomplete.ModelSelect2(url='institute-autocomplete')
+    # )
 
     class Meta:
         model = Profile
@@ -178,6 +183,9 @@ class ProfileEducationForm(forms.ModelForm):
         labels = {
             'course_length': 'Duration of Academic Course'
         }
+        # widgets = {
+        #     'institute': autocomplete.ModelSelect2(url='institute-autocomplete')
+        # }
 
 
 class ProfileUpdateForm(forms.ModelForm):
@@ -210,10 +218,31 @@ class EmailVerifyForm(forms.Form):
     )
 
 
-class ProfileResumeForm(forms.ModelForm):
+class ProfileExpForm(forms.ModelForm):
+
     class Meta:
         model = Profile
-        fields = ['resume']
+        fields = ['resume', 'skill']
+
+
+class ProfileWorkForm(forms.ModelForm):
+    start = forms.DateField(
+        localize=True,
+        label='Work Start',
+        widget=forms.DateInput(
+            format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control'}),
+    )
+    end = forms.DateField(
+        localize=True,
+        label='Work End',
+        widget=forms.DateInput(
+            format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control'}),
+    )
+
+    class Meta:
+        model = Work
+        fields = ['employer', 'role',
+                  'start', 'end', 'currently_working', 'description']
 
 
 class ContactForm(forms.ModelForm):

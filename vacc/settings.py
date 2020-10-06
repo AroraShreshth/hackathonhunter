@@ -26,6 +26,9 @@ website_name = 'Competiton Hunter'
 # Application definition
 
 INSTALLED_APPS = [
+    'dal',
+    'dal_select2',
+    'dal_legacy_static',
     # Core Applications
     'django.contrib.admin',
     'django.contrib.auth',
