@@ -16,7 +16,7 @@ from django.views.generic import (
 from django.views.generic.base import RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
-from users.models import Snippet, Profile, Institute, Work, Link, Skill, FieldofStudy
+from users.models import Snippet, Profile, Institute, Work, Link, Skill, FieldofStudy, City
 from django.contrib.auth import views as auth_views
 from vacc.settings import website_name
 from django.core.mail import send_mail
@@ -414,6 +414,17 @@ class FieldofStudyAutocomplete(autocomplete.Select2QuerySetView):
         qs = FieldofStudy.objects.all()
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
+        return qs
+
+
+class CityAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return City.objects.none()
+        qs = City.objects.all()
+        if self.q:
+            qs = qs.filter(name__istartswith=self.q,
+                           state__istartswith=self.q)
         return qs
 
 

@@ -57,6 +57,14 @@ class School(BaseClass):
         return f'{self.name}'
 
 
+class City(BaseClass):
+    name = models.CharField(max_length=150)
+    state = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.name}, {self.state}'
+
+
 class Profile(BaseClass):
 
     # Logical Stuff
@@ -143,7 +151,8 @@ class Profile(BaseClass):
     # contact
     phone = PhoneField(blank=True, help_text='Contact phone number')
     address = models.TextField(max_length=5000, null=True, blank=True)
-
+    location = models.ForeignKey(
+        City, on_delete=models.SET_NULL, null=True, blank=True)
     emergency_contact_name = models.CharField(blank=True, max_length=150)
     emergency_phone = PhoneField(blank=True, help_text='Contact phone number')
 

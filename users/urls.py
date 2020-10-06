@@ -13,6 +13,8 @@ urlpatterns = [
          name='fieldofstudy-autocomplete'),
     path('school-autocomplete/', user_views.SkillAutocomplete.as_view(create_field='name'),
          name='skill-autocomplete'),
+    path('city-autocomplete/', user_views.CityAutocomplete.as_view(),
+         name='city-autocomplete'),
     # Profile Filling Views
     path('profile/about', user_views.ProfileAbout, name='profile-about'),
     path('profile/preview', user_views.ProfileMarkdown, name='profile-markdown'),

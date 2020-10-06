@@ -51,11 +51,9 @@
                     <fieldset class="form-group">
                        {% csrf_token %}
                         {{ form|bulma }}
-
                         <table style="display: none">
                             {{ view.formset.empty_form }}
                         </table>
-
                         <table>
                             {{ view.formset }}
                              <hr class="dropdown-divider">
