@@ -5,12 +5,14 @@ from . import views as user_views
 
 urlpatterns = [
     # Django AutoComplete Light Views
-    path('institute-autocomplete/', user_views.InstituteAutocomplete.as_view(),
+    path('institute-autocomplete/', user_views.InstituteAutocomplete.as_view(create_field='name'),
          name='institute-autocomplete'),
-    path('skill-autocomplete/', user_views.SkillAutocomplete.as_view(),
+    path('skill-autocomplete/', user_views.SkillAutocomplete.as_view(create_field='name'),
          name='skill-autocomplete'),
     path('fieldofstudy-autocomplete/', user_views.FieldofStudyAutocomplete.as_view(),
          name='fieldofstudy-autocomplete'),
+    path('school-autocomplete/', user_views.SkillAutocomplete.as_view(create_field='name'),
+         name='skill-autocomplete'),
     # Profile Filling Views
     path('profile/about', user_views.ProfileAbout, name='profile-about'),
     path('profile/preview', user_views.ProfileMarkdown, name='profile-markdown'),
