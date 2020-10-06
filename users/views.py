@@ -302,6 +302,7 @@ def VerifyEmail(request):
 
 # Profile Page View of Application from this point onwards
 
+@login_required
 def ProfileMarkdown(request):
     profile = Profile.objects.get(user=request.user)
     context = {

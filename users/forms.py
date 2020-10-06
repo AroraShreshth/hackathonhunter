@@ -5,8 +5,6 @@ from django.core.exceptions import ValidationError
 from .models import Profile, Snippet
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
-from django.contrib.auth.forms import AuthenticationForm
-from pagedown.widgets import PagedownWidget
 
 
 class UserRegisterForm(UserCreationForm):
