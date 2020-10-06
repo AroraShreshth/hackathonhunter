@@ -153,6 +153,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+
 # Admin Emails
 ADMINS = [
     ('Shreshth-Arora', 'arorashreshth1@gmail.com'),

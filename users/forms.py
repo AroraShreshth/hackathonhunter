@@ -6,6 +6,7 @@ from .models import Profile, Snippet
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
 from django.contrib.auth.forms import AuthenticationForm
+import datetime
 
 
 class UserRegisterForm(UserCreationForm):
@@ -125,6 +126,22 @@ class ProfileAboutForm(forms.ModelForm):
         )
     )
 
+    dob = forms.DateField(
+        localize=True,
+        label='Date of Birth',
+        widget=forms.DateInput(
+            format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control'}),
+    )
+
+    # def clean(self):
+    #     dob_data = self.cleaned_data.get('dob')
+    #     t = datetime.datetime.now() - datetime.timedelta(days=13*365)
+    #     if dob_data < t.date():
+    #         raise forms.ValidationError(
+    #             'You should be older than 13 years to signup on the application')
+
+    #     return self.cleaned_data
+
     class Meta:
         model = Profile
         fields = ['dob', 'gender', 'bio', 'captcha']
@@ -135,11 +152,32 @@ class ProfileAboutForm(forms.ModelForm):
 
 
 class ProfileEducationForm(forms.ModelForm):
+    captcha = ReCaptchaField(
+        label='',
+        widget=ReCaptchaV3(
+            attrs={
+                'required_score': 0.75,
+            }
+        )
+    )
+    grad_year = forms.DateField(
+        localize=True,
+        label='Graduation Year',
+        widget=forms.DateInput(
+            format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control'}),
+    )
 
     class Meta:
         model = Profile
-        fields = ['no_formal_education', 'degree_type',
-                  'grad_year', 'field_of_study']
+        fields = ['degree_type',
+                  'course_length',
+                  'field_of_study',
+                  'institute',
+                  'grad_year',
+                  'captcha']
+        labels = {
+            'course_length': 'Duration of Academic Course'
+        }
 
 
 class ProfileUpdateForm(forms.ModelForm):

@@ -1,5 +1,6 @@
 {% extends "dashboard/base.html" %}
 {% load crispy_forms_tags %}
+{% load bulma_tags %}
 {% block content %}
  
  
@@ -39,15 +40,50 @@
   </ul>
 </div>
 </section>
+
 <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hey, {{ user.first_name }} {{ user.last_name }} !
-      </h1>
-      <p class="subtitle">
-        Profile Change of {{website_name}}
-      </p>
+    <div class="columns is-centered">
+        <div class="column box is-half ">
+            <div class="content-section">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|bulma }}
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="form-group ">
+                            <div class="control ">
+                                <button class="my-2  has-text-centered button is-link is-fullwidth" type="submit">
+                                    <span class="icon mx-1 ">
+                                        <i class="is-small fas fa-building"></i>
+                                    </span>
+                                    <strong> Update Education</strong>
+                                </button>
+                            </div>
+                        </div>
+                </form>
+                 
+                    <div class="column">
+                        <a class="button is-warning "href="{% url 'profile-about' %}">
+                                <span class="icon mx-1 ">
+                                    <i class="is-small fas fas fa-arrow-left"></i>
+                                </span>
+                                <strong> About</strong>
+                        </a>
+                        <small class="text-muted" style="float: right;">
+                            <a class="ml-2 button is-primary" href="{% url 'profile-exp' %}">
+                                   
+                                  <strong>  Experience </strong>
+                                   <span class="icon mx-1 ">
+                                        <i class="is-small fas fa-arrow-right"></i>
+                                    </span>
+                            </a>
+                        </small>
+                    </div>
+                </div> 
+            </div>
+        </div>
     </div>
-  </section>
+</section>
 
 {% endblock content %}

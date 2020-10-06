@@ -52,9 +52,7 @@
             <div class="content">
               <div class="column">
                 <h1 class="title ">
-
                   About you
-
                 </h1>
 
                 <button class=" has-text-centered button is-link " id="lanuchModal">
@@ -64,9 +62,6 @@
                   <strong>Update Bio</strong>
                 </button>
               </div>
-
-
-
 
               {{ data|markdown }}
 
@@ -104,7 +99,19 @@
               </div>
 
 
-
+              <div class="column">
+                        
+                        <small class="text-muted" style="float: right;">
+                            <a class="ml-2 button is-link" href="{% url 'profile-edu' %}">
+                                   
+                                  <strong> Education  </strong>
+                                   <span class="icon mx-1 ">
+                                        <i class="is-small fas fa-arrow-right"></i>
+                                    </span>
+                            </a>
+                        </small>
+                    </div>
+            
             </div>
           </article>
         </div>

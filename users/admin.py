@@ -43,7 +43,6 @@ class ProfileAdmin(admin.ModelAdmin):
         'institute',
         'field_of_study',
         'grad_year',
-        'skill',
         'resume',
         'work_status',
         'phone',

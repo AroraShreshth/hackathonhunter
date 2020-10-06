@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
-                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
+                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileEducationForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
 from django.views.generic import (
     View,
     ListView,
@@ -317,29 +317,71 @@ def ProfileMarkdown(request):
 def ProfileAbout(request):
     profile = Profile.objects.get(user=request.user)
 
-    context = {
-        'website_name': website_name,
-        'title': 'Profile - About',
-        'bio_form': BioForm(initial={'bio': profile.bio}),
-        'data': profile.bio
-    }
-
     if request.method == 'POST':
         form = BioForm(request.POST)
 
         if form.is_valid():
             profile.bio = form.cleaned_data.get('bio')
             profile.save()
+            context = {
+                'website_name': website_name,
+                'title': 'Profile - About',
+                'bio_form': BioForm(initial={'bio': profile.bio}),
+                'data': form.cleaned_data.get('bio')
+            }
             return render(request, 'dashboard/profile_about.html', context)
 
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - About',
+        'bio_form': BioForm(initial={'bio': profile.bio}),
+        'data': profile.bio
+    }
     return render(request, 'dashboard/profile_about.html', context)
 
 
 @login_required
 def ProfileEducation(request):
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        form = ProfileEducationForm(request.POST)
+        if form.is_valid():
+            profile.degree_type = form.cleaned_data.get('degree_type')
+            profile.grad_year = form.cleaned_data.get('grad_year')
+            profile.field_of_study = form.cleaned_data.get('field_of_study')
+            profile.institute = form.cleaned_data.get('institute')
+            profile.course_length = form.cleaned_data.get('course_length')
+
+            profile.save()
+            context = {
+                'website_name': website_name,
+                'title': 'Profile - Education',
+                'form': ProfileEducationForm(
+                    initial={
+                        'degree_type': profile.degree_type,
+                        'grad_year': profile.grad_year,
+                        'field_of_study': profile.field_of_study,
+                        'institute': profile.institute,
+                        'course_length': profile.course_length
+                    }
+                )
+
+            }
+            return render(request, 'dashboard/profile_edu.html', context)
+
     context = {
         'website_name': website_name,
-        'title': 'Profile - Education'
+        'title': 'Profile - Education',
+        'form': ProfileEducationForm(
+            initial={
+                'degree_type': profile.degree_type,
+                'grad_year': profile.grad_year,
+                'field_of_study': profile.field_of_study,
+                'institute': profile.institute,
+                'course_length': profile.course_length
+            }
+        ),
     }
     return render(request, 'dashboard/profile_edu.html', context)
 

@@ -50,6 +50,13 @@ class Skill(BaseClass):
         return f'{self.name}'
 
 
+class School(BaseClass):
+    name = models.CharField(max_length=300)
+
+    def __str__(self):
+        return f'{self.name}'
+
+
 class Profile(BaseClass):
 
     # Logical Stuff
@@ -99,11 +106,14 @@ class Profile(BaseClass):
 
     no_formal_education = models.BooleanField(default=False)
 
+    completed_school = models.BooleanField(default=False)
+
     DEGREE_TYPE = (
+        ('PhD', 'PhD'),
         ('Associate', 'Associate'),
         ('Masters', 'Masters'),
-        ('PhD', 'PhD'),
-        ('High School', 'High School')
+        ('Bachelors', 'Bachelors'),
+        ('Diploma', 'Diploma')
     )
 
     degree_type = models.CharField(
@@ -112,11 +122,17 @@ class Profile(BaseClass):
         Institute, on_delete=models.PROTECT, null=True, blank=True)
     field_of_study = models.ForeignKey(
         FieldofStudy, on_delete=models.PROTECT, null=True, blank=True)
-    grad_year = models.DateTimeField(null=True, blank=True)
+    grad_year = models.DateField(null=True, blank=True)
+    LENGTH_COURSE = (
+        ('3', '3 year'),
+        ('4', '4 year'),
+        ('5', '5 year')
+    )
+    course_length = models.CharField(max_length=1, choices=LENGTH_COURSE)
 
     # Experience
-    skill = models.ForeignKey(
-        Skill, on_delete=models.PROTECT, null=True, blank=True)
+    skill = models.ManyToManyField(
+        Skill, blank=True)
 
     def user_directory_path(instance, filename):
         return 'user_{0}/{1}'.format(instance.user.username, filename)
@@ -181,3 +197,28 @@ class Snippet(BaseClass):
 
     def __str__(self):
         return f'{self.title} : {self.body}'
+
+
+class SchoolEducation(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
+
+    STANDARD_CHOICES = (
+        ('1', '1st'),
+        ('2', '2nd'),
+        ('3', '3rd '),
+        ('4', '4th'),
+        ('5', '5th'),
+        ('6', '6th'),
+        ('7', '7th'),
+        ('8', '8th'),
+        ('9', '9th'),
+        ('10', '10th'),
+        ('11', '11th'),
+        ('12', '12th')
+    )
+    from_standard = models.CharField(max_length=2, choices=STANDARD_CHOICES)
+    to_standard = models.CharField(max_length=2, choices=STANDARD_CHOICES)
+
+    def __str__(self):
+        return f'{self.school.name} '
