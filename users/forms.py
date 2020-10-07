@@ -233,22 +233,21 @@ class EmailVerifyForm(forms.Form):
     )
 
 
-class ProfileExpForm(forms.ModelForm):
+class ProfileExpForm(forms.Form):
     skill = forms.ModelChoiceField(
         queryset=Skill.objects.all(),
-        widget=autocomplete.ModelSelect2Multiple(
+        widget=autocomplete.ModelSelect2(
             url='skill-autocomplete',
             attrs={
                 'data-placeholder': 'skill',
                 'data-minimum-input-length': 0,
-                # 'class': 'columns is full '
             },
         )
     )
 
-    class Meta:
-        model = Profile
-        fields = ['skill']
+    # class Meta:
+    #     model = Profile
+    #     fields = ['skill']
 
 
 class ProfileWorkForm(forms.ModelForm):

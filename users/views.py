@@ -387,14 +387,34 @@ def ProfileEducation(request):
     return render(request, 'dashboard/profile_edu.html', context)
 
 
+# Was planned to use but not being used right now
+# class ProfileExperience(LoginRequiredMixin, UpdateView):
+#     model = Profile
+#     template_name = 'dashboard/profile_exp.html'
+#     fields = ['skill']
+#     form_class = ProfileExpForm
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['website_name'] = website_name
+#         context['title'] = 'Profile - Experience'
+#         context['form'] = ProfileExpForm,
+#         context['form_work'] = ProfileWorkForm
+#         context['work'] = Work.objects.filter(profile=profile),
+#         return context
+
+
 @login_required
 def ProfileExperience(request):
+    profile = Profile.objects.get(user=request.user)
 
     context = {
         'website_name': website_name,
         'title': 'Profile - Experience',
         'form': ProfileExpForm,
         'form_work': ProfileWorkForm,
+        'works': Work.objects.filter(profile=profile),
+        'skills': profile.skill.all()
     }
 
     return render(request, 'dashboard/profile_exp.html', context)
@@ -413,10 +433,24 @@ def ProfileWorkCreate(request):
 
 
 @login_required
+def ProfileSkillConnect(request):
+    if request.method == 'POST':
+        profile = Profile.objects.get(user=request.user)
+        form = ProfileExpForm(request.POST)
+        print(form)
+        if form.is_valid():
+            skill = form.cleaned_data.get('skill')
+            skill_add = Skill.objects.get(name=skill)
+            profile.skill.add(skill_add)
+            profile.save()
+
+    return redirect('profile-exp')
+
+
+@login_required
 def ProfileExpResume(request):
 
     if request.method == 'POST':
-
         form = ProfileExpForm(request.POST,
                               request.FILES,
                               instance=request.user.profile)
@@ -438,9 +472,13 @@ class InstituteAutocomplete(autocomplete.Select2QuerySetView):
 
 class SkillAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
+
         if not self.request.user.is_authenticated:
             return Skill.objects.none()
-        qs = Skill.objects.all()
+        profile = Profile.objects.get(user=self.request.user)
+        skills_discounted = profile.skill.all()
+        qs = Skill.objects.all().order_by('name')
+        qs = qs.exclude(id__in=[s.id for s in skills_discounted])
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
         return qs

@@ -11,8 +11,8 @@ urlpatterns = [
          name='skill-autocomplete'),
     path('fieldofstudy-autocomplete/', user_views.FieldofStudyAutocomplete.as_view(),
          name='fieldofstudy-autocomplete'),
-    path('school-autocomplete/', user_views.SkillAutocomplete.as_view(create_field='name'),
-         name='skill-autocomplete'),
+    path('school-autocomplete/', user_views.SchoolAutocomplete.as_view(create_field='name'),
+         name='school-autocomplete'),
     path('city-autocomplete/', user_views.CityAutocomplete.as_view(),
          name='city-autocomplete'),
     # Profile Filling Views
@@ -24,6 +24,8 @@ urlpatterns = [
     path('profile/contact', user_views.ProfileContact, name='profile-contact'),
     path('profile/work/create', user_views.ProfileWorkCreate,
          name='profile-work-create'),
+    path('profile/skill/connect', user_views.ProfileSkillConnect,
+         name='profile-skill-connect'),
     path('p/', user_views.profilepage, name='public-profile'),
     # Sign Up & On boarding / Welcome Logic & Auth Views
     path('', user_views.homepage, name='home'),
