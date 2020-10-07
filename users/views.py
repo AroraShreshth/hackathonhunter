@@ -387,6 +387,45 @@ def ProfileEducation(request):
     return render(request, 'dashboard/profile_edu.html', context)
 
 
+@login_required
+def ProfileExperience(request):
+
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - Experience',
+        'form': ProfileExpForm,
+        'form_work': ProfileWorkForm,
+    }
+
+    return render(request, 'dashboard/profile_exp.html', context)
+
+
+@login_required
+def ProfileWorkCreate(request):
+    if request.method == 'POST':
+        profile = Profile.objects.get(user=request.user)
+        form = ProfileWorkForm(request.POST)
+        if form.is_valid():
+            form.instance.profile = profile
+            form.save()
+
+    return redirect('profile-exp')
+
+
+@login_required
+def ProfileExpResume(request):
+
+    if request.method == 'POST':
+
+        form = ProfileExpForm(request.POST,
+                              request.FILES,
+                              instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+
+    return redirect('profile-exp')
+
+
 class InstituteAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated:
@@ -438,32 +477,7 @@ class SchoolAutocomplete(autocomplete.Select2QuerySetView):
         return qs
 
 
-@ login_required
-def ProfileExperience(request):
-    context = {
-        'website_name': website_name,
-        'title': 'Profile - Experience',
-        'form': ProfileExpForm,
-        'form_work': ProfileWorkForm,
-    }
-    return render(request, 'dashboard/profile_exp.html', context)
-
-
-@ login_required
-def ProfileExpResume(request):
-
-    if request.method == 'POST':
-        profile = Profile.objects.get(request.POST,
-                                      request.FILES,
-                                      instance=request.user.profile)
-        form = ProfileExpForm(request.POST)
-        if form.is_valid():
-            form.save()
-
-    return redirect('profile-exp')
-
-
-@ login_required
+@login_required
 def ProfileLinks(request):
     context = {
         'website_name': website_name,
@@ -472,7 +486,7 @@ def ProfileLinks(request):
     return render(request, 'dashboard/profile_links.html', context)
 
 
-@ login_required
+@login_required
 def ProfileContact(request):
     context = {
         'website_name': website_name,
@@ -481,7 +495,7 @@ def ProfileContact(request):
     return render(request, 'dashboard/profile_contact.html', context)
 
 
-@ login_required
+@login_required
 def settings(request):
     context = {
         'website_name': website_name,

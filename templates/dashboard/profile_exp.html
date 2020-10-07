@@ -47,23 +47,23 @@
     <div class="tile is-parent is-vertical mx-2">
       <article class="tile is-child notification is-12 is-white box is-centered">
         <div class="content">
-          <h3 class="title">Your Skills and Resume </h3>
-          <p class="subtitle has-text-grey-light">These will help you to find more interesting competitons and also
-            match according
-            to the organisor </p>
-          <button class=" has-text-centered button is-link " id="lanuchModal">
+          <h3 class="title">Work </h3>
+          <p class="subtitle has-text-grey">
+            Have you ever worked before? Add these details to make a credible profile
+          </p>
+          <button class=" has-text-centered button is-link is-fullwidth " id="lanuchModal">
             <span class="icon mx-1 ">
               <i class="is-small fas fa-signature"></i>
             </span>
-            <strong>Update Bio</strong>
+            <strong>Add Work</strong>
           </button>
           <div id="update-modal" class="modal px-2 ">
             <div class="modal-background"></div>
             <div class="modal-content">
               <div class='box'>
-                <h1 class='title'>Add Your Skills</h1>
-                <p class="subtitle"> Inform about your top skills </p>
-                <form method="POST">
+                <h3 class="title">Your Work </h3>
+                <p class="subtitle">Description is markdown supported</p>
+                <form action={% url 'profile-work-create' %} method="POST">
                   {% csrf_token %}
                   <fieldset class="form-group">
                     {% csrf_token %}
@@ -103,8 +103,10 @@
     <div class="tile is-parent is-vertical">
       <article class="tile is-child notification is-12 is-white box is-centered">
         <div class="content">
-          <h3 class="title">About you</h3>
-          <p class="subtitle"> Markdown supported , write intro to your competition organizers </p>
+          <h3 class="title">Your Skills</h3>
+          <p class="subtitle has-text-grey">This will help you to match you with your type of competitions </p>
+
+
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -129,6 +131,8 @@
   </div>
 
 </section>
+
+
 <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
 
 {{ form.media }}

@@ -22,6 +22,8 @@ urlpatterns = [
     path('profile/experience', user_views.ProfileExperience, name='profile-exp'),
     path('profile/links', user_views.ProfileLinks, name='profile-links'),
     path('profile/contact', user_views.ProfileContact, name='profile-contact'),
+    path('profile/work/create', user_views.ProfileWorkCreate,
+         name='profile-work-create'),
     path('p/', user_views.profilepage, name='public-profile'),
     # Sign Up & On boarding / Welcome Logic & Auth Views
     path('', user_views.homepage, name='home'),

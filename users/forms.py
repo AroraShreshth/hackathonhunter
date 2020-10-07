@@ -254,13 +254,13 @@ class ProfileExpForm(forms.ModelForm):
 class ProfileWorkForm(forms.ModelForm):
     start = forms.DateField(
         localize=True,
-        label='Work Start',
+        label='Start Date',
         widget=forms.DateInput(
             format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control'}),
     )
     end = forms.DateField(
         localize=True,
-        label='Work End',
+        label='End Date',
         widget=forms.DateInput(
             format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control'}),
     )
@@ -269,6 +269,9 @@ class ProfileWorkForm(forms.ModelForm):
         model = Work
         fields = ['employer', 'role',
                   'start', 'end', 'currently_working', 'description']
+        labels = {
+            'currently_working': 'Currently Working Here'
+        }
 
 
 class ContactForm(forms.ModelForm):
