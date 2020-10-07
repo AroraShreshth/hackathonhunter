@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
-                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileEducationForm, ProfileExpForm, ProfileWorkForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
+                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileResumeForm, ProfileEducationForm, ProfileExpForm, ProfileWorkForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
 from django.views.generic import (
     View,
     ListView,
@@ -413,6 +413,7 @@ def ProfileExperience(request):
         'title': 'Profile - Experience',
         'form': ProfileExpForm,
         'form_work': ProfileWorkForm,
+        'resume_form': ProfileResumeForm,
         'works': Work.objects.filter(profile=profile),
         'skills': profile.skill.all()
     }
@@ -448,12 +449,11 @@ def ProfileSkillConnect(request):
 
 
 @login_required
-def ProfileExpResume(request):
+def ProfileResumeUpload(request):
 
     if request.method == 'POST':
-        form = ProfileExpForm(request.POST,
-                              request.FILES,
-                              instance=request.user.profile)
+        form = ProfileResumeForm(
+            request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
 

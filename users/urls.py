@@ -26,6 +26,9 @@ urlpatterns = [
          name='profile-work-create'),
     path('profile/skill/connect', user_views.ProfileSkillConnect,
          name='profile-skill-connect'),
+    path('profile/resume/upload', user_views.ProfileResumeUpload,
+         name='profile-resume-upload'),
+
     path('p/', user_views.profilepage, name='public-profile'),
     # Sign Up & On boarding / Welcome Logic & Auth Views
     path('', user_views.homepage, name='home'),

@@ -245,9 +245,15 @@ class ProfileExpForm(forms.Form):
         )
     )
 
-    # class Meta:
-    #     model = Profile
-    #     fields = ['skill']
+
+class ProfileResumeForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ['resume']
+        labels = {
+            'resume': 'Resume'
+        }
 
 
 class ProfileWorkForm(forms.ModelForm):
