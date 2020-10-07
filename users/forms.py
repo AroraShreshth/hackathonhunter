@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from .models import Profile, Snippet, Work, Link, Institute, FieldofStudy
+from .models import Profile, Snippet, Work, Link, Institute, FieldofStudy, Skill
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
 from django.contrib.auth.forms import AuthenticationForm
@@ -234,10 +234,21 @@ class EmailVerifyForm(forms.Form):
 
 
 class ProfileExpForm(forms.ModelForm):
+    skill = forms.ModelChoiceField(
+        queryset=Skill.objects.all(),
+        widget=autocomplete.ModelSelect2Multiple(
+            url='skill-autocomplete',
+            attrs={
+                'data-placeholder': 'skill',
+                'data-minimum-input-length': 0,
+                # 'class': 'columns is full '
+            },
+        )
+    )
 
     class Meta:
         model = Profile
-        fields = ['resume', 'skill']
+        fields = ['skill']
 
 
 class ProfileWorkForm(forms.ModelForm):

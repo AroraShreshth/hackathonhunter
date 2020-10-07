@@ -1,6 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% load crispy_forms_tags %}
 {% load bulma_tags %}
+{% load static %}
 {% block content %}
 
 
@@ -46,8 +47,64 @@
     <div class="tile is-parent is-vertical mx-2">
       <article class="tile is-child notification is-12 is-white box is-centered">
         <div class="content">
-          <h3 class="title">Basic Information</h3>
-          {% comment %} <p class="subtitle">Your Basic Information</p> {% endcomment %}
+          <h3 class="title">Your Skills and Resume </h3>
+          <p class="subtitle has-text-grey-light">These will help you to find more interesting competitons and also
+            match according
+            to the organisor </p>
+          <button class=" has-text-centered button is-link " id="lanuchModal">
+            <span class="icon mx-1 ">
+              <i class="is-small fas fa-signature"></i>
+            </span>
+            <strong>Update Bio</strong>
+          </button>
+          <div id="update-modal" class="modal px-2 ">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+              <div class='box'>
+                <h1 class='title'>Add Your Skills</h1>
+                <p class="subtitle"> Inform about your top skills </p>
+                <form method="POST">
+                  {% csrf_token %}
+                  <fieldset class="form-group">
+                    {% csrf_token %}
+                    {{ form_work|bulma }}
+                    <table style="display: none">
+                      {{ view.formset.empty_form }}
+                    </table>
+                    <table>
+                      {{ view.formset }}
+                      <hr class="dropdown-divider">
+                    </table>
+                  </fieldset>
+                  <div class="form-group">
+
+                    <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth" type="submit">
+                      <strong>
+                        <span class="icon mx-1 ">
+                          <i class="is-small fas fa-signature"></i>
+                        </span>
+                        Submit
+                      </strong>
+                    </button>
+                    <br>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <button class="modal-close is-large" aria-label="close">
+              Model
+            </button>
+          </div>
+
+        </div>
+      </article>
+    </div>
+
+    <div class="tile is-parent is-vertical">
+      <article class="tile is-child notification is-12 is-white box is-centered">
+        <div class="content">
+          <h3 class="title">About you</h3>
+          <p class="subtitle"> Markdown supported , write intro to your competition organizers </p>
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -69,35 +126,47 @@
         </div>
       </article>
     </div>
-
-    <div class="tile is-parent is-vertical">
-      <article class="tile is-child notification is-12 is-white box is-centered">
-        <div class="content">
-          <h3 class="title">About you</h3>
-          <p class="subtitle"> Markdown supported , write intro to your competition organizers </p>
-          <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <fieldset class="form-group">
-              {{ form_work|bulma }}
-            </fieldset>
-            <div class="form-group">
-
-              <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth" type="submit">
-                <strong>
-                  <span class="icon mx-1 ">
-                    <i class="is-small fas fa-signature"></i>
-                  </span>
-                  Submit
-                </strong>
-              </button>
-              <br>
-            </div>
-          </form>
-        </div>
-      </article>
-    </div>
   </div>
 
 </section>
+<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+
+{{ form.media }}
+
+<script>
+  (function ($) {
+    $('#add-form').click(function () {
+      var index = $('#id_inline_test_models-TOTAL_FORMS').val()
+      var newTable = $('#id_inline_test_models-__prefix__-DELETE').parents('table').clone()
+      newTable.find(':input').each(function () {
+        for (attr of ['name', 'id'])
+          $(this).attr(
+            attr,
+            $(this).attr(attr).replace('__prefix__', index)
+          )
+      })
+      newTable.insertBefore($(this))
+      $('#id_inline_test_models-TOTAL_FORMS').val(
+        parseInt($('#id_inline_test_models-TOTAL_FORMS').val()) + 1
+      )
+      newTable.slideDown()
+    })
+  })($)
+
+
+  $("#lanuchModal").click(function () {
+
+    $(".modal").addClass("is-active");
+
+  });
+
+
+  $(".modal-close").click(function () {
+
+    $(".modal").removeClass("is-active");
+
+  });
+
+</script>
 
 {% endblock content %}
