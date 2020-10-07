@@ -136,44 +136,53 @@
     <div class="column box is-half ">
       <div class="content-section">
         <form method="POST" action={% url 'profile-resume-upload' %} enctype="multipart/form-data">
-          {% csrf_token %}
           <fieldset class="form-group">
             {% csrf_token %}
-            {{ resume_form|bulma }}
-            <table style="display: none">
-              {{ view.formset.empty_form }}
-            </table>
-            <table>
-              {{ view.formset }}
-              <hr class="dropdown-divider">
-            </table>
+            <div class="field">
+              <label class="label">Resume</label>
+              <div class="control ">
+                <label class="file-label">
+                  <input type="file" name="resume" class=" file-input" required id="id_resume" accept="application/pdf,application/msword,
+                  application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fa fa-upload"></i>
+                    </span>
+                    <span class="file-label" id="uploadresumelabel">
+                      Upload Resume
+                    </span>
+                  </span>
+                  <span class="file-name" id="resumefilename">
+                    No file Selected
+                  </span>
+                </label>
+              </div>
+            </div>
           </fieldset>
           <div class="form-group">
             <div class="form-group ">
               <div class="control ">
-                <button class="my-2  has-text-centered button is-link is-fullwidth" type="submit">
+                <button class="my-2  has-text-centered button is-link is-fullwidth" id="uploadresumebutton"
+                  type="submit">
                   <span class="icon mx-1 ">
-                    <i class="is-small fas fa-building"></i>
+                    <i class="is-small fas fa-file"></i>
                   </span>
-                  <strong> Update Education</strong>
+                  <strong> Upload Resume </strong>
                 </button>
               </div>
             </div>
         </form>
         <div>
-
-
           <div class="column">
-            <a class="button is-warning " href="{% url 'profile-about' %}">
+            <a class="button is-warning " href="{% url 'profile-edu' %}">
               <span class="icon mx-1 ">
                 <i class="is-small fas fas fa-arrow-left"></i>
               </span>
-              <strong> About</strong>
+              <strong> Education </strong>
             </a>
             <small class="text-muted" style="float: right;">
-              <a class="ml-2 button is-primary" href="{% url 'profile-exp' %}">
-
-                <strong> Experience </strong>
+              <a class="ml-2 button is-primary" href="{% url 'profile-links' %}">
+                <strong> Links </strong>
                 <span class="icon mx-1 ">
                   <i class="is-small fas fa-arrow-right"></i>
                 </span>
@@ -223,6 +232,16 @@
 
     $(".modal").removeClass("is-active");
 
+  });
+
+
+
+  $('#uploadresumelabel').click(function () {
+    $('#id_resume').change(function () {
+      var file = $('#id_resume')[0].files[0];
+
+      $('#resumefilename').html(file.name);
+    });
   });
 
 </script>
