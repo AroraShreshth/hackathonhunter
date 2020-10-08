@@ -44,7 +44,7 @@ class FieldofStudy(BaseClass):
 
 
 class Skill(BaseClass):
-    name = models.CharField(max_length=300)
+    name = models.CharField(max_length=30, unique=True)
 
     def __str__(self):
         return f'{self.name}'

@@ -20,10 +20,10 @@
           <span>Education</span>
         </a>
       </li>
-      <li class="is-active">
+      <li class="is-active has-text-weight-bold">
         <a href={% url 'profile-exp' %}>
           <span class="icon is-small"><i class="fas fa-pencil-ruler"></i></span>
-          <span><strong>Experience</strong></span>
+          <span>Experience</span>
         </a>
       </li>
       <li>
@@ -74,7 +74,7 @@
 
               <div class="dropdown is-rounded is-hoverable is-small is-right is-pulled-right">
                 <div class="dropdown-trigger">
-                  <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                  <button class="button is-link is-outlined " aria-haspopup="true" aria-controls="dropdown-menu4">
                     <span>more</span>
                     <span class="icon is-small">
                       <i class="fas fa-angle-down" aria-hidden="true"></i>
@@ -112,11 +112,11 @@
 
             <hr>
           {% endfor %}
-          <button class=" has-text-centered button is-link is-fullwidth " id="lanuchModal">
+          <button class=" has-text-weight-bold has-text-centered button is-link is-fullwidth " id="lanuchModal">
             <span class="icon mx-1 ">
               <i class="is-small fas fa-briefcase"></i>
             </span>
-            <strong>Add Work</strong>
+            Add Work
           </button>
           <div id="update-modal" class="modal px-2 ">
             <div class="modal-background"></div>
@@ -139,13 +139,13 @@
                   </fieldset>
                   <div class="form-group">
 
-                    <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth" type="submit">
-                      <strong>
+                    <button class="my-2 border-top py-4 has-text-weight-bold has-text-centered button is-link is-fullwidth" type="submit">
+                     
                         <span class="icon mx-1 ">
                           <i class="is-small fas fa-signature"></i>
                         </span>
                         Submit
-                      </strong>
+                     
                     </button>
                     <br>
                   </div>
@@ -190,13 +190,13 @@
               {{ form|bulma }}
             </fieldset>
             <div class="form-group">
-              <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth" type="submit">
-                <strong>
+              <button class="my-2 border-top py-4 has-text-weight-bold has-text-centered button is-link is-fullwidth" type="submit">
+                
                   <span class="icon mx-1 ">
                     <i class="is-small fas fa-plus"></i>
                   </span>
                   Add Skill
-                </strong>
+                
               </button>
               <br>
             </div>
@@ -219,10 +219,11 @@
           Resume
            {% if resume %}
           </h3>
-           <a class="button is-normal is-info is-outlined" href="{{resume.url}}" target="_blanK">
+           <a class="button is-normal has-text-weight-bold is-link is-outlined" href="{{resume.url}}" target="_blanK">
 
-            <strong> Open Current Resume </strong>
+             Open Uploaded Resume
           </a>
+
           {% endif %}
         <form method="POST" action={% url 'profile-resume-upload' %} enctype="multipart/form-data">
           <fieldset class="form-group">
@@ -251,27 +252,27 @@
           <div class="form-group">
             <div class="form-group ">
               <div class="control ">
-                <button class="my-2  has-text-centered button is-link is-fullwidth" id="uploadresumebutton"
+                <button class="my-2 has-text-weight-bold has-text-centered button is-link is-fullwidth" id="uploadresumebutton"
                   type="submit">
                   <span class="icon mx-1 ">
                     <i class="is-small fas fa-file"></i>
                   </span>
-                  <strong> Upload Resume </strong>
+                  Upload Resume
                 </button>
               </div>
             </div>
         </form>
         <div>
           <div class="column">
-            <a class="button is-warning " href="{% url 'profile-edu' %}">
+            <a class="button is-warning has-text-weight-bold" href="{% url 'profile-edu' %}">
               <span class="icon mx-1 ">
                 <i class="is-small fas fas fa-arrow-left"></i>
               </span>
-              <strong> Education </strong>
+              Education 
             </a>
             <small class="text-muted" style="float: right;">
-              <a class="ml-2 button is-primary" href="{% url 'profile-links' %}">
-                <strong> Links </strong>
+              <a class="ml-2 button is-primary has-text-weight-bold" href="{% url 'profile-links' %}">
+                 Links
                 <span class="icon mx-1 ">
                   <i class="is-small fas fa-arrow-right"></i>
                 </span>
