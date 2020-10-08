@@ -1,9 +1,16 @@
 {% extends "dashboard/base.html" %}
 {% load crispy_forms_tags %}
+{% load bulma_tags %}
+{% load static %}
 {% block content %}
  
  
 <section class="section">
+<div class="container has-text-centered mb-4">
+        <h3 class='has-text-grey-darker title is-4'>
+            100% profile completed
+        </h3> 
+  </div>
 <div class="tabs is-toggle is-centered is-toggle-rounded">
   <ul>
     <li>
@@ -27,7 +34,7 @@
     <li>
       <a href={% url 'profile-links' %}>
         <span class="icon is-small"><i class="fas fa-link"></i></span>
-        <span><strong>Links</strong></span>
+        <span>Links</span>
       </a>
     </li>
     <li class="is-active">
@@ -40,14 +47,90 @@
 </div>
 </section>
 <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hey, {{ user.first_name }} {{ user.last_name }} !
-      </h1>
-      <p class="subtitle">
-        Profile Change of {{website_name}}
-      </p>
+    <div class="columns is-centered ">
+        <div class="column box is-half ">
+            <div class="content-section p-4 ">
+            
+                    <h2 class='title'>
+                    <span class="icon mx-1 ">
+                        <i class="is-small fas fas fa-id-card"></i>
+                    </span>
+                      Contact Details
+                    </h2>
+                    <p class="subtitle"> How can we get in touch with you? Also In case something goes wrong when you're attending a competition organized on {{website_name}}, who'd you like us to reach out to first?​</p>
+
+                 <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|bulma }}
+                        <table style="display: none">
+                            {{ view.formset.empty_form }}
+                        </table>
+                        <table>
+                            {{ view.formset }}
+                             <hr class="dropdown-divider">
+                        </table>
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="form-group ">
+                            <div class="control ">
+                                <button class="my-2  has-text-centered button is-link is-fullwidth" type="submit">
+                                    <span class="icon mx-1 ">
+                                        <i class="is-small fas fa-address-card"></i>
+                                    </span>
+                                    <strong> Update Contact Details</strong>
+                                </button>
+                            </div>
+                        </div>
+                </form> 
+                 <div>
+
+
+                    <div class="column">
+                        <a class="button is-warning "href="{% url 'profile-links' %}">
+                                <span class="icon mx-1 ">
+                                    <i class="is-small fas fas fa-arrow-left"></i>
+                                </span>
+                                <strong>Links</strong>
+                        </a>
+                        <small class="text-muted" style="float: right;">
+                            <a class="ml-2 button is-primary" href="{% url 'profile-markdown' %}">
+                                   
+                                  <strong> Preview Profile </strong>
+                                   <span class="icon mx-1 ">
+                                        <i class="is-small fas fa-arrow-right"></i>
+                                    </span>
+                            </a>
+                        </small>
+                    </div>
+                </div> 
+            </div>
+        </div>
     </div>
-  </section>
+</section>
+<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+
+{{ form.media }}
+
+<script>
+(function($) {
+    $('#add-form').click(function() {
+        var index = $('#id_inline_test_models-TOTAL_FORMS').val()
+        var newTable = $('#id_inline_test_models-__prefix__-DELETE').parents('table').clone()
+        newTable.find(':input').each(function() {
+            for (attr of ['name', 'id'])
+                $(this).attr(
+                    attr,
+                    $(this).attr(attr).replace('__prefix__', index)
+                )
+        })
+        newTable.insertBefore($(this))
+        $('#id_inline_test_models-TOTAL_FORMS').val(
+            parseInt($('#id_inline_test_models-TOTAL_FORMS').val()) + 1
+        )
+        newTable.slideDown()
+    })
+})($)
+</script>
 
 {% endblock content %}

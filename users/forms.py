@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from .models import Profile, Snippet, Work, Link, Institute, FieldofStudy, Skill
+from .models import Profile, Snippet, Work, Link, Institute, FieldofStudy, Skill, City
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
 from django.contrib.auth.forms import AuthenticationForm
@@ -99,7 +99,8 @@ class BioForm(forms.Form):
         max_length=5000,
         min_length=20,
         label='Bio',
-        widget=forms.Textarea
+        widget=forms.Textarea(
+            attrs={"rows": 15, "cols": 20, "required": True})
     )
 
 
@@ -272,6 +273,8 @@ class ProfileWorkForm(forms.ModelForm):
         ),
 
     )
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={"rows": 4, "cols": 20, "required": True}), max_length=200, min_length=10, )
 
     class Meta:
         model = Work
@@ -283,15 +286,23 @@ class ProfileWorkForm(forms.ModelForm):
 
 
 class ContactForm(forms.ModelForm):
+    location = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        widget=autocomplete.ModelSelect2(
+            url='city-autocomplete',
+            attrs={
+                'data-placeholder': 'Your City',
+                'data-minimum-input-length': 0,
+            },
+        )
+    )
+    address = forms.CharField(
+        widget=forms.Textarea(attrs={"rows": 4, "cols": 20, "required": True}), max_length=200, min_length=10, )
+
     class Meta:
         model = Profile
-        fields = ['phone', 'address', 'emergency_contact_name']
-
-
-class ContactEmergencyForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['emergency_contact_name', 'emergency_phone']
+        fields = ['phone', 'location', 'address',
+                  'emergency_contact_name', 'emergency_phone']
 
 
 class PhoneVerifyForm(forms.ModelForm):

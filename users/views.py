@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
-                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileResumeForm, ProfileEducationForm, ProfileExpForm, ProfileWorkForm, LinkForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
+                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileResumeForm, ProfileEducationForm, ProfileExpForm, ProfileWorkForm, LinkForm, ContactForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
 from django.views.generic import (
     View,
     ListView,
@@ -388,6 +388,52 @@ def ProfileEducation(request):
     return render(request, 'dashboard/profile_edu.html', context)
 
 
+@login_required
+def ProfileContact(request):
+    profile = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = ContactForm(request.POST, )
+        if form.is_valid():
+
+            profile.phone = form.cleaned_data.get('phone')
+            profile.location = form.cleaned_data.get('location')
+            profile.address = form.cleaned_data.get('address')
+            profile.emergency_contact_name = form.cleaned_data.get(
+                'emergency_contact_name')
+            profile.emergency_phone = form.cleaned_data.get('emergency_phone')
+            profile.save()
+
+            context = {
+                'website_name': website_name,
+                'title': 'Profile - Links',
+                'form': ContactForm(
+                    initial={
+                        'phone': profile.phone,
+                        'location': profile.location,
+                        'address': profile.address,
+                        'emergency_contact_name': profile.emergency_contact_name,
+                        'emergency_phone': profile.emergency_phone
+
+                    }
+                )
+            }
+
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - Links',
+        'form': ContactForm(
+            initial={
+                'phone': profile.phone,
+                'location': profile.location,
+                'address': profile.address,
+                'emergency_contact_name': profile.emergency_contact_name,
+                'emergency_phone': profile.emergency_phone
+
+            }
+        )
+    }
+    return render(request, 'dashboard/profile_contact.html', context)
+
 # Was planned to use but not being used right now
 # class ProfileExperience(LoginRequiredMixin, UpdateView):
 #     model = Profile
@@ -633,15 +679,6 @@ class SchoolAutocomplete(autocomplete.Select2QuerySetView):
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
         return qs
-
-
-@login_required
-def ProfileContact(request):
-    context = {
-        'website_name': website_name,
-        'title': 'Profile - Links'
-    }
-    return render(request, 'dashboard/profile_contact.html', context)
 
 
 @login_required
