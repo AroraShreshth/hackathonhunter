@@ -267,7 +267,10 @@ class ProfileWorkForm(forms.ModelForm):
         localize=True,
         label='End Date',
         widget=forms.DateInput(
-            format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control'}),
+            format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control', 'required': 'false', }
+
+        ),
+
     )
 
     class Meta:

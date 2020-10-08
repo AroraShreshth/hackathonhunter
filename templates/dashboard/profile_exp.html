@@ -65,7 +65,7 @@
           {% endif %}
 
           {% for work in works %}
-          <div class="box ">
+          <div >
                 
             <div >
               <h6>
@@ -83,7 +83,7 @@
                 </div>
                 <div class="dropdown-menu" id="dropdown-menu3" role="menu">
                   <div class="dropdown-content">
-                    <a href="{% url 'profile-work-update' work.id %}" class="is-link dropdown-item">
+                    <a href="{% url 'profile-work-update' work.id %}" class=" dropdown-item">
                       Update
                     </a>
                     <a href="{% url 'profile-work-delete' work.id %}" class="dropdown-item">
@@ -109,10 +109,12 @@
             {{ work.description }}
 
           </div>
+
+            <hr>
           {% endfor %}
           <button class=" has-text-centered button is-link is-fullwidth " id="lanuchModal">
             <span class="icon mx-1 ">
-              <i class="is-small fas fa-signature"></i>
+              <i class="is-small fas fa-briefcase"></i>
             </span>
             <strong>Add Work</strong>
           </button>
@@ -170,15 +172,19 @@
         <div>
           {% if skills %}
           {% for skill in skills %}
-          <div class="columns ">
-            <p class="column">{{ skill.name }}</p>
-            <a class="delete is-pulled-right column" href={% url 'profile-skill-disconnect' skill_id=skill.id %}></a>
+          <div class="columns button is-mobile is-link py-2 my-2 ">
+            <p class="column mt-3">{{ skill.name }}</p>
+            <a class=" is-pulled-right is-mobile column" href={% url 'profile-skill-disconnect' skill_id=skill.id %}>
+            <span class="icon mx-1 ">
+              <i class="fas fa-times-circle"></i>
+            </span>
+            </a>
           </div>
           {% endfor %}
           {% endif %}
           </div>
           {% if skill_form_show %}
-          <form action={% url 'profile-skill-connect' %} method="POST">
+          <form class="mt-6" action={% url 'profile-skill-connect' %} method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
               {{ form|bulma }}
@@ -187,9 +193,9 @@
               <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth" type="submit">
                 <strong>
                   <span class="icon mx-1 ">
-                    <i class="is-small fas fa-signature"></i>
+                    <i class="is-small fas fa-plus"></i>
                   </span>
-                  Submit
+                  Add Skill
                 </strong>
               </button>
               <br>
@@ -205,7 +211,7 @@
 
 <section class="section">
   <div class="columns is-centered">
-    <div class="column box is-10">
+    <div class="column box is-8">
       <div class="content-section">
         <h3 class="title"> <span class="icon mx-1 ">
             <i class="fas fa-file"></i>
@@ -214,7 +220,7 @@
            
           </h3>
            <a class="button is-normal is-info is-outlined" href="{{resume.url}}" target="_blanK">
-            <strong> Open Current Resume : {{resume}} </strong>
+            <strong> Open Current Resume </strong>
           </a>
         <form method="POST" action={% url 'profile-resume-upload' %} enctype="multipart/form-data">
           <fieldset class="form-group">
@@ -319,7 +325,6 @@
   $('#uploadresumelabel').click(function () {
     $('#id_resume').change(function () {
       var file = $('#id_resume')[0].files[0];
-
       $('#resumefilename').html(file.name);
     });
   });

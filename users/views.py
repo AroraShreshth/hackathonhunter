@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -430,26 +431,47 @@ def ProfileExperience(request):
 class WorkUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Work
     template_name = 'dashboard/profile_work_update.html'
+    form = ProfileWorkForm
     fields = ['employer', 'role',
               'start', 'end', 'currently_working', 'description']
 
-    def test_func(self):
+    def get_context_data(self, **kwargs):
         work = self.get_object()
-        return self.request.user == work.profile.user
-
-
-class WorkDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Work
-    template_name = 'dashboard/profile_work_confirm_delete.html'
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Profile - Work Update'
+        context['form'] = ProfileWorkForm(
+            initial={
+                'employer': work.employer,
+                'role': work.role,
+                'start': work.start,
+                'end': work.end,
+                'currently_working': work.currently_working,
+                'description': work.description
+            }
+        )
+        return context
 
     def test_func(self):
         work = self.get_object()
         return self.request.user == work.profile.user
 
     def get_success_url(self):
-        return redirect('profile-exp')
-        # return reverse_lazy(
-        #     "photo-detail", kwargs={'pk': note.photo.id})
+
+        return reverse_lazy('profile-exp')
+
+
+class WorkDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Work
+    template_name = 'dashboard/profile_work_confirm_delete.html'
+    context_object_name = 'work'
+
+    def test_func(self):
+        work = self.get_object()
+        return self.request.user == work.profile.user
+
+    def get_success_url(self):
+        return reverse_lazy('profile-exp')
 
 
 @login_required
