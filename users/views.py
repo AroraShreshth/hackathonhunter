@@ -502,7 +502,6 @@ def ProfileSkillConnect(request):
     if request.method == 'POST':
         profile = Profile.objects.get(user=request.user)
         form = ProfileExpForm(request.POST)
-        print(form)
         if form.is_valid():
             skill = form.cleaned_data.get('skill')
             skill_add = Skill.objects.get(name=skill)
@@ -530,9 +529,19 @@ def ProfileLinks(request):
     context = {
         'website_name': website_name,
         'title': 'Profile - Links',
-        'form': LinkForm,
+        'form': LinkForm(
+            initial={
+                'url': 'https://'
+            }
+        ),
         'links': Link.objects.filter(profile=profile)
     }
+
+    if request.method == 'POST':
+        form = LinkForm(request.POST)
+        if form.is_valid():
+            form.instance.profile = profile
+            form.save()
 
     return render(request, 'dashboard/profile_links.html', context)
 

@@ -52,54 +52,32 @@
                   Add Links
                 </h1>
                 <p class="subtitle has-text-grey">
-                  Add links to your internet profile that are scattered accross the internet or anywhere your work stands out
+                  Add links to your internet profile that are scattered accross the internet , anywhere your work stands out. These will be visible on top right of your profile
                 </p>
               </div>
-
-              <div class="listLinks ">
-             {% for link in links %}
-          <div >
+              {% if links %}
+              {% for link in links %}
+              <div class="columns button is-mobile  py-2 my-2  mx-1">
                 
-            <div >
-              <h6>
-                {{ link.url }}
-              </h6>
-
-              <div class="dropdown is-rounded is-hoverable is-small is-right is-pulled-right">
-                <div class="dropdown-trigger">
-                  <button class="button is-link is-outlined " aria-haspopup="true" aria-controls="dropdown-menu4">
-                    <span>more</span>
-                    <span class="icon is-small">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu3" role="menu">
-                  <div class="dropdown-content">
-                    <a href="{% url 'profile-link-update' link.id %}" class=" dropdown-item">
-                      Update
-                    </a>
-                    <a href="{% url 'profile-link-delete' link.id %}" class="dropdown-item">
-                      Delete
-                    </a>
-                  
-                  </div>
+                <a class="column is-11 has-text-left" href="{{ link.url }}" target="_blank">{{ link.url }}</a>
+                <a class=" is-pulled-left is-mobile column " href={% url 'profile-link-delete' link_id=link.id %}>
+                <span class="icon mx-1 ">
+                  <i class="fas fa-times-circle"></i>
+                </span>
+                </a>
               </div>
-              </div>
-            </div>
-
-          </div>
-
-            <hr>
-          {% endfor %}
-              </div>
+              {% endfor %}
+              {% endif %}
+              
+             
+              
 
               <div id="update-modal" class="modal px-2 ">
                 <div class="modal-background"></div>
                 <div class="modal-content">
                   <div class='box'>
-                    <h1 class='title'>
-                      Update Bio</h1>
+                    <h2 class='title'>
+                      Add Link</h2>
                     <p class="subtitle"> Markdown supported , write a meaningful intro </p>
                     <form method="POST" enctype="multipart/form-data">
                       {% csrf_token %}
@@ -126,7 +104,7 @@
                   Model
                 </button>
               </div>
-               <button class=" has-text-centered button is-link is-fullwidth" id="lanuchModal">
+               <button class=" has-text-centered button is-link is-fullwidth pb-3 mx-2 " id="lanuchModal">
                   <span class="icon mx-1 ">
                     <i class="is-small fas fa-link"></i>
                   </span>
@@ -134,14 +112,14 @@
                 </button>
 
               <div class="column">
-                        <a class="button is-warning has-text-weight-bold "href="{% url 'profile-exp' %}">
+                        <a class="button is-warning has-text-weight-bold mt-2 "href="{% url 'profile-exp' %}">
                                 <span class="icon mx-1 ">
                                     <i class="is-small fas fas fa-arrow-left"></i>
                                 </span>
                                 Experience
                         </a>
                         <small class="text-muted" style="float: right;">
-                            <a class="ml-2 button is-primary has-text-weight-bold" href="{% url 'profile-contact' %}">
+                            <a class="ml-2 button is-primary has-text-weight-bold mt-2" href="{% url 'profile-contact' %}">
                                    
                                   Contact
                                    <span class="icon mx-1 ">

@@ -313,7 +313,15 @@ class PhoneVerifyForm(forms.ModelForm):
 
 class LinkForm(forms.ModelForm):
     url = forms.URLField(label='Link', required=True)
+    captcha = ReCaptchaField(
+        label='',
+        widget=ReCaptchaV3(
+            attrs={
+                'required_score': 0.75,
+            }
+        )
+    )
 
     class Meta:
         model = Link
-        fields = ['url']
+        fields = ['url', 'captcha']
