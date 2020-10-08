@@ -14,6 +14,7 @@ Django==3.1
 django-admin==2.0.1
 django-appconf==1.0.4
 django-autocomplete-light==3.5.1
+django-autoslug-iplweb==1.9.4.dev0
 django-bulma==0.8.1
 django-crispy-forms==1.9.2
 django-debug-toolbar==2.2
@@ -50,6 +51,7 @@ pdfkit==0.6.1
 pilkit==2.0
 Pillow==7.2.0
 ply==3.11
+progressbar2==3.53.1
 promise==2.3
 psycopg2==2.8.5
 pyasn1==0.4.8
@@ -65,6 +67,7 @@ pyparsing==2.4.7
 pypng==0.0.20
 PyQRCode==1.2.1
 python-dotenv==0.14.0
+python-utils==2.4.0
 pytz==2020.1
 Rx==1.6.1
 screen==1.0.1
