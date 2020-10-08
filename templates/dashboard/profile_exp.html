@@ -217,11 +217,13 @@
             <i class="fas fa-file"></i>
           </span>
           Resume
-           
+           {% if resume %}
           </h3>
            <a class="button is-normal is-info is-outlined" href="{{resume.url}}" target="_blanK">
+
             <strong> Open Current Resume </strong>
           </a>
+          {% endif %}
         <form method="POST" action={% url 'profile-resume-upload' %} enctype="multipart/form-data">
           <fieldset class="form-group">
             {% csrf_token %}

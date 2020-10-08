@@ -422,8 +422,10 @@ def ProfileExperience(request):
         'works': Work.objects.filter(profile=profile),
         'skills': profile.skill.all(),
         'skill_form_show': skill_form_show,
-        'resume': profile.resume
+
     }
+    if profile.resume:
+        context.update({'resume': profile.resume})
 
     return render(request, 'dashboard/profile_exp.html', context)
 
