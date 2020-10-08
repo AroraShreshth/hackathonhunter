@@ -1,5 +1,6 @@
 {% extends "dashboard/base.html" %}
 {% load crispy_forms_tags %}
+{% load bulma_tags %}
 {% block content %}
  
  
@@ -40,14 +41,136 @@
 </div>
 </section>
 <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hey, {{ user.first_name }} {{ user.last_name }} !
-      </h1>
-      <p class="subtitle">
-        Profile Change of {{website_name}}
-      </p>
+  <div class="columns ">
+    <div class="column is-half is-offset-one-quarter">
+      <div class="tile is-ancestor is-12">
+        <div class="tile is-parent is-vertical">
+          <article class="tile is-child notification is-12 is-white box is-centered">
+            <div class="content">
+              <div class="column">
+                <h1 class="title ">
+                  Add Links
+                </h1>
+                <p class="subtitle has-text-grey">
+                  Add links to your internet profile that are scattered accross the internet or anywhere your work stands out
+                </p>
+              </div>
+
+              <div class="listLinks ">
+             {% for link in links %}
+          <div >
+                
+            <div >
+              <h6>
+                {{ link.url }}
+              </h6>
+
+              <div class="dropdown is-rounded is-hoverable is-small is-right is-pulled-right">
+                <div class="dropdown-trigger">
+                  <button class="button is-link is-outlined " aria-haspopup="true" aria-controls="dropdown-menu4">
+                    <span>more</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                  <div class="dropdown-content">
+                    <a href="{% url 'profile-link-update' link.id %}" class=" dropdown-item">
+                      Update
+                    </a>
+                    <a href="{% url 'profile-link-delete' link.id %}" class="dropdown-item">
+                      Delete
+                    </a>
+                  
+                  </div>
+              </div>
+              </div>
+            </div>
+
+          </div>
+
+            <hr>
+          {% endfor %}
+              </div>
+
+              <div id="update-modal" class="modal px-2 ">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                  <div class='box'>
+                    <h1 class='title'>
+                      Update Bio</h1>
+                    <p class="subtitle"> Markdown supported , write a meaningful intro </p>
+                    <form method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <fieldset class="form-group">
+                        {{ form|bulma }}
+                      </fieldset>
+                      <div class="form-group">
+
+                        <button class="my-2 border-top py-4  has-text-centered button is-link is-fullwidth"
+                          type="submit">
+                          <strong>
+                            <span class="icon mx-1 ">
+                              <i class="is-small fas fa-signature"></i>
+                            </span>
+                            Submit
+                          </strong>
+                        </button>
+                        <br>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <button class="modal-close is-large" aria-label="close">
+                  Model
+                </button>
+              </div>
+               <button class=" has-text-centered button is-link is-fullwidth" id="lanuchModal">
+                  <span class="icon mx-1 ">
+                    <i class="is-small fas fa-link"></i>
+                  </span>
+                  <strong>Add New Link</strong>
+                </button>
+
+              <div class="column">
+                        <a class="button is-warning has-text-weight-bold "href="{% url 'profile-exp' %}">
+                                <span class="icon mx-1 ">
+                                    <i class="is-small fas fas fa-arrow-left"></i>
+                                </span>
+                                Experience
+                        </a>
+                        <small class="text-muted" style="float: right;">
+                            <a class="ml-2 button is-primary has-text-weight-bold" href="{% url 'profile-contact' %}">
+                                   
+                                  Contact
+                                   <span class="icon mx-1 ">
+                                        <i class="is-small fas fa-arrow-right"></i>
+                                    </span>
+                            </a>
+                        </small>
+                    </div>
+          </article>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<script>
+  $("#lanuchModal").click(function () {
+
+    $(".modal").addClass("is-active");
+
+  });
+
+
+  $(".modal-close").click(function () {
+
+    $(".modal").removeClass("is-active");
+
+  });
+
+</script>
 
 {% endblock content %}

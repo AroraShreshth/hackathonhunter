@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
-                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileResumeForm, ProfileEducationForm, ProfileExpForm, ProfileWorkForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
+                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileResumeForm, ProfileEducationForm, ProfileExpForm, ProfileWorkForm, LinkForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
 from django.views.generic import (
     View,
     ListView,
@@ -409,7 +409,7 @@ def ProfileEducation(request):
 def ProfileExperience(request):
     profile = Profile.objects.get(user=request.user)
 
-    if profile.skill.all().count() > 8:
+    if profile.skill.all().count() > 9:
         skill_form_show = False
     else:
         skill_form_show = True
@@ -524,6 +524,53 @@ def ProfileResumeUpload(request):
     return redirect('profile-exp')
 
 
+@login_required
+def ProfileLinks(request):
+    profile = Profile.objects.get(user=request.user)
+    context = {
+        'website_name': website_name,
+        'title': 'Profile - Links',
+        'form': LinkForm,
+        'links': Link.objects.filter(profile=profile)
+    }
+
+    return render(request, 'dashboard/profile_links.html', context)
+
+
+@login_required
+def ProfileLinkDelete(request, link_id):
+    link = get_object_or_404(Link, id=link_id)
+    profile = Profile.objects.get(user=request.user)
+
+    if link.profile == profile:
+        link.delete()
+
+    return redirect('profile-links')
+
+
+class LinkUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Link
+    template_name = 'dashboard/profile_link_update.html'
+    form = LinkForm
+    fields = ['url']
+
+    def get_context_data(self, **kwargs):
+        link = self.get_object()
+        context = super().get_context_data(**kwargs)
+        context['website_name'] = website_name
+        context['title'] = 'Profile - Link Update'
+        context['form'] = LinkForm(
+            initial={
+                'url': link.url,
+            }
+        )
+        return context
+
+    def test_func(self):
+        link = self.get_object()
+        return self.request.user == link.profile.user
+
+
 class InstituteAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated:
@@ -577,15 +624,6 @@ class SchoolAutocomplete(autocomplete.Select2QuerySetView):
         if self.q:
             qs = qs.filter(name__istartswith=self.q)
         return qs
-
-
-@login_required
-def ProfileLinks(request):
-    context = {
-        'website_name': website_name,
-        'title': 'Profile - Links'
-    }
-    return render(request, 'dashboard/profile_links.html', context)
 
 
 @login_required

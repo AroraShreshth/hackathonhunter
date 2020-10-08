@@ -309,3 +309,11 @@ class PhoneVerifyForm(forms.ModelForm):
             }
         )
     )
+
+
+class LinkForm(forms.ModelForm):
+    url = forms.URLField(label='Link', required=True)
+
+    class Meta:
+        model = Link
+        fields = ['url']

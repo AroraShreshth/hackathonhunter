@@ -35,6 +35,10 @@ urlpatterns = [
          user_views.WorkDeleteView.as_view(), name='profile-work-delete'),
     path('profile/skill/<uuid:skill_id>/disconnect',
          user_views.ProfileSkillDisconnet, name='profile-skill-disconnect'),
+    path('profile/link/<uuid:pk>/update',
+         user_views.LinkUpdateView, name='profile-link-update'),
+    path('profile/link/<uuid:link_id>/delete',
+         user_views.ProfileLinkDelete, name='profile-link-delete'),
     path('p/', user_views.profilepage, name='public-profile'),
     # Sign Up & On boarding / Welcome Logic & Auth Views
     path('', user_views.homepage, name='home'),
