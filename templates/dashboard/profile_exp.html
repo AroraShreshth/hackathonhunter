@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% load bulma_tags %}
 {% load static %}
+{% load markdown_deux_tags %}
 {% block content %}
 
 
@@ -47,10 +48,42 @@
     <div class="tile is-parent is-vertical mx-2">
       <article class="tile is-child notification is-12 is-white box is-centered">
         <div class="content">
-          <h3 class="title">Work </h3>
+          <h3 class="title">
+            <span class="icon mx-1 ">
+              <i class="is-small fas fa-globe-asia"></i>
+            </span>
+            Work </h3>
+          {% if works %}
+
+          <p class="subtitle has-text-grey">
+
+            Your Amazing Work History
+          </p>
+          {% else %}
           <p class="subtitle has-text-grey">
             Have you ever worked before? Add these details to make a credible profile
           </p>
+          {% endif %}
+
+          {% for work in works %}
+          <div class="box ">
+
+            <div class=" ">
+              <h6>
+                {{ work.employer }} | {{ work.role }}
+              </h6>
+              {% if work.currently_working %}
+              <p class="is-italic">
+                Currently working here
+              </p>
+              {% endif %}
+            </div>
+
+            <p class="">{{ work.start}} - {{ work.end }}</p>
+            {{ work.description|markdown }}
+
+          </div>
+          {% endfor %}
           <button class=" has-text-centered button is-link is-fullwidth " id="lanuchModal">
             <span class="icon mx-1 ">
               <i class="is-small fas fa-signature"></i>
@@ -103,11 +136,18 @@
     <div class="tile is-parent is-vertical">
       <article class="tile is-child notification is-12 is-white box is-centered">
         <div class="content">
-          <h3 class="title">Your Skills</h3>
-          <p class="subtitle has-text-grey">This will help you to match you with your type of competitions </p>
+          <h3 class="title"> <span class="icon mx-1 ">
+              <i class="fab fa-angellist"></i>
+            </span>
+            Your Skills</h3>
+          <p class="subtitle has-text-grey">This will help you to match you with with type of competitions you like </p>
 
-
-          <form class="box" action={% url 'profile-skill-connect' %} method="POST">
+          {% if skills %}
+          {% for skill in skills %}
+          <p>{{ skill.name }}</p>
+          {% endfor %}
+          {% endif %}
+          <form action={% url 'profile-skill-connect' %} method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
               {{ form|bulma }}
@@ -133,8 +173,13 @@
 
 <section class="section">
   <div class="columns is-centered">
-    <div class="column box is-half ">
+    <div class="column box is-10">
       <div class="content-section">
+        <h3 class="title"> <span class="icon mx-1 ">
+            <i class="fas fa-file"></i>
+          </span>
+          Resume</h3>
+
         <form method="POST" action={% url 'profile-resume-upload' %} enctype="multipart/form-data">
           <fieldset class="form-group">
             {% csrf_token %}
@@ -235,7 +280,6 @@
   });
 
 
-
   $('#uploadresumelabel').click(function () {
     $('#id_resume').change(function () {
       var file = $('#id_resume')[0].files[0];
@@ -245,5 +289,6 @@
   });
 
 </script>
+
 
 {% endblock content %}
