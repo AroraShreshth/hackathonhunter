@@ -2,7 +2,6 @@
 {% load crispy_forms_tags %}
 {% load bulma_tags %}
 {% load static %}
-{% load markdown_deux_tags %}
 {% block content %}
 
 
@@ -67,20 +66,47 @@
 
           {% for work in works %}
           <div class="box ">
-
-            <div class=" ">
+                
+            <div >
               <h6>
                 {{ work.employer }} | {{ work.role }}
               </h6>
-              {% if work.currently_working %}
-              <p class="is-italic">
-                Currently working here
-              </p>
-              {% endif %}
+
+              <div class="dropdown is-rounded is-hoverable is-small is-right is-pulled-right">
+                <div class="dropdown-trigger">
+                  <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                    <span>more</span>
+                    <span class="icon is-small">
+                      <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                  <div class="dropdown-content">
+                    <a href="{% url 'profile-work-update' work.id %}" class="is-link dropdown-item">
+                      Update
+                    </a>
+                    <a href="{% url 'profile-work-delete' work.id %}" class="dropdown-item">
+                      Delete
+                    </a>
+                  
+                  </div>
+              </div>
+              </div>
+
+
             </div>
 
-            <p class="">{{ work.start}} - {{ work.end }}</p>
-            {{ work.description|markdown }}
+            <p class="mt-2 is-italic">
+              {{ work.start}} -
+                {% if work.currently_working %}
+                  Currently working here
+                {% else %}
+                  {{ work.end }}
+              {% endif %}
+
+            </p>
+            {{ work.description }}
 
           </div>
           {% endfor %}
@@ -140,13 +166,18 @@
               <i class="fab fa-angellist"></i>
             </span>
             Your Skills</h3>
-          <p class="subtitle has-text-grey">This will help you to match you with with type of competitions you like </p>
-
+          <p class="subtitle has-text-grey mb-3">Only top 9 skills. Connect you with better competitions </p>
+        <div>
           {% if skills %}
           {% for skill in skills %}
-          <p>{{ skill.name }}</p>
+          <div class="columns ">
+            <p class="column">{{ skill.name }}</p>
+            <a class="delete is-pulled-right column" href={% url 'profile-skill-disconnect' skill_id=skill.id %}></a>
+          </div>
           {% endfor %}
           {% endif %}
+          </div>
+          {% if skill_form_show %}
           <form action={% url 'profile-skill-connect' %} method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -164,6 +195,7 @@
               <br>
             </div>
           </form>
+          {% endif %}
         </div>
       </article>
     </div>
@@ -178,8 +210,12 @@
         <h3 class="title"> <span class="icon mx-1 ">
             <i class="fas fa-file"></i>
           </span>
-          Resume</h3>
-
+          Resume
+           
+          </h3>
+           <a class="button is-normal is-info is-outlined" href="{{resume.url}}" target="_blanK">
+            <strong> Open Current Resume : {{resume}} </strong>
+          </a>
         <form method="POST" action={% url 'profile-resume-upload' %} enctype="multipart/form-data">
           <fieldset class="form-group">
             {% csrf_token %}

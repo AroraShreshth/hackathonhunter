@@ -408,6 +408,10 @@ def ProfileEducation(request):
 def ProfileExperience(request):
     profile = Profile.objects.get(user=request.user)
 
+    if profile.skill.all().count() > 8:
+        skill_form_show = False
+    else:
+        skill_form_show = True
     context = {
         'website_name': website_name,
         'title': 'Profile - Experience',
@@ -415,10 +419,46 @@ def ProfileExperience(request):
         'form_work': ProfileWorkForm,
         'resume_form': ProfileResumeForm,
         'works': Work.objects.filter(profile=profile),
-        'skills': profile.skill.all()
+        'skills': profile.skill.all(),
+        'skill_form_show': skill_form_show,
+        'resume': profile.resume
     }
 
     return render(request, 'dashboard/profile_exp.html', context)
+
+
+class WorkUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Work
+    template_name = 'dashboard/profile_work_update.html'
+    fields = ['employer', 'role',
+              'start', 'end', 'currently_working', 'description']
+
+    def test_func(self):
+        work = self.get_object()
+        return self.request.user == work.profile.user
+
+
+class WorkDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Work
+    template_name = 'dashboard/profile_work_confirm_delete.html'
+
+    def test_func(self):
+        work = self.get_object()
+        return self.request.user == work.profile.user
+
+    def get_success_url(self):
+        return redirect('profile-exp')
+        # return reverse_lazy(
+        #     "photo-detail", kwargs={'pk': note.photo.id})
+
+
+@login_required
+def ProfileSkillDisconnet(request, skill_id):
+    skill = get_object_or_404(Skill, id=skill_id)
+    profile = Profile.objects.get(user=request.user)
+    if profile.skill.filter(name=skill.name).exists():
+        profile.skill.remove(skill)
+        return redirect('profile-exp')
 
 
 @login_required

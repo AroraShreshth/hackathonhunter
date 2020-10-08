@@ -29,6 +29,12 @@ urlpatterns = [
     path('profile/resume/upload', user_views.ProfileResumeUpload,
          name='profile-resume-upload'),
 
+    path('profile/work/<uuid:pk>/update', user_views.WorkUpdateView.as_view(),
+         name='profile-work-update'),
+    path('profile/work/<uuid:pk>/delete',
+         user_views.WorkDeleteView.as_view(), name='profile-work-delete'),
+    path('profile/skill/<uuid:skill_id>/disconnect',
+         user_views.ProfileSkillDisconnet, name='profile-skill-disconnect'),
     path('p/', user_views.profilepage, name='public-profile'),
     # Sign Up & On boarding / Welcome Logic & Auth Views
     path('', user_views.homepage, name='home'),
