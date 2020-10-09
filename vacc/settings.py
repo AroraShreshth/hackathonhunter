@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'appl.apps.ApplConfig',
     'issuerep.apps.IssuerepConfig',
     'payments.apps.PaymentsConfig',
+    'connect.apps.ConnectConfig'
 
     # External Applications
     'rest_framework',
