@@ -28,6 +28,8 @@ from dal import autocomplete
 
 
 def homepage(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard-home')
     return render(request, 'unlogged/index.html', {'title': '', 'website_name': website_name})
 
 
