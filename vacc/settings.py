@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'comp.apps.CompConfig',
     'appl.apps.ApplConfig',
     'issuerep.apps.IssuerepConfig',
+    'payments.apps.PaymentsConfig',
 
     # External Applications
     'rest_framework',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'imagekit',
     'pwa',
     'markdownify',
+    "push_notifications",
 
     # These 2 go hand in hand
     'markdown_deux',
@@ -245,6 +247,20 @@ PWA_APP_DEBUG_MODE = False
 MARKDOWNIFY_STRIP = False
 MARKDOWNIFY_WHITELIST_TAGS = {'a', 'p', 'h1', 'h2',
                               'h3', 'h4', 'h5', 'h6', 'h7', 'ul', 'li', 'span', }
+
+# django-push-notification config
+
+
+PUSH_NOTIFICATIONS_SETTINGS = {
+    "FCM_API_KEY": "AIzaSyByR23gn08tD2fFEQ49Vn9d-8blvGNGlOw",
+    # "GCM_API_KEY": "[your api key]",
+    # "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
+    # "APNS_TOPIC": "com.example.push_test",
+    # "WNS_PACKAGE_SECURITY_ID": "[your package security id, e.g: 'ms-app://e-3-4-6234...']",
+    # "WNS_SECRET_KEY": "[your app secret key, e.g.: 'KDiejnLKDUWodsjmewuSZkk']",
+    # "WP_PRIVATE_KEY": "/path/to/your/private.pem",
+    # "WP_CLAIMS": {'sub': "mailto: development@example.com"}
+}
 
 # Github workflow File
 if os.environ.get('GITHUB_WORKFLOW'):

@@ -1,0 +1,90 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+{% load bulma_tags %}
+{% load imagekit %}
+{% block content %}
+<section class="section">
+
+
+
+<section class="section columns is-5 ">
+
+     {% include 'settings/s_nav.html' %}
+
+  <div class=" column  is-vertical is-5 content-section p-4 ">
+
+             
+                
+            <form method="POST" class="box" enctype="multipart/form-data">
+                       <h1 class="title ">
+                            <span class="icon mx-1 ">
+                                <i class="is-small fas fa-user"></i>
+                            </span>
+                            Profile Photo
+
+                        </h1>
+                        {% if request.user.profile.image %}
+                        <p class="subtitle"> Want a new look ?</p>
+                        <figure class="image is-128x128 mb-5 ">
+                        {% thumbnail '200x200' request.user.profile.image -- alt="Your Profile Photo" id="profilephoto" %}
+                        </figure>
+                        {% endif%}
+                        <fieldset class="form-group">
+                        
+
+                    {% csrf_token %}
+    
+                        <div class="control ">
+                            <label class="file-label">
+                           <input type="file" name="image" accept="image/*" class=" file-input" id="id_image">
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                <i class="fa fa-upload"></i>
+                                </span>
+                                <span class="file-label" id="uploadprofilelabel">
+                                Upload New Profile Photo
+                                </span>
+                            </span>
+                            <span class="file-name" id="profilefilename">
+                                No file Selected
+                            </span>
+                            </label>
+                        </div>
+                        <table style="display: none">
+                            {{ view.formset.empty_form }}
+                        </table>
+                        <table>
+                            {{ view.formset }}
+                             <hr class="dropdown-divider">
+                        </table>
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="form-group ">
+                            <div class="control ">
+                                <button class="my-2  has-text-centered button is-link is-fullwidth" type="submit">
+                                    <span class="icon mx-1 ">
+                                        <i class="is-small fas fa-user"></i>
+                                    </span>
+                                    <strong> Update Details</strong>
+                                </button>
+                            </div>
+                        </div>
+                </form> 
+  </div>
+
+
+
+
+</section>
+<script>
+
+  $('#uploadprofilelabel').click(function () {
+    $('#id_image').change(function () {
+      var file = $('#id_image')[0].files[0];
+      $('#profilefilename').html(file.name);
+    });
+  });
+</script>
+
+
+{% endblock content %}

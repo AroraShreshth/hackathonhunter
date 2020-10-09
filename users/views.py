@@ -3,8 +3,8 @@ from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import (UserRegisterForm, UserUpdateForm, ProfileUpdateForm,
-                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileResumeForm, ProfileEducationForm, ProfileExpForm, ProfileWorkForm, LinkForm, ContactForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
+from .forms import (UserRegisterForm, UserUpdateForm, ProfileImageForm,
+                    SearchForm, NameForm, EmailVerifyForm, ProfileAboutForm, ProfileGTForm, ProfileResumeForm, ProfileEducationForm, ProfileExpForm, ProfileWorkForm, LinkForm, ContactForm, UserLoginForm, BioForm, ShirtSizeGenderForm)
 from django.views.generic import (
     View,
     ListView,
@@ -119,9 +119,9 @@ class NewLoginView(auth_views.LoginView):
 def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST,
-                                   request.FILES,
-                                   instance=request.user.profile)
+        p_form = ProfileImageForm(request.POST,
+                                  request.FILES,
+                                  instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
@@ -130,7 +130,7 @@ def profile(request):
 
     else:
         u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
+        p_form = ProfileImageForm(instance=request.user.profile)
 
     context = {
         'u_form': u_form,
@@ -685,11 +685,51 @@ class SchoolAutocomplete(autocomplete.Select2QuerySetView):
 
 @login_required
 def settings(request):
+
+    if request.method == 'POST':
+        name_form = NameForm(request.POST, instance=request.user)
+        gender_form = ProfileGTForm(request.POST,
+                                    request.FILES,
+                                    instance=request.user.profile)
+        if name_form.is_valid() and gender_form.is_valid():
+            name_form.save()
+            gender_form.save()
+    profile = Profile.objects.get(user=request.user)
     context = {
         'website_name': website_name,
-        'title': 'Settings'
+        'title': 'Settings',
+        'name_form': NameForm(
+            initial={
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name
+            }
+        ),
+        'gender_form': ProfileGTForm(
+            initial={
+                'gender': profile.gender,
+                'shirt_size': profile.shirt_size
+            }
+        )
     }
-    return render(request, 'dashboard/settings.html', context)
+    return render(request, 'settings/about.html', context)
+
+
+@login_required
+def settings_photo(request):
+    profile = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = ProfileImageForm(request.POST,
+                                request.FILES,
+                                instance=profile)
+        if form.is_valid():
+            form.save()
+
+    context = {
+        'website_name': website_name,
+        'title': 'Settings Image Upload',
+        'form': ProfileImageForm,
+    }
+    return render(request, 'settings/image.html', context)
 
 
 def profilepage(request):

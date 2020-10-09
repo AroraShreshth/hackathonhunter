@@ -49,7 +49,10 @@ urlpatterns = [
     path('about/', user_views.About.as_view(), name='about'),
     path('competitons/', user_views.Explore.as_view(), name='explore'),
     path('help/', user_views.Help.as_view(), name='help'),
-    path('settings/', user_views.settings, name='settings'),
+
+    # Settings Panel
+    path('settings/about', user_views.settings, name='settings-about'),
+    path('settings/photo', user_views.settings_photo, name='settings'),
 
     path('welcome/name', user_views.welcome, name='dashboard-welcome'),
     path('welcome/verifyemail', user_views.VerifyEmail,

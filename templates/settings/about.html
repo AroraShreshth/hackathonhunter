@@ -1,0 +1,55 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+{% load bulma_tags %}
+{% block content %}
+<section class="section">
+
+
+
+<section class="section columns is-5 ">
+
+     {% include 'settings/s_nav.html' %}
+
+  <div class=" column  is-vertical is-5 content-section p-4 ">
+
+             <h1 class="title ">
+                    <span class="icon mx-1 ">
+                        <i class="is-small fas fa-user"></i>
+                    </span>
+                  Your Details
+                </h1>
+            <form method="POST" class="box">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                       
+                        {{ name_form|bulma }}
+                        {{ gender_form|bulma }}
+                        <table style="display: none">
+                            {{ view.formset.empty_form }}
+                        </table>
+                        <table>
+                            {{ view.formset }}
+                             <hr class="dropdown-divider">
+                        </table>
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="form-group ">
+                            <div class="control ">
+                                <button class="my-2  has-text-centered button is-link is-fullwidth" type="submit">
+                                    <span class="icon mx-1 ">
+                                        <i class="is-small fas fa-user"></i>
+                                    </span>
+                                    <strong> Update Details</strong>
+                                </button>
+                            </div>
+                        </div>
+                </form> 
+  </div>
+
+
+
+
+</section>
+
+
+{% endblock content %}

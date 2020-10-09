@@ -1,15 +1,9 @@
-{% extends "dashboard/base.html" %}
-{% load crispy_forms_tags %}
-{% load bulma_tags %}
-{% block content %}
-
-<section class="section columns  ">
-   <aside class=" box m-2 ml-6 pl-5 menu is-vertical is-10 is-hidden-mobile">
+<aside class=" box m-2 ml-2 pl-5 menu is-vertical is-10 ">
   <p class="menu-label is-size-6 has-text-grey has-text-weight-medium" >
     General
   </p>
   <ul class="menu-list">
-    <li><a class="button is-link is-rounded has-text-left my-2 has-text-weight-bold">About You</a></li>
+    <li><a class="button is-link is-rounded has-text-left has-text-weight-bold ">About You</a></li>
     <li><a class="button is-rounded is-outlined has-text-left my-2 ">Email Change</a></li>
     <li><a class="button is-rounded is-outlined has-text-left my-2">Password Change</a></li>
   </ul>
@@ -37,10 +31,6 @@
     <li><a class="button is-rounded is-outlined has-text-left my-2">Payments</a></li>
     <li><a class="button is-rounded is-outlined has-text-left my-2">Reciepts</a></li>
   </ul>
+
+
 </aside>
-
-
-</section>
-
-
-{% endblock content %}

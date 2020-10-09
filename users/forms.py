@@ -80,18 +80,10 @@ class NameForm(forms.ModelForm):
 
 
 class ShirtSizeGenderForm(forms.ModelForm):
-    captcha = ReCaptchaField(
-        label='',
-        widget=ReCaptchaV3(
-            attrs={
-                'required_score': 0.75,
-            }
-        )
-    )
 
     class Meta:
         model = Profile
-        fields = ['gender', 'shirt_size', 'captcha']
+        fields = ['gender', 'shirt_size']
 
 
 class BioForm(forms.Form):
@@ -213,7 +205,7 @@ class ProfileEducationForm(forms.ModelForm):
         }
 
 
-class ProfileUpdateForm(forms.ModelForm):
+class ProfileImageForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']

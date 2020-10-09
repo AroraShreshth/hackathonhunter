@@ -1,0 +1,43 @@
+{% extends "dashboard/base.html" %}
+{% load crispy_forms_tags %}
+{% load bulma_tags %}
+{% block content %}
+
+<section class="section columns  ">
+   <aside class=" box m-2 ml-6 pl-5  menu is-vertical is-10 is-hidden-mobile">
+  <p class="menu-label is-size-6" >
+    General
+  </p>
+  <ul class="menu-list">
+    <li><a class="button is-link is-rounded has-text-left my-2"><strong>About You</strong></a></li>
+    <li><a class="button is-rounded is-outlined has-text-left my-2">Email Change</a></li>
+    <li><a class="button is-rounded is-outlined has-text-left my-2">Password Change</a></li>
+  </ul>
+  <p class="menu-label is-size-6">
+    Contact
+  </p>
+  <ul class="menu-list">
+    <li><a>Emails & SMS </a></li>
+    <li><a>Push Notifications</a></li>
+    <li><a>Emails from {{ website_name }}</a></li>
+  </ul>
+  
+  <p class="menu-label is-size-6">
+    Competitions
+  </p>
+  <ul class="menu-list">
+    <li><a>Team Settings</a></li>
+    <li><a>Invitations</a></li>
+  </ul>
+  <p class="menu-label is-size-6">
+    Transactions
+  </p>
+  <ul class="menu-list ">
+    <li><a>Payments</a></li>
+    <li><a>Reciepts</a></li>
+  </ul>
+</aside>
+</section>
+
+
+{% endblock content %}
