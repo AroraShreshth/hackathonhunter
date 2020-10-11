@@ -91,6 +91,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'work_status',
         'location',
     )
+    search_fields = ('user', )
     raw_id_fields = ('skill',)
 
 
@@ -140,4 +141,5 @@ class SchoolEducationAdmin(admin.ModelAdmin):
         'from_standard',
         'to_standard',
     )
-    list_filter = ('profile', 'school')
+    autocomplete_fields = ['profile', 'school']
+    search_fields = ('profile', 'school', )

@@ -41,7 +41,7 @@ class SchoolSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = School
-        fields = ['url', 'id', 'name']
+        fields = ['url', 'id', 'name', 'state', 'district', 'region']
 
 
 class SkillSerializer(serializers.HyperlinkedModelSerializer):

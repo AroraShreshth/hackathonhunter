@@ -35,7 +35,7 @@ class CityViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
                                     'list': [permissions.IsAuthenticated]}
     queryset = City.objects.all()
-    search_fields = ['name', 'state']
+    search_fields = ['^name', '^state']
     filter_backends = (filters.SearchFilter,)
     serializer_class = user_serial.CitySerializer
 
@@ -80,7 +80,7 @@ class FieldofStudyViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
                                     'list': [permissions.IsAuthenticated]}
     queryset = FieldofStudy.objects.all()
-    search_fields = ['name']
+    search_fields = ['^name']
     filter_backends = (filters.SearchFilter,)
     serializer_class = user_serial.FieldofStudySerializer
 
@@ -101,7 +101,7 @@ class SkillViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
                                     'list': [permissions.IsAuthenticated]}
     queryset = Skill.objects.all()
-    search_fields = ['name']
+    search_fields = ['^name']
     filter_backends = (filters.SearchFilter,)
     serializer_class = user_serial.SkillSerializer
 

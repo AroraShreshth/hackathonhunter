@@ -54,7 +54,7 @@ class School(BaseClass):
     name = models.CharField(max_length=300)
     affiliation_no = models.PositiveIntegerField(null=True)
     state = models.CharField(max_length=150, null=True)
-    distric = models.CharField(max_length=150, null=True)
+    district = models.CharField(max_length=150, null=True)
     region = models.CharField(max_length=150, null=True)
     address = models.TextField(null=True, blank=True)
     pincode = models.PositiveIntegerField(null=True)
