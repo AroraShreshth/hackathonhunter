@@ -250,8 +250,6 @@ MARKDOWNIFY_WHITELIST_TAGS = {'a', 'p', 'h1', 'h2',
                               'h3', 'h4', 'h5', 'h6', 'h7', 'ul', 'li', 'span', }
 
 # django-push-notification config
-
-
 PUSH_NOTIFICATIONS_SETTINGS = {
     "FCM_API_KEY": "AIzaSyByR23gn08tD2fFEQ49Vn9d-8blvGNGlOw",
     # "GCM_API_KEY": "[your api key]",
@@ -262,6 +260,16 @@ PUSH_NOTIFICATIONS_SETTINGS = {
     # "WP_PRIVATE_KEY": "/path/to/your/private.pem",
     # "WP_CLAIMS": {'sub': "mailto: development@example.com"}
 }
+
+# Django Rest Framework Settings
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
 
 # Github workflow File
 if os.environ.get('GITHUB_WORKFLOW'):
