@@ -52,6 +52,25 @@ class Skill(BaseClass):
 
 class School(BaseClass):
     name = models.CharField(max_length=300)
+    affiliation_no = models.PositiveIntegerField(null=True)
+    state = models.CharField(max_length=150, null=True)
+    distric = models.CharField(max_length=150, null=True)
+    region = models.CharField(max_length=150, null=True)
+    address = models.TextField(null=True, blank=True)
+    pincode = models.PositiveIntegerField(null=True)
+    ph_no = models.CharField(max_length=30, null=True)
+    off_ph_no = models.CharField(max_length=30, null=True)
+    res_ph_no = models.CharField(max_length=30, null=True)
+    email = models.EmailField(null=True)
+    website = models.URLField(null=True)
+    year_found = models.PositiveSmallIntegerField(blank=True, null=True)
+    date_opened = models.DateField(null=True)
+    principal_name = models.CharField(max_length=150, null=True)
+    principal_qual = models.CharField(max_length=150, null=True)
+    principal_exp_teach = models.PositiveSmallIntegerField(null=True)
+    principal_exp_adm = models.PositiveSmallIntegerField(null=True)
+    status = models.CharField(null=True, max_length=100)
+    society_name = models.CharField(max_length=300, null=True)
 
     def __str__(self):
         return f'{self.name}'
