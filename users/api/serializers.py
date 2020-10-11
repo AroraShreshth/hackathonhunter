@@ -40,12 +40,12 @@ class FieldofStudySerializer(serializers.HyperlinkedModelSerializer):
 class SchoolSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model = FieldofStudy
+        model = School
         fields = ['url', 'id', 'name']
 
 
 class SkillSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model = FieldofStudy
+        model = Skill
         fields = ['url', 'id', 'name']

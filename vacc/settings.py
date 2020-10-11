@@ -9,6 +9,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
+# Application version
+VERSION = "0.0.1"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
 
     # External Applications
     'rest_framework',
+    'rest_framework.authtoken',
     'phone_field',
     'markdownx',
     'crispy_forms',
