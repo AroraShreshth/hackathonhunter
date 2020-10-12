@@ -73,7 +73,7 @@ class School(BaseClass):
     society_name = models.CharField(max_length=300, null=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name}, {self.district}, {self.region}'
 
 
 class City(BaseClass):
