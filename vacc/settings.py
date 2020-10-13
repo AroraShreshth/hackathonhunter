@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'payments.apps.PaymentsConfig',
     'connect.apps.ConnectConfig',
     'projects.apps.ProjectsConfig',
+    'quiz.apps.QuizConfig',
 
     # External Applications
     'rest_framework',
