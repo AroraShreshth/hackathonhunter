@@ -7,6 +7,7 @@ from markdownx import urls as markdownx
 from django.contrib.auth import views as auth_views
 from .settings import website_name
 
+
 # Admin.py Stuff
 admin.site.site_header = f'{website_name} Admin'
 admin.site.site_title = f'{website_name} Admin'
@@ -27,6 +28,8 @@ urlpatterns = [
          ),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
+
+
     path('markdownx/', include('markdownx.urls')),
 ]
 

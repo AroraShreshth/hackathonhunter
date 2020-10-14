@@ -1,9 +1,14 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views as user_views
-
-
+from users.api.auth_views import registerapi
+from rest_framework.authtoken.views import obtain_auth_token
 urlpatterns = [
+    # Django API AUTH VIEWS
+    path('api/auth/register', registerapi, name='api-user-register'),
+    path('api/auth/login', obtain_auth_token, name='api-user-login'),
+    # path('api/auth/user', UserAPI.as_view()),
+
     # Django AutoComplete Light Views
     path('institute-autocomplete/', user_views.InstituteAutocomplete.as_view(create_field='name'),
          name='institute-autocomplete'),
@@ -82,7 +87,6 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(
              template_name='unlogged/password_reset_complete.html'),
          name='password_reset_complete'),
-
     path('<int:pk>/',
          user_views.UserDetailView.as_view(), name='user-detail'),
 
