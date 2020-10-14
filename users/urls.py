@@ -1,13 +1,14 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views as user_views
-from users.api.auth_views import registerapi
+from users.api.auth_views import registerapi, whoami, Logout
 from rest_framework.authtoken.views import obtain_auth_token
 urlpatterns = [
     # Django API AUTH VIEWS
     path('api/auth/register', registerapi, name='api-user-register'),
     path('api/auth/login', obtain_auth_token, name='api-user-login'),
-    # path('api/auth/user', UserAPI.as_view()),
+    path('api/auth/whoami', whoami, name='api-user-whoami'),
+    path('api/auth/logout', Logout.as_view(), name='api-user-logout'),
 
     # Django AutoComplete Light Views
     path('institute-autocomplete/', user_views.InstituteAutocomplete.as_view(create_field='name'),

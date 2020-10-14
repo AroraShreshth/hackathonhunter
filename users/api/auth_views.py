@@ -1,8 +1,11 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 from rest_framework.authtoken.models import Token
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 
 @api_view(['POST', 'GET'])
@@ -24,6 +27,33 @@ def registerapi(request):
         else:
             data = serializer.errors
         return Response(data)
+
+
+class Logout(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        request.user.auth_token.delete()
+
+        return Response({'message': 'Logged Out Succesfully'}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def whoami(request, format=None):
+    user = request.user
+    content = {
+        'username': user.username,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'is_active': user.is_active,
+        'last_login': user.last_login,
+        'date_joined': user.date_joined
+
+        # 'auth': str(request.auth),  # None
+    }
+    return Response(content)
 
 # Register API
 
