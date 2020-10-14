@@ -198,7 +198,8 @@ class Profile(BaseClass):
 
 
 class Work(BaseClass):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(
+        Profile, related_name='works', on_delete=models.CASCADE)
     employer = models.CharField(max_length=200)
     role = models.CharField(max_length=200)
     start = models.DateField()
@@ -212,7 +213,8 @@ class Work(BaseClass):
 
 
 class Link(BaseClass):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(
+        Profile, related_name='links', on_delete=models.CASCADE)
     url = models.URLField()
 
     def __str__(self):
@@ -228,7 +230,8 @@ class Snippet(BaseClass):
 
 
 class SchoolEducation(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(
+        Profile, related_name='schooleducation', on_delete=models.CASCADE)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
 
     STANDARD_CHOICES = (

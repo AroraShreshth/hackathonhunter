@@ -1,11 +1,12 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from rest_framework.decorators import api_view, authentication_classes, permission_classes, throttle_classes
+from .serializers import UserSerializer, RegisterSerializer, ProfileSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 
 
 @api_view(['POST', 'GET'])
@@ -55,11 +56,20 @@ def whoami(request, format=None):
     }
     return Response(content)
 
+
+@api_view(['POST'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def profile(request, format=None):
+    user = request.user
+    serializer = ProfileSerializer(instance=user.profile)
+    return Response(serializer.data)
+
 # Register API
 
 
-class RegisterAPI(generics.GenericAPIView):
-    serializer_class = RegisterSerializer
+# class RegisterAPI(generics.GenericAPIView):
+#     serializer_class = RegisterSerializer
 
     # def post(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
@@ -73,8 +83,8 @@ class RegisterAPI(generics.GenericAPIView):
 
 
 # Login API
-class LoginAPI(generics.GenericAPIView):
-    pass
+# class LoginAPI(generics.GenericAPIView):
+#     pass
     # serializer_class = LoginSerializer
 
     # def post(self, request, *args, **kwargs):
@@ -89,8 +99,8 @@ class LoginAPI(generics.GenericAPIView):
 
 
 # Get User API
-class UserAPI(generics.RetrieveAPIView):
-    pass
+# class UserAPI(generics.RetrieveAPIView):
+#     pass
 
     # permission_classes = [
     #     permissions.IsAuthenticated,

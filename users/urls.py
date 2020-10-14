@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views as user_views
-from users.api.auth_views import registerapi, whoami, Logout
+from users.api.auth_views import registerapi, whoami, Logout, profile
 from rest_framework.authtoken.views import obtain_auth_token
 urlpatterns = [
     # Django API AUTH VIEWS
@@ -9,7 +9,7 @@ urlpatterns = [
     path('api/auth/login', obtain_auth_token, name='api-user-login'),
     path('api/auth/whoami', whoami, name='api-user-whoami'),
     path('api/auth/logout', Logout.as_view(), name='api-user-logout'),
-
+    path('api/profile', profile, name='api-profile'),
     # Django AutoComplete Light Views
     path('institute-autocomplete/', user_views.InstituteAutocomplete.as_view(create_field='name'),
          name='institute-autocomplete'),

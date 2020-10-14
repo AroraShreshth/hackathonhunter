@@ -40,18 +40,31 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-# Login Serializer
+
+class WorkSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Work
+        fields = ['id', 'employer', 'role', 'start', 'end',
+                  'currently_working', 'description', 'url']
 
 
-class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    password = serializers.CharField()
+class LinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Link
+        fields = ['id', 'url']
 
-    def validate(self, data):
-        user = authenticate(**data)
-        if user and user.is_active:
-            return user
-        raise serializers.ValidationError("Incorrect Credentials")
+
+class ProfileSerializer(serializers.ModelSerializer):
+    links = LinkSerializer(many=True, read_only=True)
+    works = WorkSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ['id', 'bio', 'image', 'dob', 'gender', 'degree_type', 'institute', 'field_of_study',
+                  'grad_year', 'course_length', 'resume', 'links', 'works', 'location', 'address', 'emergency_contact_name',
+                  'emergency_phone', 'shirt_size', 'published',
+                  'verification_mail_sent', ]
 
 
 class SnippetSerializer(serializers.ModelSerializer):
