@@ -206,7 +206,7 @@ class Work(BaseClass):
     end = models.DateField(null=True, blank=True)
     currently_working = models.BooleanField(default=False)
     description = models.TextField(null=True)
-    url = models.URLField(blank=True)
+    link = models.URLField(blank=True)
 
     def __str__(self):
         return f'{self.profile.user.username} Work at {self.employer}'

@@ -108,7 +108,6 @@ class WorkAdmin(admin.ModelAdmin):
         'end',
         'currently_working',
         'description',
-        'url',
     )
     list_filter = (
         'created_date',

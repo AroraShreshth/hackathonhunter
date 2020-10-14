@@ -1,10 +1,65 @@
 from django.contrib.auth.models import User
-from users.models import Snippet
+from django.shortcuts import get_object_or_404
 from . import serializers as user_serial
 from users.models import Snippet, City, Institute, FieldofStudy, Skill, School, Profile, Work, Link, SchoolEducation
 from rest_framework import viewsets, permissions, generics, filters
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+
+
+class WorkViewSet(viewsets.ViewSet):
+    """
+    A simple Viewset for listing or retrieving Work
+    """
+    permission_classes_by_action = {'list': [permissions.IsAdminUser],
+                                    'retrieve': [permissions.IsAuthenticated]}
+
+    def list(self, request):
+        queryset = Work.objects.all()
+        serializer = user_serial.WorkSerializer(
+            queryset, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Work.objects.all()
+        work = get_object_or_404(queryset, pk=pk)
+        serializer = user_serial.WorkSerializer(
+            work, context={'request': request})
+        return Response(serializer.data)
+
+    def get_permissions(self):
+        try:
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            return [permission() for permission in self.permission_classes]
+
+
+class LinkViewSet(viewsets.ViewSet):
+    """
+    A simple Viewset for listing or retrieving Link
+    """
+    permission_classes_by_action = {'list': [permissions.IsAdminUser],
+                                    'retrieve': [permissions.IsAuthenticated]}
+
+    def list(self, request):
+        queryset = Link.objects.all()
+        serializer = user_serial.LinkSerializer(
+            queryset, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Link.objects.all()
+        link = get_object_or_404(queryset, pk=pk)
+        serializer = user_serial.LinkSerializer(
+            link, context={'request': request})
+        return Response(serializer.data)
+
+    def get_permissions(self):
+        try:
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            return [permission() for permission in self.permission_classes]
 
 
 class SnippetViewSet(viewsets.ModelViewSet):
@@ -31,9 +86,11 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = user_serial.UserSerializer
 
 
-class CityViewSet(viewsets.ModelViewSet):
+class CityViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
-                                    'list': [permissions.IsAuthenticated]}
+                                    'list': [permissions.IsAuthenticated],
+                                    'retrieve': [permissions.IsAuthenticated]
+                                    }
     queryset = City.objects.all()
     search_fields = ['^name', '^state']
     filter_backends = (filters.SearchFilter,)
@@ -54,9 +111,11 @@ class CityViewSet(viewsets.ModelViewSet):
             return [permission() for permission in self.permission_classes]
 
 
-class InstituteViewSet(viewsets.ModelViewSet):
+class InstituteViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
-                                    'list': [permissions.IsAuthenticated]}
+                                    'list': [permissions.IsAuthenticated],
+                                    'retrieve': [permissions.IsAuthenticated]
+                                    }
 
     queryset = Institute.objects.all()
     search_fields = ['name']
@@ -76,9 +135,11 @@ class InstituteViewSet(viewsets.ModelViewSet):
             return [permission() for permission in self.permission_classes]
 
 
-class FieldofStudyViewSet(viewsets.ModelViewSet):
+class FieldofStudyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
-                                    'list': [permissions.IsAuthenticated]}
+                                    'list': [permissions.IsAuthenticated],
+                                    'retrieve': [permissions.IsAuthenticated]
+                                    }
     queryset = FieldofStudy.objects.all()
     search_fields = ['^name']
     filter_backends = (filters.SearchFilter,)
@@ -97,13 +158,17 @@ class FieldofStudyViewSet(viewsets.ModelViewSet):
             return [permission() for permission in self.permission_classes]
 
 
-class SkillViewSet(viewsets.ModelViewSet):
+class SkillViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
-                                    'list': [permissions.IsAuthenticated]}
+                                    'list': [permissions.IsAuthenticated],
+                                    'retrieve': [permissions.IsAuthenticated]
+                                    }
+
     queryset = Skill.objects.all()
     search_fields = ['^name']
     filter_backends = (filters.SearchFilter,)
     serializer_class = user_serial.SkillSerializer
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         return super(SkillViewSet, self).create(request, *args, **kwargs)
@@ -120,10 +185,11 @@ class SkillViewSet(viewsets.ModelViewSet):
 
 class SchoolViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
-                                    'list': [permissions.IsAuthenticated]}
+                                    'list': [permissions.IsAuthenticated],
+                                    'retrieve': [permissions.IsAuthenticated]
+                                    }
     queryset = School.objects.all()
     search_fields = ['name']
-   # search_fields = ['^name'] # For Starts with put this upper arrow char
     filter_backends = (filters.SearchFilter,)
     serializer_class = user_serial.SchoolSerializer
 

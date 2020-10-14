@@ -62,7 +62,8 @@ def whoami(request, format=None):
 @permission_classes([IsAuthenticated])
 def profile(request, format=None):
     user = request.user
-    serializer = ProfileSerializer(instance=user.profile)
+    serializer = ProfileSerializer(
+        instance=user.profile, context={'request': request})
     return Response(serializer.data)
 
 # Register API

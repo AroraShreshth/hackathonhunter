@@ -41,30 +41,50 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class WorkSerializer(serializers.ModelSerializer):
+class WorkSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Work
-        fields = ['id', 'employer', 'role', 'start', 'end',
+        fields = ['url', 'id', 'employer', 'role', 'start', 'end',
                   'currently_working', 'description', 'url']
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
 
 
-class LinkSerializer(serializers.ModelSerializer):
+class LinkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Link
-        fields = ['id', 'url']
+        fields = ['url', 'id', 'url']
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
+
+
+class SkillSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Skill
+        fields = ['url', 'id', 'name']
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
 
 
 class ProfileSerializer(serializers.ModelSerializer):
     links = LinkSerializer(many=True, read_only=True)
     works = WorkSerializer(many=True, read_only=True)
+    skill = SkillSerializer(many=True, read_only=True)
 
     class Meta:
         model = Profile
         fields = ['id', 'bio', 'image', 'dob', 'gender', 'degree_type', 'institute', 'field_of_study',
-                  'grad_year', 'course_length', 'resume', 'links', 'works', 'location', 'address', 'emergency_contact_name',
+                  'grad_year', 'course_length', 'resume', 'works', 'skill', 'links', 'location', 'address', 'emergency_contact_name',
                   'emergency_phone', 'shirt_size', 'published',
-                  'verification_mail_sent', ]
+                  'verification_mail_sent', 'setup', 'mail_is_verified', 'phone_is_verified']
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
 
 
 class SnippetSerializer(serializers.ModelSerializer):
@@ -85,6 +105,11 @@ class CitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = City
         fields = ['url', 'id', 'name', 'state']
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'name': {'read_only': True},
+            'state': {'read_only': True},
+        }
 
 
 class InstituteSerializer(serializers.HyperlinkedModelSerializer):
@@ -92,6 +117,10 @@ class InstituteSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Institute
         fields = ['url', 'id', 'name']
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'name': {'read_only': True},
+        }
 
 
 class FieldofStudySerializer(serializers.HyperlinkedModelSerializer):
@@ -99,6 +128,10 @@ class FieldofStudySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FieldofStudy
         fields = ['url', 'id', 'name']
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'name': {'read_only': True},
+        }
 
 
 class SchoolSerializer(serializers.HyperlinkedModelSerializer):
@@ -106,10 +139,7 @@ class SchoolSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = School
         fields = ['url', 'id', 'name', 'state', 'district', 'region']
-
-
-class SkillSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Skill
-        fields = ['url', 'id', 'name']
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'name': {'read_only': True},
+        }

@@ -13,3 +13,7 @@ router.register(r'skill', user_viewset.SkillViewSet,
                 basename='skill')
 router.register(r'school', user_viewset.SchoolViewSet,
                 basename='school')
+router.register(r'work', user_viewset.WorkViewSet,
+                basename='work')
+router.register(r'link', user_viewset.LinkViewSet,
+                basename='link')
