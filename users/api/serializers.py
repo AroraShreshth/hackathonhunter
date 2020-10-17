@@ -28,6 +28,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def save(self):
         validated_data = self.validated_data
+
+        email = validated_data['email']
+        email_user_count = User.objects.filter(email=email).count()
+        if email_user_count > 0:
+            raise serializers.ValidationError(
+                {'email': ['Account with this email already exists']})
+
         user = User(
             email=validated_data['email'],
             username=validated_data['username'],

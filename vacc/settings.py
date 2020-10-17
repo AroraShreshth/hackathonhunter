@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'dal',
     'dal_select2',
     'dal_legacy_static',
+
     # Core Applications
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'connect.apps.ConnectConfig',
     'projects.apps.ProjectsConfig',
     'quiz.apps.QuizConfig',
+    'invite.apps.InviteConfig',
 
     # External Applications
     'rest_framework',
