@@ -84,22 +84,14 @@ class LinkViewSet(viewsets.ModelViewSet):
             return [permission() for permission in self.permission_classes]
 
 
-class SnippetViewSet(viewsets.ModelViewSet):
+class SnippetViewSet(viewsets.ReadOnlyModelViewSet):
 
-    # List , create , retreive , update, partial_update, destroy
     queryset = Snippet.objects.all()
     serializer_class = user_serial.SnippetSerializer
 
-    # @action(methods=['get'], detail=True)
-    # def newest(self, request, pk):
-    #     newest = self.get_queryset().order_by('created_date').last()
-    #     serializer = SnippetSerializer(newest)
-    #     return Response(serializer.data)
-
-    @action(methods=['get'], detail=True)
-    def random(self, request, pk):
-        newest = self.get_queryset().order_by('?').last()
-        serializer = user_serial.SnippetSerializer(newest)
+    def list(self, request):
+        q = Snippet.objects.all().order_by('?')[0]
+        serializer = user_serial.SnippetSerializer(q)
         return Response(serializer.data)
 
 
