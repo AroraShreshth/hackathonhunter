@@ -6,19 +6,26 @@ from rest_framework import viewsets, permissions, generics, filters
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsOwnerOrReadOnly
 
 
-class WorkViewSet(viewsets.ViewSet):
+class WorkViewSet(viewsets.ModelViewSet):
     """
     A simple Viewset for listing or retrieving Work
     """
     permission_classes_by_action = {'list': [permissions.IsAdminUser],
                                     'retrieve': [permissions.IsAuthenticated]}
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+    serializer_class = user_serial.WorkSerializer
+
+    queryset = Work.objects.all()
 
     def list(self, request):
         queryset = Work.objects.all()
         serializer = user_serial.WorkSerializer(
             queryset, many=True, context={'request': request})
+
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -28,6 +35,12 @@ class WorkViewSet(viewsets.ViewSet):
             work, context={'request': request})
         return Response(serializer.data)
 
+    def create(self, request, *args, **kwargs):
+        return super(WorkViewSet, self).create(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        serializer.save(profile=self.request.user.profile)
+
     def get_permissions(self):
         try:
             return [permission() for permission in self.permission_classes_by_action[self.action]]
@@ -35,12 +48,18 @@ class WorkViewSet(viewsets.ViewSet):
             return [permission() for permission in self.permission_classes]
 
 
-class LinkViewSet(viewsets.ViewSet):
+class LinkViewSet(viewsets.ModelViewSet):
     """
     A simple Viewset for listing or retrieving Link
     """
     permission_classes_by_action = {'list': [permissions.IsAdminUser],
                                     'retrieve': [permissions.IsAuthenticated]}
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+    serializer_class = user_serial.LinkSerializer
+
+    queryset = Link.objects.all()
 
     def list(self, request):
         queryset = Link.objects.all()
@@ -54,6 +73,9 @@ class LinkViewSet(viewsets.ViewSet):
         serializer = user_serial.LinkSerializer(
             link, context={'request': request})
         return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        serializer.save(profile=self.request.user.profile)
 
     def get_permissions(self):
         try:

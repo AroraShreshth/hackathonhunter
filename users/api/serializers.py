@@ -49,20 +49,24 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class WorkSerializer(serializers.HyperlinkedModelSerializer):
+    profile = serializers.ReadOnlyField(source='profile.owner.username')
 
     class Meta:
         model = Work
         fields = ['url', 'id', 'employer', 'role', 'start', 'end',
-                  'currently_working', 'description', 'url']
+                  'currently_working', 'description', 'url', 'profile']
         extra_kwargs = {
             'id': {'read_only': True},
+            'url': {'read_only': True},
         }
 
 
 class LinkSerializer(serializers.HyperlinkedModelSerializer):
+    profile = serializers.ReadOnlyField(source='profile.owner.username')
+
     class Meta:
         model = Link
-        fields = ['url', 'id', 'url']
+        fields = ['id', 'url', 'profile']
         extra_kwargs = {
             'id': {'read_only': True},
         }
