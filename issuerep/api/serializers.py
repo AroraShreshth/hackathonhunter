@@ -12,6 +12,7 @@ class IssueTypeSerializer(serializers.ModelSerializer):
 
 
 class IssueSerializer(serializers.ModelSerializer):
+    is_type = IssueTypeSerializer()
 
     class Meta:
         model = Issue

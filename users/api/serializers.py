@@ -82,22 +82,6 @@ class SkillSerializer(serializers.HyperlinkedModelSerializer):
         }
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    links = LinkSerializer(many=True, read_only=True)
-    works = WorkSerializer(many=True, read_only=True)
-    skill = SkillSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Profile
-        fields = ['id', 'bio', 'image', 'dob', 'gender', 'degree_type', 'institute', 'field_of_study',
-                  'grad_year', 'course_length', 'resume', 'works', 'skill', 'links', 'location', 'address', 'emergency_contact_name',
-                  'emergency_phone', 'shirt_size', 'published',
-                  'verification_mail_sent', 'setup', 'mail_is_verified', 'phone_is_verified']
-        extra_kwargs = {
-            'id': {'read_only': True},
-        }
-
-
 class SnippetSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -153,4 +137,23 @@ class SchoolSerializer(serializers.HyperlinkedModelSerializer):
         extra_kwargs = {
             'id': {'read_only': True},
             'name': {'read_only': True},
+        }
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    links = LinkSerializer(many=True, read_only=True)
+    works = WorkSerializer(many=True, read_only=True)
+    skill = SkillSerializer(many=True, read_only=True)
+    field_of_study = FieldofStudySerializer()
+    institute = InstituteSerializer()
+    location = CitySerializer()
+
+    class Meta:
+        model = Profile
+        fields = ['id', 'bio', 'image', 'dob', 'gender', 'degree_type', 'institute', 'field_of_study',
+                  'grad_year', 'course_length', 'resume', 'works', 'skill', 'links', 'location', 'address', 'emergency_contact_name',
+                  'emergency_phone', 'shirt_size', 'published',
+                  'verification_mail_sent', 'setup', 'mail_is_verified', 'phone_is_verified']
+        extra_kwargs = {
+            'id': {'read_only': True},
         }
