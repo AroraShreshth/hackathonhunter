@@ -1,4 +1,5 @@
 from users.api import viewsets as user_viewset
+from issuerep.api import viewsets as issuerep_viewset
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -17,3 +18,7 @@ router.register(r'work', user_viewset.WorkViewSet,
                 basename='work')
 router.register(r'link', user_viewset.LinkViewSet,
                 basename='link')
+router.register(r'issuetype', issuerep_viewset.IssueTypeViewSet,
+                basename='issuetype')
+router.register(r'issue', issuerep_viewset.IssueViewSet,
+                basename='issuetype')
