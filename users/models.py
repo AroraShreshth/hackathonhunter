@@ -159,7 +159,7 @@ class Profile(BaseClass):
 
     # Experience
     skill = models.ManyToManyField(
-        Skill, blank=True)
+        Skill, related_name='profile', blank=True)
 
     def user_directory_path(instance, filename):
         return 'user_{0}/{1}'.format(instance.user.username, filename)

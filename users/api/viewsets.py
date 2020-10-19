@@ -13,6 +13,7 @@ class WorkViewSet(viewsets.ModelViewSet):
     """
     A simple Viewset for listing or retrieving Work
     """
+
     permission_classes_by_action = {'list': [permissions.IsAdminUser],
                                     'retrieve': [permissions.IsAuthenticated]}
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
@@ -175,7 +176,8 @@ class FieldofStudyViewSet(viewsets.ReadOnlyModelViewSet):
 class SkillViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
                                     'list': [permissions.IsAuthenticated],
-                                    'retrieve': [permissions.IsAuthenticated]
+                                    'retrieve': [permissions.IsAuthenticated],
+                                    'connect': [permissions.IsAuthenticated],
                                     }
 
     queryset = Skill.objects.all()
@@ -190,6 +192,25 @@ class SkillViewSet(viewsets.ReadOnlyModelViewSet):
     def list(self, request, *args, **kwargs):
         return super(SkillViewSet, self).list(request, *args, **kwargs)
 
+    @action(detail=True, methods=['post'], name='connect')
+    def connect(self, request, pk):
+        queryset = Skill.objects.all()
+        skill = get_object_or_404(queryset, pk=pk)
+        request.user.profile.skill.add(skill)
+        return Response({'message': f'Skill {skill.name} successfully added'})
+
+    @action(detail=True, methods=['post'], name='disconnect')
+    def disconnect(self, request, pk):
+        queryset = Skill.objects.all()
+
+        skill = get_object_or_404(queryset, pk=pk)
+        pskills = request.user.profile.skill
+        if pskills.filter(name=skill.name).count():
+            pskills.remove(skill)
+            return Response({'message': f'Skill {skill.name} successfully disconnected'})
+        else:
+            return Response({'message': f'Skill {skill.name} isn\'t connected to your profile'})
+
     def get_permissions(self):
         try:
             return [permission() for permission in self.permission_classes_by_action[self.action]]
@@ -200,18 +221,12 @@ class SkillViewSet(viewsets.ReadOnlyModelViewSet):
 class SchoolViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
                                     'list': [permissions.IsAuthenticated],
-                                    'retrieve': [permissions.IsAuthenticated]
+                                    'retrieve': [permissions.IsAuthenticated],
                                     }
     queryset = School.objects.all()
     search_fields = ['name']
     filter_backends = (filters.SearchFilter,)
     serializer_class = user_serial.SchoolSerializer
-
-    def create(self, request, *args, **kwargs):
-        return super(SchoolViewSet, self).create(request, *args, **kwargs)
-
-    def list(self, request, *args, **kwargs):
-        return super(SchoolViewSet, self).list(request, *args, **kwargs)
 
     def get_permissions(self):
         try:

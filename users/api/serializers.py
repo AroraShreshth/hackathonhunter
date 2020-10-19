@@ -133,7 +133,8 @@ class SchoolSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = School
-        fields = ['url', 'id', 'name', 'state', 'district', 'region']
+        fields = ['url', 'id', 'name', 'state',
+                  'district', 'region', 'pincode', 'year_found', 'principal_name', 'status']
         extra_kwargs = {
             'id': {'read_only': True},
             'name': {'read_only': True},

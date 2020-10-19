@@ -21,4 +21,4 @@ router.register(r'link', user_viewset.LinkViewSet,
 router.register(r'issuetype', issuerep_viewset.IssueTypeViewSet,
                 basename='issuetype')
 router.register(r'issue', issuerep_viewset.IssueViewSet,
-                basename='issuetype')
+                basename='issue')

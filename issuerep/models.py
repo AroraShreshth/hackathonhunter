@@ -21,7 +21,7 @@ class Issue(BaseClass):
         User,  on_delete=models.SET_NULL, null=True)
 
     is_type = models.ForeignKey(
-        IssueType, related_name='issues', on_delete=models.PROTECT, null=True, blank=True)
+        IssueType, related_name='issues', on_delete=models.PROTECT,)
 
     ISSUE_STATUS = (
         ('unreviewed', 'ureviewed'),

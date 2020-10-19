@@ -66,8 +66,6 @@ def profile(request, format=None):
         instance=user.profile, context={'request': request})
     return Response(serializer.data)
 
-# Register API
-
 
 # class RegisterAPI(generics.GenericAPIView):
 #     serializer_class = RegisterSerializer
