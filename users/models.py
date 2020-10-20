@@ -11,6 +11,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from imagekit import ImageSpec
 from vacc.settings import website_name, EMAIL_HOST_USER
+from game.models import Level
 
 
 def random_no():
@@ -129,6 +130,8 @@ class Profile(BaseClass):
     )
     gender = models.CharField(max_length=1, choices=GENDER, blank=True)
 
+    level = models.ForeignKey(
+        Level, related_name='profile', on_delete=models.SET_NULL, null=True)
     # Education
 
     no_formal_education = models.BooleanField(default=False)
@@ -146,9 +149,9 @@ class Profile(BaseClass):
     degree_type = models.CharField(
         max_length=12, choices=DEGREE_TYPE, blank=True)
     institute = models.ForeignKey(
-        Institute, on_delete=models.PROTECT, null=True, blank=True)
+        Institute, related_name='profiles', on_delete=models.PROTECT, null=True, blank=True)
     field_of_study = models.ForeignKey(
-        FieldofStudy, on_delete=models.PROTECT, null=True, blank=True)
+        FieldofStudy, related_name='profiles', on_delete=models.PROTECT, null=True, blank=True)
     grad_year = models.DateField(null=True, blank=True)
     LENGTH_COURSE = (
         ('3', '3 year'),
@@ -159,7 +162,7 @@ class Profile(BaseClass):
 
     # Experience
     skill = models.ManyToManyField(
-        Skill, related_name='profile', blank=True)
+        Skill, related_name='profiles', blank=True)
 
     def user_directory_path(instance, filename):
         return 'user_{0}/{1}'.format(instance.user.username, filename)
@@ -171,7 +174,7 @@ class Profile(BaseClass):
     phone = PhoneField(blank=True, help_text='Contact phone number')
     address = models.TextField(max_length=5000, null=True, blank=True)
     location = models.ForeignKey(
-        City, on_delete=models.SET_NULL, null=True, blank=True)
+        City, related_name='profiles', on_delete=models.SET_NULL, null=True, blank=True)
     emergency_contact_name = models.CharField(blank=True, max_length=150)
     emergency_phone = PhoneField(blank=True, help_text='Contact phone number')
 

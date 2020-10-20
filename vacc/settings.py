@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'quiz.apps.QuizConfig',
     'invite.apps.InviteConfig',
+    'game.apps.GameConfig',
 
     # External Applications
     'rest_framework',

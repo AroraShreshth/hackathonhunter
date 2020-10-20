@@ -129,7 +129,8 @@ class CityViewSet(viewsets.ReadOnlyModelViewSet):
 class InstituteViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
                                     'list': [permissions.IsAuthenticated],
-                                    'retrieve': [permissions.IsAuthenticated]
+                                    'retrieve': [permissions.IsAuthenticated],
+                                    'connect': [permissions.IsAuthenticated]
                                     }
 
     queryset = Institute.objects.all()
@@ -143,6 +144,14 @@ class InstituteViewSet(viewsets.ReadOnlyModelViewSet):
     def list(self, request, *args, **kwargs):
         return super(InstituteViewSet, self).list(request, *args, **kwargs)
 
+    @action(detail=True, methods=['post'], name='connect')
+    def connect(self, request, pk):
+        inst = get_object_or_404(Institute.objects.all(), pk=pk)
+        profile = Profile.objects.get(user=request.user)
+        profile.institute = inst
+        profile.save()
+        return Response({'message': f' Institute {inst.name} successfully added'})
+
     def get_permissions(self):
         try:
             return [permission() for permission in self.permission_classes_by_action[self.action]]
@@ -153,7 +162,8 @@ class InstituteViewSet(viewsets.ReadOnlyModelViewSet):
 class FieldofStudyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes_by_action = {'create': [permissions.IsAdminUser],
                                     'list': [permissions.IsAuthenticated],
-                                    'retrieve': [permissions.IsAuthenticated]
+                                    'retrieve': [permissions.IsAuthenticated],
+                                    'connect': [permissions.IsAuthenticated]
                                     }
     queryset = FieldofStudy.objects.all()
     search_fields = ['^name']
@@ -165,6 +175,14 @@ class FieldofStudyViewSet(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         return super(FieldofStudyViewSet, self).list(request, *args, **kwargs)
+
+    @action(detail=True, methods=['post'], name='connect')
+    def connect(self, request, pk):
+        fos = get_object_or_404(FieldofStudy.objects.all(), pk=pk)
+        profile = Profile.objects.get(user=request.user)
+        profile.field_of_study = fos
+        profile.save()
+        return Response({'message': f'Field of Study {fos.name} successfully added'})
 
     def get_permissions(self):
         try:
