@@ -6,7 +6,7 @@
 
 
 
-# Hackathon Hunter's Application 
+# Competition Hunter
 
 ![PythonCI](https://github.com/AroraShreshth/hackathonhunter/workflows/PythonCI/badge.svg)
 </div>
