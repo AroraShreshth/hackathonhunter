@@ -1,7 +1,22 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Institute, FieldofStudy, Skill, School, City, Profile, Work, Link, Snippet, SchoolEducation
+from .models import Institute, FieldofStudy, Skill, School, City, Profile, Work, Link, Snippet, SchoolEducation, Contact, Banner
+
+
+@admin.register(Banner)
+class BannerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'created_date', 'modified_date',
+                    'name', 'description', 'active', 'link')
+    list_filter = ('created_date', 'modified_date')
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('id', 'created_date', 'modified_date',
+                    'profile', 'name', 'phone_no')
+    list_filter = ('created_date', 'modified_date')
+    search_fields = ('profile',)
 
 
 @admin.register(Institute)

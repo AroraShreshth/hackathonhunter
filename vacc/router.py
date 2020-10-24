@@ -10,15 +10,12 @@ router.register(r'institute', user_viewset.InstituteViewSet,
                 basename='institute')
 router.register(r'fieldofstudy', user_viewset.FieldofStudyViewSet,
                 basename='fieldofstudy')
-router.register(r'skill', user_viewset.SkillViewSet,
-                basename='skill')
-router.register(r'school', user_viewset.SchoolViewSet,
-                basename='school')
-router.register(r'work', user_viewset.WorkViewSet,
-                basename='work')
-router.register(r'link', user_viewset.LinkViewSet,
-                basename='link')
+router.register(r'skill', user_viewset.SkillViewSet, basename='skill')
+router.register(r'school', user_viewset.SchoolViewSet, basename='school')
+router.register(r'work', user_viewset.WorkViewSet, basename='work')
+router.register(r'link', user_viewset.LinkViewSet, basename='link')
 router.register(r'issuetype', issuerep_viewset.IssueTypeViewSet,
                 basename='issuetype')
-router.register(r'issue', issuerep_viewset.IssueViewSet,
-                basename='issue')
+router.register(r'issue', issuerep_viewset.IssueViewSet, basename='issue')
+router.register(r'contact', user_viewset.ContactViewSet, basename='contact')
+router.register(r'banner', user_viewset.BannerViewSet, basename='banner')

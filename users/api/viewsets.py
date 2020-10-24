@@ -1,12 +1,75 @@
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from . import serializers as user_serial
-from users.models import Snippet, City, Institute, FieldofStudy, Skill, School, Profile, Work, Link, SchoolEducation
+from users.models import Snippet, City, Institute, FieldofStudy, Skill, School, Profile, Work, Link, SchoolEducation, Contact, Banner
 from rest_framework import viewsets, permissions, generics, filters
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsOwnerOrReadOnly
+
+
+class ContactViewSet(viewsets.ModelViewSet):
+    """
+    A simple Viewset for listing or retrieving Work
+    """
+
+    permission_classes_by_action = {'list': [permissions.IsAdminUser],
+                                    'retrieve': [permissions.IsAuthenticated],
+                                    'delete': [permissions.IsAdminUser],
+                                    'update': [permissions.IsAdminUser],
+                                    'remove': [permissions.IsAuthenticated],
+                                    'bulkremove': [permissions.IsAuthenticated],
+                                    }
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly]
+    serializer_class = user_serial.ContactSerializer
+
+    queryset = Contact.objects.all()
+
+    def list(self, request):
+        queryset = Contact.objects.filter(
+            profile=request.user.profile, soft_delete=False)
+        serializer = user_serial.ContactSerializer(
+            queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Contact.objects.filter(
+            profile=request.user.profile, soft_delete=False)
+        contact = get_object_or_404(queryset, pk=pk)
+        serializer = user_serial.ContactSerializer(contact)
+        return Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        return super(ContactViewSet, self).create(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        serializer.save(profile=self.request.user.profile)
+
+    @action(detail=True, methods=['post'], name='remove')
+    def remove(self, request, pk):
+        qs = Contact.objects.filter(
+            profile=request.user.profile, soft_delete=False)
+        contact = get_object_or_404(qs, pk=pk)
+        if not contact.profile == request.user.profile:
+            return Response({'message': f' You aren\'t allowed to delete this '})
+        contact.soft_delete = True
+        contact.save()
+        return Response({'message': f' Contact {contact.name} successfully deleted'})
+
+    @action(detail=False, methods=['post'], name='bulkremove')
+    def bulkremove(self, request):
+        for contact in Contact.objects.filter(profile=request.user.profile):
+            contact.soft_delete = True
+            contact.save()
+        return Response({'message': f' All Contact successfully deleted'})
+
+    def get_permissions(self):
+        try:
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            return [permission() for permission in self.permission_classes]
 
 
 class WorkViewSet(viewsets.ModelViewSet):
@@ -250,4 +313,21 @@ class SchoolViewSet(viewsets.ModelViewSet):
         try:
             return [permission() for permission in self.permission_classes_by_action[self.action]]
         except KeyError:
+            return [permission() for permission in self.permission_classes]
+
+
+class BannerViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes_by_action = {'create': [permissions.IsAdminUser],
+                                    'list': [permissions.IsAuthenticated],
+                                    'retrieve': [permissions.IsAuthenticated]
+                                    }
+    queryset = Banner.objects.filter(active=True)
+    serializer_class = user_serial.BannerSerializer
+
+    def get_permissions(self):
+        try:
+            # return permission_classes depending on `action`
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            # action is not set return default permission_classes
             return [permission() for permission in self.permission_classes]

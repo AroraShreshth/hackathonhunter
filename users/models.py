@@ -164,7 +164,7 @@ class Profile(BaseClass):
     skill = models.ManyToManyField(
         Skill, related_name='profiles', blank=True)
 
-    def user_directory_path(instance, filename):
+    def user_directory_path(self, instance, filename):
         return 'user_{0}/{1}'.format(instance.user.username, filename)
 
     resume = models.FileField(upload_to='resume', blank=True)
@@ -256,3 +256,21 @@ class SchoolEducation(models.Model):
 
     def __str__(self):
         return f'{self.school.name} '
+
+
+class Contact(BaseClass):
+    profile = models.ForeignKey(
+        Profile, related_name='contacts', on_delete=models.SET_NULL, null=True, blank=True)
+    name = models.CharField(max_length=500)
+    phone_no = models.CharField(max_length=100)
+    soft_delete = models.BooleanField(default=False)
+
+
+class Banner(BaseClass):
+    """
+        Side Banners that are site wide annoucements of updates and new features or blogposts
+    """
+    name = models.CharField(max_length=500)
+    description = models.CharField(max_length=200)
+    active = models.BooleanField(default=False)
+    link = models.URLField(null=True, blank=True)

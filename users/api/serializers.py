@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import Snippet, City, Institute, FieldofStudy, Skill, School, Profile, Work, Link, SchoolEducation
+from users.models import Snippet, City, Institute, FieldofStudy, Skill, School, Profile, Work, Link, SchoolEducation, Contact, Banner
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
@@ -155,6 +155,24 @@ class ProfileSerializer(serializers.ModelSerializer):
                   'grad_year', 'course_length', 'resume', 'works', 'skill', 'links', 'location', 'address', 'emergency_contact_name',
                   'emergency_phone', 'shirt_size', 'published',
                   'verification_mail_sent', 'setup', 'mail_is_verified', 'phone_is_verified']
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ['id', 'name', 'phone_no']
+        extra_kwargs = {
+            'id': {'read_only': True},
+        }
+
+
+class BannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Banner
+        fields = ['id', 'name', 'description', 'active', 'link']
         extra_kwargs = {
             'id': {'read_only': True},
         }

@@ -40,7 +40,6 @@ class Logout(APIView):
 
 
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication, BasicAuthentication])
 @permission_classes([IsAuthenticated])
 def whoami(request, format=None):
     user = request.user
