@@ -265,15 +265,15 @@ class ProfileWorkForm(forms.ModelForm):
         widget=forms.DateInput(
             format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control'}),
     )
+
     end = forms.DateField(
         localize=True,
         label='End Date',
         widget=forms.DateInput(
             format='%Y-%m-%d', attrs={'type': 'date', 'class': 'form-control', 'required': 'false', }
-
         ),
-
     )
+
     description = forms.CharField(
         widget=forms.Textarea(attrs={"rows": 4, "cols": 20, "required": True}), max_length=200, min_length=10, )
 

@@ -1,20 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Location, Event, Announcement, ApplicationQuestion, TimelineEvent, Judge, FAQ, SponsorType, Sponsor, PrizeType, Prize, EventMember, Feedback
-
-
-@admin.register(Location)
-class LocationAdmin(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'created_date',
-        'modified_date',
-        'city',
-        'state',
-        'country',
-    )
-    list_filter = ('created_date', 'modified_date')
+from .models import Event, Announcement, ApplicationQuestion, TimelineEvent, Judge, FAQ, SponsorType, Sponsor, PrizeType, Prize, EventMember, Feedback
 
 
 @admin.register(Event)
@@ -36,7 +23,7 @@ class EventAdmin(admin.ModelAdmin):
         'is_team_comp',
         'image',
         'cover_image',
-        'Location',
+        'city',
         'address',
         'longitute',
         'latitute',
@@ -70,7 +57,6 @@ class EventAdmin(admin.ModelAdmin):
         'verified',
         'official',
         'is_team_comp',
-        'Location',
         'women_only',
         'winner_announced',
         'rsvp_email_sent_at',

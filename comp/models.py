@@ -1,26 +1,18 @@
 from django.db import models
 from users.models import BaseClass
 from django.contrib.auth.models import User
-
+from django.utils.text import slugify
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from imagekit import ImageSpec
-
-
-class Location(BaseClass):
-    city = models.CharField(max_length=100)
-    state = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f'{self.city}'
+from users.models import City
 
 
 class Event(BaseClass):
-    name = models.CharField(max_length=200)
-    tagline = models.CharField(max_length=300)
-    description = models.TextField()
-    slug = models.SlugField()
+    name = models.CharField(max_length=300)
+    tagline = models.CharField(max_length=300, blank=True)
+    description = models.TextField(blank=True)
+    slug = models.SlugField(max_length=300, )
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
@@ -31,7 +23,18 @@ class Event(BaseClass):
     official = models.BooleanField(default=False)
     women_only = models.BooleanField(default=False)
     is_team_comp = models.BooleanField(default=True)
+    application_review = models.BooleanField(default=False)
 
+    COMP_STATUS = (
+        ('unreviewed', 'ureviewed'),
+        ('under review', 'under review'),
+        ('accepted', 'accepted'),
+        ('changes required', 'changes required'),
+        ('denied', 'denied'),
+    )
+
+    status = models.CharField(
+        max_length=25, choices=COMP_STATUS, default='unreviewed')
     # Image Data
     image = models.ImageField(
         default='event_logo/default.jpg', upload_to='event_logo')
@@ -47,8 +50,8 @@ class Event(BaseClass):
                                        format='JPEG',
                                        options={'quality': 80})
     # Location
-    Location = models.ForeignKey(
-        Location, null=True, blank=False, on_delete=models.PROTECT)
+    city = models.ForeignKey(
+        City, null=True, blank=True, on_delete=models.PROTECT)
     address = models.CharField(max_length=300, blank=True)
     longitute = models.DecimalField(
         null=True, blank=True, max_digits=8, decimal_places=3)
@@ -86,8 +89,16 @@ class Event(BaseClass):
 
     organiser_admin = models.ForeignKey(User, on_delete=models.PROTECT)
 
+    class Meta:
+        ordering = ['-start_date']
+        unique_together = ['slug', 'name']
+
     def __str__(self):
         return f'{self.name}'
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Event, self).save(*args, **kwargs)
 
 
 class Announcement(BaseClass):
