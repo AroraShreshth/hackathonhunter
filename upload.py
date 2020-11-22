@@ -1,11 +1,12 @@
 from users.models import Skill, City, Institute
 import csv
+
 i = 0
 with open('INUNI.csv') as f:
     reader = csv.reader(f)
     for row in reader:
-        i = Institute.objects.create(name=row[0])
-        i.save()
+        inst = Institute.objects.create(name=row[0])
+        inst.save()
         i = i+1
         print(i)
 

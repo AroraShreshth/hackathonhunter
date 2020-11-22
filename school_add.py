@@ -27,7 +27,7 @@ with open('schools.csv') as f:
                 name=row[0],
                 affiliation_no=row[1],
                 state=row[2],
-                distric=row[3],
+                district=row[3],
                 region=row[4],
                 address=row[5],
                 pincode=row[6] if row[6] else None,
@@ -47,8 +47,10 @@ with open('schools.csv') as f:
             )
             c.save()
             i += 1
+
         except Exception:
             print('this one didnt work ')
             j += 1
+
 
 print(j)
