@@ -215,7 +215,7 @@ class TimelineEventForm(forms.ModelForm):
         }
 
 
-class CreateFAQForm(forms.ModelForm):
+class FAQForm(forms.ModelForm):
     question = forms.CharField(min_length=15, label='Question')
     answer = forms.CharField(min_length=15, label='Answer')
 
@@ -231,3 +231,47 @@ class CreateFAQForm(forms.ModelForm):
     class Meta:
         model = FAQ
         fields = ['question', 'answer', 'captcha']
+
+
+class SponsorTypeForm(forms.ModelForm):
+
+    class Meta:
+        model = SponsorType
+        fields = ['name', 'priority', 'size']
+
+
+class SponsorForm(froms.ModelForm):
+
+    class Meta:
+        model = Sponsor
+        fields = ['type', 'name', 'detail', 'image']
+
+
+class JudgeForm(forms.ModelForm):
+
+    class Meta:
+        model = Judge
+        fields = ['name', 'position', 'company',
+                  'link', 'detail', 'only_speaker', 'image']
+
+
+class JudgeUserForm(forms.ModelForm):
+
+    # Search Queries on User Data
+    class Meta:
+        model = Judge
+        fields = ['user']
+
+
+class PrizeTypeForm(forms.ModelForm):
+
+    class Meta:
+        model = PrizeType
+        fields = ['name', 'size', 'priority']
+
+
+class PrizeForm(forms.ModelForm):
+
+    class Meta:
+        model = PrizeType
+        fields = ['name', 'type', 'value']

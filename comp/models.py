@@ -140,15 +140,19 @@ class TimelineEvent(BaseClass):
 
 class Judge(BaseClass):
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.SET_NULL)
     only_speaker = models.BooleanField(default=False)
     name = models.CharField(max_length=150)
-    position = models.CharField(max_length=200)
-    company = models.CharField(max_length=100)
+    position = models.CharField(max_length=200, blank=True)
+    company = models.CharField(max_length=100, blank=True)
     link = models.URLField(blank=True)
     detail = models.TextField(max_length=1000, blank=True)
     image = models.ImageField(
         default='judge_profile/default.jpg', upload_to='judge_profile')
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class FAQ(BaseClass):
@@ -177,6 +181,8 @@ class Sponsor(BaseClass):
                                  processors=[ResizeToFill(150, 150)],
                                  format='JPEG',
                                  options={'quality': 80})
+    user = models.ForeignKey(
+        User, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f'{self.type.event.name} : {self.name}'
@@ -243,7 +249,8 @@ class Feedback(BaseClass):
 #       c. accepted
 #       d. under review
 #       e. Applied
-#       f. checkedin
+#       f. Checkedin
+#       h. Missed
 #  Model Logger for all above Events
 #  ( log all emails on DB )
 #  4. EventTeam and Access Control with Role Access
