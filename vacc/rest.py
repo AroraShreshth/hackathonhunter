@@ -1,12 +1,18 @@
 from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from .coretools import AdminStaffRequiredMixin
 
 
-class SwaggerUI(LoginRequiredMixin, TemplateView):
+class SwaggerUI(AdminStaffRequiredMixin, TemplateView):
     template_name = 'swagger-ui.html'
     extra_context = {'schema_url': 'openapi-schema'}
 
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user.is_staff
 
-class ReDocUI(LoginRequiredMixin, TemplateView):
+
+class ReDocUI(AdminStaffRequiredMixin, TemplateView):
     template_name = 're-doc.html'
     extra_context = {'schema_url': 'openapi-schema'}
+
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user.is_staff

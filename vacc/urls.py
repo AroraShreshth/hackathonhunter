@@ -9,6 +9,7 @@ from .settings import website_name
 from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
 from .rest import SwaggerUI, ReDocUI
+
 # Admin.py Stuff
 admin.site.site_header = f'{website_name} Admin'
 admin.site.site_title = f'{website_name} Admin'
