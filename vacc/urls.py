@@ -45,6 +45,8 @@ urlpatterns = [
     path('api/swagger/', SwaggerUI.as_view(), name='api-swagger-ui'),
 
     path('api/redoc/', ReDocUI.as_view(), name='api-redoc-ui'),
+    path('hello-webpack/', TemplateView.as_view(template_name='test.html'))
+
 ]
 
 if settings.DEBUG:

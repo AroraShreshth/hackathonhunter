@@ -1,0 +1,42 @@
+{
+  "name": "hackathonhunter",
+  "version": "1.0.0",
+  "description": "<div align = \"center\">",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "build": "tailwind build ./assets/css/tailwind.css -o ./staticfiles/css/style-tail.css && cleancss -o ./staticfiles/css/style-tail.min.css ./staticfiles/css/style-tail.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AroraShreshth/hackathonhunter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AroraShreshth/hackathonhunter/issues"
+  },
+  "homepage": "https://github.com/AroraShreshth/hackathonhunter#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.1.0",
+    "clean-css-cli": "^4.3.0",
+    "lodash": "^4.17.20",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "tailwindcss": "^2.0.2",
+    "vue": "^2.6.12"
+  }
+}
