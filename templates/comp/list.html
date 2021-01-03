@@ -1,0 +1,22 @@
+{% extends "dashboard/base_foc.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+ 
+ <section class="section">
+    <div class="container has-text-centered ">
+    {% if count %}
+      <h1 class="title is-half">
+        Your Competitions, {{ user.first_name }} {{ user.last_name }} ! ({{count}})
+      </h1>
+    {% else %}
+        <h1 class="title is-half">
+        Orgainze Your Competitions
+      </h1>
+    {% endif %}
+      <p class="subtitle is-one-quarter">
+        The only thing that can match the thrill of attending a competition is the exhilaration of organizing one yourself! <br> Join 100s of other competitions on {{website_name}} and manage your applications, submissions, communications , and judging, all on our platform.
+      </p>
+    </div>
+  </section>
+
+{% endblock content %}

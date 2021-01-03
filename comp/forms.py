@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from .models import (
-    Event, Announcement, ApplicationQuestion,
+    Event, EventMember, Announcement, ApplicationQuestion,
     TimelineEvent, Judge, FAQ, SponsorType, Sponsor, PrizeType, Prize)
 from users.models import City
 from captcha.fields import ReCaptchaField
@@ -255,14 +255,6 @@ class JudgeForm(forms.ModelForm):
                   'link', 'detail', 'only_speaker', 'image']
 
 
-class JudgeUserForm(forms.ModelForm):
-
-    # Search Queries on User Data
-    class Meta:
-        model = Judge
-        fields = ['user']
-
-
 class PrizeTypeForm(forms.ModelForm):
 
     class Meta:
@@ -275,3 +267,16 @@ class PrizeForm(forms.ModelForm):
     class Meta:
         model = PrizeType
         fields = ['name', 'type', 'value']
+
+
+class EventMemberForm(forms.ModelForm):
+
+    class Meta:
+        model = EventMember
+        fields = ['roll_name', 'overview', 'review', 'volunteer', 'feedback']
+
+
+class FeedbackQuestionForm(forms.ModelForm):
+
+    class Meta:
+        fields = ['question']

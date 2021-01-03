@@ -58,7 +58,6 @@ class Event(BaseClass):
     latitute = models.DecimalField(
         null=True, blank=True, max_digits=8, decimal_places=3)
 
-    women_only = models.BooleanField(default=False)
     # participant stuff
     approx_particpants = models.PositiveIntegerField(default=200)
 
@@ -216,9 +215,7 @@ class EventMember(BaseClass):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
     roll_name = models.CharField(max_length=200)
-
     public = models.BooleanField(default=True)
-
     overview = models.BooleanField(default=False)
     review = models.BooleanField(default=False)
     volunteer = models.BooleanField(default=False)

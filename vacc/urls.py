@@ -6,14 +6,17 @@ from django.conf.urls.static import static
 from markdownx import urls as markdownx
 from django.contrib.auth import views as auth_views
 from .settings import website_name
-
-
+from django.views.generic import TemplateView
+from rest_framework.schemas import get_schema_view
+from .rest import SwaggerUI, ReDocUI
 # Admin.py Stuff
 admin.site.site_header = f'{website_name} Admin'
 admin.site.site_title = f'{website_name} Admin'
 admin.site.index_title = f'{website_name} System Administration'
 admin.autodiscover()
 admin.site.enable_nav_sidebar = False
+
+
 urlpatterns = [
     path('', include('users.urls')),
     path('', include('appl.urls')),
@@ -32,6 +35,15 @@ urlpatterns = [
 
 
     path('markdownx/', include('markdownx.urls')),
+    path('openapi', get_schema_view(
+        title=f"{website_name} REST API",
+        description=f"Swagger API for all things {website_name}",
+        version="1.0.0",
+    ), name='openapi-schema'),
+
+    path('api/swagger/', SwaggerUI.as_view(), name='api-swagger-ui'),
+
+    path('api/redoc/', ReDocUI.as_view(), name='api-redoc-ui'),
 ]
 
 if settings.DEBUG:

@@ -22,12 +22,14 @@ SECRET_KEY = os.environ.get(
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1',
-                 'comp.veio.in', 'competitionhunter.herokuapp.com']
+                 'comp.vexio.in', 'competitionhunter.herokuapp.com']
 
 website_name = 'Competiton Hunter'
 # Application definition
 
 INSTALLED_APPS = [
+
+    # Django Auto Complete Light Systems
     'dal',
     'dal_select2',
     'dal_legacy_static',
@@ -68,8 +70,6 @@ INSTALLED_APPS = [
 
     # These 2 go hand in hand
     'markdown_deux',
-
-
 ]
 
 MIDDLEWARE = [
